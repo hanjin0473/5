@@ -3,93 +3,149 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>CHEONGEUN ACADEMY: CORE ARCHIVE</title>
+    <title>CHEONGEUN PRESTIGE ACADEMY</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Noto+Serif+KR:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
-        :root { --silver: #cbd5e1; --black: #020617; --neon-blue: #38bdf8; --warning: #ef4444; }
-        body { background: var(--black); color: var(--silver); font-family: 'Noto Sans KR', sans-serif; overflow-x: hidden; }
-        .orbitron { font-family: 'Orbitron', sans-serif; }
-        .glass-panel { background: rgba(10, 15, 30, 0.98); border: 1px solid rgba(255, 255, 255, 0.05); }
+        :root { 
+            --gold: #d4af37; --silver: #c0c0c0; --deep-brown: #1a0f0a; 
+            --accent: #8b5a2b; --paper: #f4f1ea;
+        }
+        body { background: var(--deep-brown); color: var(--paper); font-family: 'Noto Serif KR', serif; }
+        .cinzel { font-family: 'Cinzel', serif; }
         
-        /* Thumbnail Styles */
-        .thumb { width: 50px; height: 50px; object-fit: cover; cursor: pointer; border: 2px solid transparent; opacity: 0.4; transition: 0.3s; flex-shrink: 0; }
-        .thumb.active { border-color: var(--neon-blue); opacity: 1; transform: scale(1.1); }
+        /* Layout */
+        .gold-border { border: 1px solid var(--gold); }
+        .gold-gradient { background: linear-gradient(135deg, #d4af37 0%, #f1d592 50%, #d4af37 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
-        /* Awakened Filter */
-        .awakened-active .main-photo { filter: brightness(0.5) contrast(1.3) saturate(0.7) drop-shadow(0 0 10px rgba(255,0,0,0.2)); }
-        .awakened-active .thumb.active { border-color: var(--warning); }
-        .awakened-active #charModal { background: radial-gradient(circle at center, rgba(80, 0, 0, 0.3) 0%, rgba(2, 6, 23, 1) 100%); }
+        /* Sections */
+        .section-box { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(212, 175, 55, 0.2); padding: 2rem; position: relative; }
+        .section-box::before { content: ''; position: absolute; top: 5px; left: 5px; right: 5px; bottom: 5px; border: 1px solid rgba(212, 175, 55, 0.1); pointer-events: none; }
         
-        .char-card { transition: 0.4s; background: #0f172a; border-radius: 4px; overflow: hidden; cursor: pointer; border: 1px solid rgba(255,255,255,0.05); }
-        .char-card:hover { border-color: var(--neon-blue); transform: translateY(-3px); }
+        /* Character Card */
+        .char-card { position: relative; background: #2a1b12; border: 1px solid var(--accent); transition: 0.4s; overflow: hidden; cursor: pointer; }
+        .char-card:hover { border-color: var(--gold); box-shadow: 0 0 20px rgba(212, 175, 55, 0.2); transform: translateY(-5px); }
+        .char-card img { filter: sepia(0.3) contrast(1.1); transition: 0.5s; }
+        .char-card:hover img { filter: sepia(0) contrast(1.1); }
+
+        /* Modal & Gallery */
+        .modal-bg { background: rgba(10, 5, 2, 0.98); backdrop-blur: 15px; }
+        .thumb { width: 55px; height: 55px; object-fit: cover; border: 1px solid var(--accent); opacity: 0.5; transition: 0.3s; cursor: pointer; }
+        .thumb.active { border-color: var(--gold); opacity: 1; box-shadow: 0 0 10px var(--gold); }
         
-        .modal-content-area::-webkit-scrollbar { width: 3px; }
-        .modal-content-area::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); }
+        .main-photo { border: 1px solid var(--gold); }
+        .awakened-active .main-photo { filter: brightness(0.4) contrast(1.4) sepia(0.5) hue-rotate(-30deg); border-color: #8b0000; }
+        .awakened-active #awakenBtn { background: #5c0000 !important; color: white !important; }
         
-        .tag { font-size: 9px; padding: 2px 10px; background: rgba(255,255,255,0.05); border-radius: 99px; color: #94a3b8; }
-        .awakened-active .tag { background: rgba(239, 68, 68, 0.1); color: var(--warning); border: 1px solid rgba(239, 68, 68, 0.2); }
-        
-        .scanner { position: absolute; width: 100%; height: 1px; background: var(--neon-blue); box-shadow: 0 0 10px var(--neon-blue); z-index: 10; animation: scan 4s linear infinite; opacity: 0.4; pointer-events: none; }
-        .awakened-active .scanner { background: var(--warning); box-shadow: 0 0 10px var(--warning); }
-        @keyframes scan { 0% { top: 0%; } 100% { top: 100%; } }
+        /* Navigation */
+        .nav-link { color: var(--silver); font-size: 13px; transition: 0.3s; letter-spacing: 2px; }
+        .nav-link:hover { color: var(--gold); }
+
+        .ornament { width: 100%; height: 20px; background: url('https://www.transparenttextures.com/patterns/gold-glitter.png'); opacity: 0.1; }
     </style>
 </head>
-<body class="p-4 md:p-10">
+<body class="p-6 md:p-16">
 
-    <header class="max-w-7xl mx-auto mb-10 flex justify-between items-end border-b border-white/10 pb-8 px-2">
-        <div>
-            <h1 class="orbitron text-2xl font-black tracking-tighter text-white">靑銀 SYSTEM <span class="text-sky-500 text-sm">ARCHIVE</span></h1>
-            <p class="text-[9px] text-slate-500 orbitron tracking-[0.4em] mt-2">MULTIMEDIA BIOMETRIC INTERFACE</p>
-        </div>
-    </header>
+    <div class="max-w-6xl mx-auto space-y-20">
+        
+        <header class="text-center space-y-6">
+            <div class="ornament mb-4"></div>
+            <h1 class="cinzel text-5xl md:text-7xl font-black gold-gradient tracking-widest">CHEONGEUN</h1>
+            <p class="cinzel text-sm text-silver tracking-[0.6em]">PRIVATE PRESTIGE ACADEMY ARCHIVE</p>
+            <div class="flex justify-center gap-10 pt-6">
+                <a href="#intro" class="nav-link cinzel">INTRO</a>
+                <a href="#rules" class="nav-link cinzel">RULES</a>
+                <a href="#list" class="nav-link cinzel">STUDENTS</a>
+            </div>
+            <div class="ornament mt-4"></div>
+        </header>
 
-    <div class="max-w-7xl mx-auto">
-        <div id="characterGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-6"></div>
+        <section id="intro" class="section-box grid md:grid-cols-2 gap-12 items-center">
+            <div class="space-y-6">
+                <h2 class="cinzel text-3xl text-gold font-bold">THE PHILOSOPHY</h2>
+                <p class="text-silver leading-relaxed text-sm">
+                    청은학원은 선택받은 이들의 잠재력을 정제하고, 고결한 인격을 수립하는 것을 목적으로 합니다. 
+                    우리는 단순한 교육을 넘어, 혈통과 재능이 올바른 방향으로 발현될 수 있도록 엄격한 규율 아래 관리합니다. 
+                    이곳의 모든 기록은 기밀이며, 외부 유출 시 엄중한 책임을 묻습니다.
+                </p>
+            </div>
+            <div class="border-l border-gold/20 pl-12 hidden md:block">
+                <p class="cinzel text-[10px] text-gold/50 mb-4 tracking-widest uppercase">Founded 19XX</p>
+                <p class="italic text-slate-400 text-sm">"In silentia, virtus et sanguis." <br>(침묵 속에서, 미덕과 혈통이 증명되리라.)</p>
+            </div>
+        </section>
+
+        <section id="rules" class="section-box space-y-8">
+            <h2 class="cinzel text-3xl text-gold font-bold text-center">ACADEMY RULES</h2>
+            <div class="grid md:grid-cols-3 gap-8 text-xs leading-loose">
+                <div class="p-4 border border-gold/10">
+                    <p class="text-gold mb-2 font-bold cinzel">I. INTEGRITY</p>
+                    <p class="text-silver">교내외를 막론하고 기만행위는 엄격히 금지된다. 특히 선도부의 추적 시 협조하지 않는 행위는 즉각 처벌 대상이다.</p>
+                </div>
+                <div class="p-4 border border-gold/10">
+                    <p class="text-gold mb-2 font-bold cinzel">II. ORDER</p>
+                    <p class="text-silver">각 학급 및 부서의 위계질서를 준수해야 한다. 학생회 및 선도부의 지시에 불복종하는 행위는 허용되지 않는다.</p>
+                </div>
+                <div class="p-4 border border-gold/10">
+                    <p class="text-gold mb-2 font-bold cinzel">III. SECRECY</p>
+                    <p class="text-silver">자신의 '본성'이 외부인 혹은 규정된 대상 외의 학생에게 노출되지 않도록 스스로 절제해야 한다.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="list" class="space-y-12">
+            <div class="flex items-center gap-4">
+                <div class="h-[1px] flex-grow bg-gold/30"></div>
+                <h2 class="cinzel text-3xl text-gold font-bold">STUDENT ARCHIVE</h2>
+                <div class="h-[1px] flex-grow bg-gold/30"></div>
+            </div>
+            <div id="characterGrid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6"></div>
+        </section>
+
+        <footer class="text-center py-20 opacity-30 text-[10px] cinzel tracking-[0.5em]">
+            © CHEONGEUN ACADEMY ALL RIGHTS RESERVED.
+        </footer>
     </div>
 
-    <div id="charModal" class="fixed inset-0 z-[1000] hidden flex items-center justify-center p-0 md:p-4 bg-[#020617]/98 backdrop-blur-xl" onclick="closeModal()">
-        <div id="modalContainer" class="glass-panel w-full max-w-[500px] h-full md:h-auto max-h-[95vh] md:rounded-sm overflow-hidden flex flex-col shadow-2xl" onclick="event.stopPropagation()">
+    <div id="charModal" class="fixed inset-0 z-[1000] hidden flex items-center justify-center p-0 md:p-4 modal-bg" onclick="closeModal()">
+        <div id="modalContainer" class="bg-[#1a0f0a] w-full max-w-[550px] h-full md:h-auto max-h-[98vh] border border-gold/30 overflow-hidden flex flex-col shadow-2xl" onclick="event.stopPropagation()">
             
-            <div class="relative bg-black h-[400px] md:h-[450px] flex-shrink-0 overflow-hidden">
-                <div class="scanner"></div>
+            <div class="relative bg-black h-[400px] flex-shrink-0">
                 <img id="mainImg" src="" class="main-photo w-full h-full object-cover transition-all duration-700">
-                
-                <button onclick="prevImg()" class="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/20 text-white hover:bg-white/10 transition">◀</button>
-                <button onclick="nextImg()" class="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/20 text-white hover:bg-white/10 transition">▶</button>
-                
-                <div class="absolute bottom-6 left-6 right-6">
-                    <p id="mSubTitle" class="text-sky-400 text-[10px] orbitron font-bold mb-1"></p>
+                <button onclick="prevImg()" class="absolute left-2 top-1/2 -translate-y-1/2 text-gold p-4 hover:scale-125 transition">◁</button>
+                <button onclick="nextImg()" class="absolute right-2 top-1/2 -translate-y-1/2 text-gold p-4 hover:scale-125 transition">▷</button>
+                <div class="absolute bottom-6 left-8">
+                    <p id="mSubTitle" class="text-gold/70 text-[10px] cinzel font-bold mb-1 tracking-widest"></p>
                     <h2 id="mName" class="text-4xl font-bold text-white tracking-tighter"></h2>
                 </div>
             </div>
 
-            <div id="thumbArea" class="flex gap-2 p-3 bg-black/60 border-y border-white/5 overflow-x-auto custom-scroll"></div>
+            <div id="thumbArea" class="flex gap-2 p-4 bg-black/40 border-y border-gold/10 overflow-x-auto justify-center"></div>
 
-            <div class="p-6 space-y-6 modal-content-area overflow-y-auto flex-grow">
-                <div class="grid grid-cols-4 gap-2 text-center pb-4 border-b border-white/5">
-                    <div><p class="text-[8px] text-slate-500 orbitron mb-1">HEIGHT</p><p id="mHeight" class="text-[11px] text-white font-bold"></p></div>
-                    <div><p class="text-[8px] text-slate-500 orbitron mb-1">WEIGHT</p><p id="mWeight" class="text-[11px] text-white font-bold"></p></div>
-                    <div><p class="text-[8px] text-slate-500 orbitron mb-1">LIKES</p><p id="mLikes" class="text-[10px] text-white font-bold truncate"></p></div>
-                    <div><p class="text-[8px] text-slate-500 orbitron mb-1">DISLIKES</p><p id="mDislikes" class="text-[10px] text-white font-bold truncate"></p></div>
+            <div class="p-8 space-y-6 overflow-y-auto flex-grow custom-scroll">
+                <div class="grid grid-cols-4 gap-4 text-center pb-6 border-b border-gold/10">
+                    <div><p class="text-[9px] text-gold cinzel mb-1">HEIGHT</p><p id="mHeight" class="text-[12px] text-silver font-bold"></p></div>
+                    <div><p class="text-[9px] text-gold cinzel mb-1">WEIGHT</p><p id="mWeight" class="text-[12px] text-silver font-bold"></p></div>
+                    <div><p class="text-[9px] text-gold cinzel mb-1">LIKES</p><p id="mLikes" class="text-[11px] text-silver font-bold truncate"></p></div>
+                    <div><p class="text-[9px] text-gold cinzel mb-1">DISLIKES</p><p id="mDislikes" class="text-[11px] text-silver font-bold truncate"></p></div>
                 </div>
 
                 <div class="space-y-4">
-                    <div id="mTags" class="flex flex-wrap gap-2"></div>
-                    <p id="mQuote" class="text-[14px] text-slate-200 leading-snug italic border-l-2 border-sky-500 pl-4"></p>
-                    <p id="mDesc" class="text-[12px] text-slate-500 leading-relaxed"></p>
+                    <p id="mQuote" class="text-[15px] text-white/90 leading-snug italic border-l-2 border-gold pl-6"></p>
+                    <p id="mDesc" class="text-[12px] text-silver/70 leading-relaxed"></p>
+                    <div id="mTags" class="flex flex-wrap gap-2 pt-2"></div>
                 </div>
             </div>
 
-            <div class="p-4 bg-white/5 border-t border-white/10 flex flex-col gap-2">
-                <button id="awakenBtn" onclick="toggleAwakening()" class="w-full py-3 orbitron text-[11px] font-black tracking-widest bg-sky-500 text-black hover:opacity-90 transition-all">UNLEASH INSTINCT</button>
-                <button onclick="closeModal()" class="w-full py-1.5 orbitron text-[9px] text-slate-500 hover:text-white transition">CLOSE_CONNECTION</button>
+            <div class="p-6 bg-black/40 border-t border-gold/10 flex flex-col gap-2">
+                <button id="awakenBtn" onclick="toggleAwakening()" class="w-full py-4 cinzel text-[12px] font-black tracking-[0.3em] border border-gold text-gold hover:bg-gold hover:text-black transition-all">UNLEASH INSTINCT</button>
+                <button onclick="closeModal()" class="w-full py-2 cinzel text-[9px] text-silver/40 tracking-widest hover:text-white transition">DISMISS TERMINAL</button>
             </div>
         </div>
     </div>
 
     <script>
-        const baseUrl = "https://pub-1ff16a5c9ef048e3ab851e262c07ba57.r2.dev/";
+const baseUrl = "https://pub-1ff16a5c9ef048e3ab851e262c07ba57.r2.dev/";
         const codes = ["0", "B2", "C1", "E3", "D2", "R1"];
         
         // 데이터 베이스 (이미지는 약자와 코드를 조합해 자동 생성)
@@ -144,7 +200,7 @@
               awakened: { sub: "홍염의 혈통 / 패도의 비늘", likes: "지배력, 질서, 압도적인 실력", dislikes: "무능, 조롱, 권위 훼손", tags: ["#드래곤혼혈", "#화염", "#전장지배"], quote: "경고는 한 번이면 충분해. 자꾸 선 넘으면 그땐 진짜 제압 들어간다.", desc: "드래곤 혈통의 위압. 강력한 마력과 화염으로 공간을 장악한다." }}
         ];
 
-        let current = null;
+let current = null;
         let isAwake = false;
         let imgIdx = 0;
 
@@ -155,8 +211,11 @@
                 const card = document.createElement('div');
                 card.className = 'char-card';
                 card.onclick = () => openModal(c);
-                card.innerHTML = `<img src="${baseUrl}${c.id}_N0.webp" class="w-full aspect-[3/4] object-cover opacity-80 transition hover:opacity-100">
-                                  <div class="p-3 bg-gradient-to-t from-black to-transparent"><p class="text-[11px] font-bold text-white">${c.name}</p></div>`;
+                card.innerHTML = `<img src="${baseUrl}${c.id}_N0.webp" class="w-full h-full object-cover">
+                                  <div class="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black to-transparent">
+                                      <p class="text-[11px] font-bold text-white tracking-tighter">${c.name}</p>
+                                      <p class="text-[8px] text-gold/80 cinzel">${c.sub.split(' / ')[1] || c.sub}</p>
+                                  </div>`;
                 g.appendChild(card);
             });
         }
@@ -180,13 +239,11 @@
             document.getElementById('mQuote').innerText = data.quote;
             document.getElementById('mDesc').innerText = data.desc;
 
-            // Thumbnail List Generation (6 per mode)
             const thumbArea = document.getElementById('thumbArea');
             thumbArea.innerHTML = '';
             codes.forEach((code, idx) => {
-                const imgUrl = `${baseUrl}${current.id}_${mode}${code}.webp`;
                 const img = document.createElement('img');
-                img.src = imgUrl;
+                img.src = `${baseUrl}${current.id}_${mode}${code}.webp`;
                 img.className = `thumb ${idx === imgIdx ? 'active' : ''}`;
                 img.onclick = () => { imgIdx = idx; updateMainPhoto(); };
                 thumbArea.appendChild(img);
@@ -194,24 +251,20 @@
 
             updateMainPhoto();
 
-            // Awake Mode Styling
             const btn = document.getElementById('awakenBtn');
             if(isAwake) {
                 document.body.classList.add('awakened-active');
                 btn.innerText = "RESTRICT INSTINCT";
-                btn.classList.replace('bg-sky-500', 'bg-rose-600');
             } else {
                 document.body.classList.remove('awakened-active');
                 btn.innerText = "UNLEASH INSTINCT";
-                btn.classList.replace('bg-rose-600', 'bg-sky-500');
             }
 
-            // Tags
             const tagBox = document.getElementById('mTags');
             tagBox.innerHTML = '';
             data.tags.forEach(t => {
                 const s = document.createElement('span');
-                s.className = 'tag';
+                s.className = 'text-[9px] text-gold/60 border border-gold/20 px-2 py-0.5 rounded-full';
                 s.innerText = t;
                 tagBox.appendChild(s);
             });
@@ -219,24 +272,14 @@
 
         function updateMainPhoto() {
             const mode = isAwake ? 'T' : 'N';
-            const code = codes[imgIdx];
-            document.getElementById('mainImg').src = `${baseUrl}${current.id}_${mode}${code}.webp`;
+            document.getElementById('mainImg').src = `${baseUrl}${current.id}_${mode}${codes[imgIdx]}.webp`;
             document.querySelectorAll('.thumb').forEach((t, i) => t.classList.toggle('active', i === imgIdx));
         }
 
         function nextImg() { imgIdx = (imgIdx + 1) % 6; updateMainPhoto(); }
         function prevImg() { imgIdx = (imgIdx - 1 + 6) % 6; updateMainPhoto(); }
-
-        function toggleAwakening() {
-            isAwake = !isAwake;
-            imgIdx = 0; 
-            updateUI();
-        }
-
-        function closeModal() {
-            document.getElementById('charModal').classList.add('hidden');
-            document.body.classList.remove('awakened-active');
-        }
+        function toggleAwakening() { isAwake = !isAwake; imgIdx = 0; updateUI(); }
+        function closeModal() { document.getElementById('charModal').classList.add('hidden'); document.body.classList.remove('awakened-active'); }
 
         renderGrid();
     </script>
