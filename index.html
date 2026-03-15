@@ -3,18 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>CHEONGEUN PRESTIGE ACADEMY</title>
+    <title>CHEONGEUN PRESTIGE ACADEMY: ARCHIVE</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Noto+Serif+KR:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         :root { 
             --gold: #d4af37; --silver: #c0c0c0; --deep-brown: #1a0f0a; 
-            --accent: #8b5a2b; --paper: #f4f1ea;
+            --accent: #8b5a2b; --paper: #f4f1ea; --warning-red: #8b0000;
         }
-        body { background: var(--deep-brown); color: var(--paper); font-family: 'Noto Serif KR', serif; }
+        body { background: var(--deep-brown); color: var(--paper); font-family: 'Noto Serif KR', serif; scroll-behavior: smooth; }
         .cinzel { font-family: 'Cinzel', serif; }
         
-        /* Layout */
+        /* Layout & Borders */
         .gold-border { border: 1px solid var(--gold); }
         .gold-gradient { background: linear-gradient(135deg, #d4af37 0%, #f1d592 50%, #d4af37 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         
@@ -29,19 +29,29 @@
         .char-card:hover img { filter: sepia(0) contrast(1.1); }
 
         /* Modal & Gallery */
-        .modal-bg { background: rgba(10, 5, 2, 0.98); backdrop-blur: 15px; }
+        .modal-bg { background: rgba(10, 5, 2, 0.98); backdrop-blur: 20px; }
         .thumb { width: 55px; height: 55px; object-fit: cover; border: 1px solid var(--accent); opacity: 0.5; transition: 0.3s; cursor: pointer; }
         .thumb.active { border-color: var(--gold); opacity: 1; box-shadow: 0 0 10px var(--gold); }
         
-        .main-photo { border: 1px solid var(--gold); }
-        .awakened-active .main-photo { filter: brightness(0.4) contrast(1.4) sepia(0.5) hue-rotate(-30deg); border-color: #8b0000; }
-        .awakened-active #awakenBtn { background: #5c0000 !important; color: white !important; }
+        .main-photo { border: 1px solid var(--gold); transition: 0.7s cubic-bezier(0.4, 0, 0.2, 1); }
+        
+        /* --- 각성 모드 위험 연출 (사진은 보이게, 위험함은 세게) --- */
+        .awakened-active .main-photo { 
+            filter: brightness(0.7) contrast(1.4) sepia(0.3) hue-rotate(-20deg) drop-shadow(0 0 15px rgba(139, 0, 0, 0.8)); 
+            border-color: var(--warning-red); 
+        }
+        .awakened-active #awakenBtn { background: var(--warning-red) !important; color: white !important; border-color: var(--warning-red); }
+        .awakened-active .thumb.active { border-color: var(--warning-red); box-shadow: 0 0 10px var(--warning-red); }
+        .awakened-active .gold-text { color: var(--warning-red) !important; }
+        .awakened-active .gold-border-inner { border-color: rgba(139, 0, 0, 0.3) !important; }
         
         /* Navigation */
         .nav-link { color: var(--silver); font-size: 13px; transition: 0.3s; letter-spacing: 2px; }
-        .nav-link:hover { color: var(--gold); }
+        .nav-link:hover { color: var(--gold); text-shadow: 0 0 5px var(--gold); }
 
         .ornament { width: 100%; height: 20px; background: url('https://www.transparenttextures.com/patterns/gold-glitter.png'); opacity: 0.1; }
+        .custom-scroll::-webkit-scrollbar { width: 3px; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: rgba(212, 175, 55, 0.2); }
     </style>
 </head>
 <body class="p-6 md:p-16">
@@ -111,33 +121,33 @@
         <div id="modalContainer" class="bg-[#1a0f0a] w-full max-w-[550px] h-full md:h-auto max-h-[98vh] border border-gold/30 overflow-hidden flex flex-col shadow-2xl" onclick="event.stopPropagation()">
             
             <div class="relative bg-black h-[400px] flex-shrink-0">
-                <img id="mainImg" src="" class="main-photo w-full h-full object-cover transition-all duration-700">
+                <img id="mainImg" src="" class="main-photo w-full h-full object-cover">
                 <button onclick="prevImg()" class="absolute left-2 top-1/2 -translate-y-1/2 text-gold p-4 hover:scale-125 transition">◁</button>
                 <button onclick="nextImg()" class="absolute right-2 top-1/2 -translate-y-1/2 text-gold p-4 hover:scale-125 transition">▷</button>
                 <div class="absolute bottom-6 left-8">
-                    <p id="mSubTitle" class="text-gold/70 text-[10px] cinzel font-bold mb-1 tracking-widest"></p>
-                    <h2 id="mName" class="text-4xl font-bold text-white tracking-tighter"></h2>
+                    <p id="mSubTitle" class="text-gold/70 text-[10px] cinzel font-bold mb-1 tracking-widest gold-text"></p>
+                    <h2 id="mName" class="text-4xl font-bold text-white tracking-tighter modal-name"></h2>
                 </div>
             </div>
 
-            <div id="thumbArea" class="flex gap-2 p-4 bg-black/40 border-y border-gold/10 overflow-x-auto justify-center"></div>
+            <div id="thumbArea" class="flex gap-2 p-4 bg-black/40 border-y border-gold/10 overflow-x-auto justify-center custom-scroll"></div>
 
             <div class="p-8 space-y-6 overflow-y-auto flex-grow custom-scroll">
-                <div class="grid grid-cols-4 gap-4 text-center pb-6 border-b border-gold/10">
-                    <div><p class="text-[9px] text-gold cinzel mb-1">HEIGHT</p><p id="mHeight" class="text-[12px] text-silver font-bold"></p></div>
-                    <div><p class="text-[9px] text-gold cinzel mb-1">WEIGHT</p><p id="mWeight" class="text-[12px] text-silver font-bold"></p></div>
-                    <div><p class="text-[9px] text-gold cinzel mb-1">LIKES</p><p id="mLikes" class="text-[11px] text-silver font-bold truncate"></p></div>
-                    <div><p class="text-[9px] text-gold cinzel mb-1">DISLIKES</p><p id="mDislikes" class="text-[11px] text-silver font-bold truncate"></p></div>
+                <div class="grid grid-cols-4 gap-4 text-center pb-6 border-b border-gold/10 gold-border-inner">
+                    <div><p class="text-[9px] text-gold cinzel mb-1 gold-text">HEIGHT</p><p id="mHeight" class="text-[12px] text-silver font-bold"></p></div>
+                    <div><p class="text-[9px] text-gold cinzel mb-1 gold-text">WEIGHT</p><p id="mWeight" class="text-[12px] text-silver font-bold"></p></div>
+                    <div><p class="text-[9px] text-gold cinzel mb-1 gold-text">LIKES</p><p id="mLikes" class="text-[11px] text-silver font-bold truncate"></p></div>
+                    <div><p class="text-[9px] text-gold cinzel mb-1 gold-text">DISLIKES</p><p id="mDislikes" class="text-[11px] text-silver font-bold truncate"></p></div>
                 </div>
 
                 <div class="space-y-4">
-                    <p id="mQuote" class="text-[15px] text-white/90 leading-snug italic border-l-2 border-gold pl-6"></p>
+                    <p id="mQuote" class="text-[15px] text-white/90 leading-snug italic border-l-2 border-gold pl-6 quote-border"></p>
                     <p id="mDesc" class="text-[12px] text-silver/70 leading-relaxed"></p>
                     <div id="mTags" class="flex flex-wrap gap-2 pt-2"></div>
                 </div>
             </div>
 
-            <div class="p-6 bg-black/40 border-t border-gold/10 flex flex-col gap-2">
+            <div class="p-6 bg-black/40 border-t border-gold/10 flex flex-col gap-2 footer-border">
                 <button id="awakenBtn" onclick="toggleAwakening()" class="w-full py-4 cinzel text-[12px] font-black tracking-[0.3em] border border-gold text-gold hover:bg-gold hover:text-black transition-all">UNLEASH INSTINCT</button>
                 <button onclick="closeModal()" class="w-full py-2 cinzel text-[9px] text-silver/40 tracking-widest hover:text-white transition">DISMISS TERMINAL</button>
             </div>
@@ -145,7 +155,7 @@
     </div>
 
     <script>
-const baseUrl = "https://pub-1ff16a5c9ef048e3ab851e262c07ba57.r2.dev/";
+        const baseUrl = "https://pub-1ff16a5c9ef048e3ab851e262c07ba57.r2.dev/";
         const codes = ["0", "B2", "C1", "E3", "D2", "R1"];
         
         // 데이터 베이스 (이미지는 약자와 코드를 조합해 자동 생성)
@@ -223,6 +233,7 @@ let current = null;
         function openModal(c) {
             current = c; isAwake = false; imgIdx = 0;
             document.getElementById('charModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
             updateUI();
         }
 
@@ -279,7 +290,7 @@ let current = null;
         function nextImg() { imgIdx = (imgIdx + 1) % 6; updateMainPhoto(); }
         function prevImg() { imgIdx = (imgIdx - 1 + 6) % 6; updateMainPhoto(); }
         function toggleAwakening() { isAwake = !isAwake; imgIdx = 0; updateUI(); }
-        function closeModal() { document.getElementById('charModal').classList.add('hidden'); document.body.classList.remove('awakened-active'); }
+        function closeModal() { document.getElementById('charModal').classList.add('hidden'); document.body.style.overflow = 'auto'; document.body.classList.remove('awakened-active'); }
 
         renderGrid();
     </script>
