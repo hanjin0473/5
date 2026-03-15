@@ -3,147 +3,174 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>CHEONGEUN ACADEMY ARCHIVE</title>
+    <title>청은학원 기록보관소</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Noto+Serif+KR:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root { 
-            --gold: #d4af37; --silver: #a8a8a8; --deep-brown: #2c1e17; 
-            --paper: #f9f7f2; --accent-red: #b30000;
+            --gold: #b08d57; --deep-brown: #3d2b1f; 
+            --paper: #f2e8cf; --ink: #1a1a1a; --danger: #960000;
         }
-        body { background: #1a120e; color: var(--paper); font-family: 'Noto Serif KR', serif; overflow-x: hidden; }
-        .cinzel { font-family: 'Cinzel', serif; }
+        body { 
+            background: #231a14; 
+            color: var(--ink); 
+            font-family: 'Noto Serif KR', serif; 
+            background-image: url('https://www.transparenttextures.com/patterns/dark-leather.png');
+        }
         
-        /* Tab System */
-        .tab-content { display: none; animation: fadeIn 0.5s ease forwards; }
+        /* 종이 질감 섹션 */
+        .paper-sheet { 
+            background: #fdfaf1; 
+            background-image: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5), inset 0 0 100px rgba(181, 153, 110, 0.1);
+            border: 1px solid #d4c5a9;
+            position: relative;
+        }
+
+        /* 탭 시스템 */
+        .tab-btn { 
+            padding: 15px 30px; 
+            color: #8c7865; 
+            font-weight: 700; 
+            font-size: 18px; 
+            transition: 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+        .tab-btn.active { 
+            color: var(--deep-brown); 
+            border-bottom-color: var(--gold);
+        }
+        .tab-content { display: none; animation: fadeIn 0.4s ease; }
         .tab-content.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        .tab-btn { padding: 12px 24px; color: var(--silver); border-bottom: 2px solid transparent; transition: 0.3s; font-size: 14px; letter-spacing: 2px; }
-        .tab-btn.active { color: var(--gold); border-bottom-color: var(--gold); font-weight: bold; }
+        /* 캐릭터 카드 */
+        .char-card { 
+            border: 1px solid #d4c5a9; 
+            background: #fff; 
+            padding: 5px; 
+            transition: 0.3s;
+        }
+        .char-card:hover { border-color: var(--gold); transform: translateY(-3px); }
 
-        /* Prologue Style */
-        .prologue-card { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(212, 175, 55, 0.2); position: relative; padding: 3rem 2rem; }
-        .prologue-text { line-height: 2.2; color: #d1d1d1; word-break: keep-all; }
+        /* 각성 연출 (밝기 유지, 위험함 강조) */
+        .awakened-active .main-photo { 
+            border: 4px solid var(--danger); 
+            box-shadow: 0 0 30px rgba(150, 0, 0, 0.5); 
+        }
+        .awakened-active .danger-text { color: var(--danger) !important; font-weight: 900; }
+        .awakened-active #awakenBtn { background: var(--danger) !important; color: white !important; }
 
-        /* Character Card */
-        .char-card { position: relative; border: 1px solid rgba(212, 175, 55, 0.3); transition: 0.3s; overflow: hidden; cursor: pointer; background: #261a14; }
-        .char-card:hover { border-color: var(--gold); transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
-        .char-card img { filter: grayscale(20%); transition: 0.5s; }
-        .char-card:hover img { filter: grayscale(0%); }
-
-        /* Gallery & Awakened Effect */
-        .modal-bg { background: rgba(0, 0, 0, 0.9); backdrop-blur: 10px; }
-        .main-photo { border: 1px solid var(--gold); transition: 0.5s ease-in-out; }
-        .thumb { width: 50px; height: 50px; object-fit: cover; border: 1px solid rgba(255,255,255,0.1); cursor: pointer; transition: 0.3s; }
-        .thumb.active { border-color: var(--gold); box-shadow: 0 0 8px var(--gold); }
-
-        /* Awakened: Danger but Bright */
-        .awakened-active .main-photo { border-color: var(--accent-red); box-shadow: 0 0 20px rgba(179, 0, 0, 0.6); }
-        .awakened-active #awakenBtn { background: var(--accent-red) !important; color: white !important; }
-        .awakened-active .modal-name { color: var(--accent-red); text-shadow: 0 0 10px rgba(179, 0, 0, 0.5); }
-        .awakened-active .thumb.active { border-color: var(--accent-red); box-shadow: 0 0 8px var(--accent-red); }
-
-        .btn-gold { border: 1px solid var(--gold); color: var(--gold); padding: 15px 40px; transition: 0.3s; font-size: 13px; letter-spacing: 4px; display: inline-block; }
-        .btn-gold:hover { background: var(--gold); color: black; }
+        .main-btn {
+            background: var(--deep-brown);
+            color: #f2e8cf;
+            padding: 18px 45px;
+            font-size: 16px;
+            font-weight: 700;
+            border: 1px solid var(--gold);
+            transition: 0.3s;
+        }
+        .main-btn:hover { background: var(--gold); color: white; }
     </style>
 </head>
-<body class="p-4 md:p-12">
+<body class="p-4 md:p-8">
 
-    <div class="max-w-5xl mx-auto">
+    <div class="max-w-4xl mx-auto">
         
-        <header class="text-center mb-12">
-            <h1 class="cinzel text-5xl font-black text-white tracking-widest gold-gradient">CHEONGEUN</h1>
-            <p class="cinzel text-[10px] text-gold tracking-[0.5em] mt-2 opacity-70">PRIVATE EDUCATIONAL ARCHIVE</p>
+        <header class="text-center py-10">
+            <h1 class="text-5xl md:text-6xl font-black text-[#f2e8cf] tracking-widest drop-shadow-lg">靑銀</h1>
+            <p class="text-lg text-[#b08d57] mt-3 font-bold tracking-[0.3em]">청은 사립 학원 기록부</p>
         </header>
 
-        <nav class="flex justify-center border-b border-white/10 mb-12 overflow-x-auto">
-            <button onclick="showTab('intro')" id="btn-intro" class="tab-btn cinzel active">PROLOGUE</button>
-            <button onclick="showTab('rules')" id="btn-rules" class="tab-btn cinzel">RULES</button>
-            <button onclick="showTab('students')" id="btn-students" class="tab-btn cinzel">STUDENTS</button>
+        <nav class="flex justify-center bg-[#e8dec5] rounded-t-lg border-b border-[#d4c5a9]">
+            <button onclick="showTab('intro')" id="btn-intro" class="tab-btn active">입학 안내</button>
+            <button onclick="showTab('rules')" id="btn-rules" class="tab-btn">교내 수칙</button>
+            <button onclick="showTab('students')" id="btn-students" class="tab-btn">학생 명부</button>
         </nav>
 
-        <section id="tab-intro" class="tab-content active">
-            <div class="prologue-card text-center">
-                <div class="max-w-2xl mx-auto space-y-12">
-                    <div class="prologue-text text-sm">
-                        <p>「아침 공기가 아직 차갑다. 새 학기 첫날이라 그런지 교문 앞은 학생들로 붐빈다.」</p>
-                        <p>「교복을 입은 학생들이 삼삼오오 모여 떠들고, 처음 보는 얼굴들끼리 어색하게 인사를 나눈다. 오늘은 청은학원의 입학식 날이었다.」</p>
-                        <p class="py-4">「그리고 당신은, 이제 막 이 학교에 발을 들였다. 부모님이 돌아가신 뒤로 학교와는 조금 멀어졌었다. 생활을 버티는 게 먼저였고, 공부 같은 건 자연스럽게 뒤로 밀려났다.」</p>
-                        <p>「그러다 얼마 전, 부모님과 알고 지내던 지인이 불쑥 봉투 하나를 건넸다. 그 안에는 청은학원의 입학장이 들어 있었다. 이유는 자세히 말해주지 않았다. 다만, 그 사람은 마지막에 이렇게 말했다.」</p>
-                        <p class="text-gold py-4 font-bold text-base">— 거기 가면, 네 인생이 조금은 달라질지도 모른다.</p>
-                        <p>「그래서 결국 여기까지 왔다. 청은학원. 겉보기에는 평범한 사립학교다. 깔끔한 교문, 정돈된 교정, 새 교복을 입은 학생들.」</p>
-                        <p>「그런데 이상하게도 이곳의 공기는 어딘가 묘하게 낯설다. 설명하기 어려운 위화감이, 교문 앞에서부터 희미하게 걸린다.」</p>
+        <main class="paper-sheet p-8 md:p-12 min-h-[60vh] rounded-b-lg">
+            
+            <section id="tab-intro" class="tab-content active space-y-8">
+                <div class="text-center space-y-6">
+                    <h2 class="text-3xl font-black text-[#3d2b1f] border-b-2 border-gold/30 pb-4">새로운 시작</h2>
+                    <div class="text-lg md:text-xl leading-[2] text-[#4a3b31] space-y-6">
+                        <p>「부모님을 여의고 삶을 버텨내기에 급급했던 당신에게, 어느 날 낯선 봉투 하나가 전달되었습니다.」</p>
+                        <p>「그 안에는 이름조차 생소한 **'청은학원'**의 입학 허가서가 들어있었죠.」</p>
+                        <p class="font-bold text-[#b08d57]">"— 거기 가면, 네 인생이 조금은 달라질지도 모른다."</p>
+                        <p>「깔끔한 교문과 정돈된 교정. 겉보기엔 평범한 학교지만, 교문에 들어서는 순간 설명하기 힘든 기묘한 위화감이 당신을 반깁니다.」</p>
                     </div>
-                    <div class="pt-8">
-                        <a href="https://share.crack.wrtn.ai/w090440" target="_blank" class="btn-gold cinzel">ADMISSION SUBMIT</a>
-                        <p class="text-[9px] text-silver mt-4 opacity-50 tracking-widest uppercase">Warning: Information will be encrypted upon submission.</p>
+                    <div class="pt-10">
+                        <a href="https://share.crack.wrtn.ai/w090440" target="_blank" class="main-btn inline-block">입학 신청서 제출하기</a>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <section id="tab-rules" class="tab-content">
-            <div class="grid md:grid-cols-2 gap-8">
-                <div class="section-box border border-gold/20 p-8 space-y-4">
-                    <h3 class="cinzel text-xl text-gold">학원 생활 수칙</h3>
-                    <ul class="text-sm space-y-4 text-silver">
-                        <li>• 모든 학생은 일몰 후 허가 없이 본관을 이탈할 수 없다.</li>
-                        <li>• 학원 내에서 발견되는 '이질적인 흔적'에 대해 발설하지 않는다.</li>
-                        <li>• 선도부의 비정기적 검문에 즉각 응하며, 소지품 검사에 협조한다.</li>
-                        <li>• 자신의 '본성'이 각성될 조짐이 보일 경우 즉시 보건실로 향한다.</li>
-                    </ul>
+            <section id="tab-rules" class="tab-content space-y-8">
+                <h2 class="text-3xl font-black text-[#3d2b1f] text-center mb-10">청은학원 학생 준수 사항</h2>
+                <div class="grid md:grid-cols-2 gap-10">
+                    <div class="space-y-4">
+                        <h3 class="text-xl font-bold text-[#b08d57]">◈ 일상 지침</h3>
+                        <ul class="text-lg space-y-3 list-disc pl-5">
+                            <li>해질녘 종소리가 들리면 반드시 생활관으로 복귀하십시오.</li>
+                            <li>교내 도서관 깊은 곳의 비밀 서가에는 접근을 금합니다.</li>
+                            <li>선도부의 불시 검문 시 절대 눈을 피하지 마십시오.</li>
+                        </ul>
+                    </div>
+                    <div class="space-y-4">
+                        <h3 class="text-xl font-bold text-[#b08d57]">◈ 각성 및 본성 관리</h3>
+                        <ul class="text-lg space-y-3 list-disc pl-5">
+                            <li>자신의 신체에 이질적인 변화가 생기면 즉시 신고하십시오.</li>
+                            <li>타인의 본모습을 목격했을 경우, 절대 외부에 발설하지 마십시오.</li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="section-box border border-gold/20 p-8 space-y-4 bg-black/20">
-                    <h3 class="cinzel text-xl text-gold">경고사항</h3>
-                    <p class="text-xs text-silver/70 leading-relaxed italic">
-                        "청은학원은 학생의 안전을 보장하지만, 규칙을 위반한 자에게는 그 권한을 행사하지 않습니다. 이곳은 배움의 전당인 동시에 거대한 '우리'임을 잊지 마십시오."
-                    </p>
-                </div>
-            </div>
-        </section>
+            </section>
 
-        <section id="tab-students" class="tab-content">
-            <div id="characterGrid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4"></div>
-        </section>
+            <section id="tab-students" class="tab-content">
+                <div id="characterGrid" class="grid grid-cols-2 md:grid-cols-3 gap-6"></div>
+            </section>
 
+        </main>
+
+        <footer class="text-center py-12 text-[#b08d57]/50 text-sm">
+            본 문서는 청은학원 행정실의 허가 없이 복제할 수 없습니다.
+        </footer>
     </div>
 
-    <div id="charModal" class="fixed inset-0 z-[1000] hidden flex items-center justify-center p-0 md:p-4 modal-bg" onclick="closeModal()">
-        <div id="modalContainer" class="bg-[#1a120e] w-full max-w-[500px] h-full md:h-auto max-h-[95vh] border border-gold/30 flex flex-col shadow-2xl" onclick="event.stopPropagation()">
+    <div id="charModal" class="fixed inset-0 z-[1000] hidden flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm" onclick="closeModal()">
+        <div id="modalContainer" class="paper-sheet w-full max-w-[500px] max-h-[90vh] overflow-hidden flex flex-col shadow-2xl rounded-lg" onclick="event.stopPropagation()">
             
-            <div class="relative bg-black h-[400px] flex-shrink-0 overflow-hidden">
+            <div class="relative bg-white h-[400px] flex-shrink-0">
                 <img id="mainImg" src="" class="main-photo w-full h-full object-cover">
-                <button onclick="prevImg()" class="absolute left-2 top-1/2 -translate-y-1/2 text-white bg-black/30 w-10 h-10 rounded-full hover:bg-gold transition">◁</button>
-                <button onclick="nextImg()" class="absolute right-2 top-1/2 -translate-y-1/2 text-white bg-black/30 w-10 h-10 rounded-full hover:bg-gold transition">▷</button>
-                <div class="absolute bottom-6 left-8 right-8">
-                    <p id="mSubTitle" class="text-gold text-[10px] cinzel tracking-widest"></p>
-                    <h2 id="mName" class="text-4xl font-bold text-white tracking-tighter modal-name"></h2>
+                <button onclick="prevImg()" class="absolute left-4 top-1/2 -translate-y-1/2 bg-black/20 hover:bg-black/50 text-white w-10 h-10 rounded-full">◀</button>
+                <button onclick="nextImg()" class="absolute right-4 top-1/2 -translate-y-1/2 bg-black/20 hover:bg-black/50 text-white w-10 h-10 rounded-full">▶</button>
+                <div class="absolute bottom-6 left-8">
+                    <p id="mSubTitle" class="text-[#b08d57] text-sm font-bold mb-1 danger-text"></p>
+                    <h2 id="mName" class="text-4xl font-black text-[#1a1a1a] danger-text"></h2>
                 </div>
             </div>
 
-            <div id="thumbArea" class="flex gap-2 p-3 bg-black/60 border-y border-white/5 overflow-x-auto justify-center"></div>
+            <div id="thumbArea" class="flex gap-2 p-3 bg-black/5 border-y border-[#d4c5a9] overflow-x-auto justify-center"></div>
 
-            <div class="p-8 space-y-6 overflow-y-auto flex-grow custom-scroll text-sm">
-                <div class="grid grid-cols-2 gap-4 border-b border-white/5 pb-4">
-                    <p><span class="text-gold text-[9px] cinzel mr-2">HEIGHT</span><span id="mHeight"></span></p>
-                    <p><span class="text-gold text-[9px] cinzel mr-2">WEIGHT</span><span id="mWeight"></span></p>
+            <div class="p-8 space-y-6 overflow-y-auto flex-grow text-lg">
+                <div class="grid grid-cols-2 gap-6 border-b border-[#d4c5a9] pb-4 font-bold">
+                    <p><span class="text-[#b08d57] mr-2">신장</span> <span id="mHeight"></span></p>
+                    <p><span class="text-[#b08d57] mr-2">체중</span> <span id="mWeight"></span></p>
                 </div>
                 <div class="space-y-4">
-                    <p id="mQuote" class="text-white italic border-l-2 border-gold pl-4"></p>
-                    <p id="mDesc" class="text-silver text-xs leading-relaxed"></p>
+                    <p id="mQuote" class="text-xl italic font-bold border-l-4 border-gold pl-4 text-[#3d2b1f]"></p>
+                    <p id="mDesc" class="text-base text-[#4a3b31] leading-relaxed"></p>
                 </div>
             </div>
 
-            <div class="p-6 border-t border-white/5 bg-black/20 flex flex-col gap-2">
-                <button id="awakenBtn" onclick="toggleAwakening()" class="w-full py-4 cinzel text-[11px] font-black tracking-widest border border-gold text-gold hover:bg-gold hover:text-black transition-all">UNLEASH INSTINCT</button>
-                <button onclick="closeModal()" class="w-full py-1 cinzel text-[8px] text-white/20 tracking-widest">DISMISS</button>
+            <div class="p-6 border-t border-[#d4c5a9] bg-black/5">
+                <button id="awakenBtn" onclick="toggleAwakening()" class="w-full py-5 text-lg font-black bg-[#3d2b1f] text-[#f2e8cf] hover:opacity-90 transition-all rounded">본모습 개방</button>
             </div>
         </div>
     </div>
 
     <script>
-        const baseUrl = "https://pub-1ff16a5c9ef048e3ab851e262c07ba57.r2.dev/";
+const baseUrl = "https://pub-1ff16a5c9ef048e3ab851e262c07ba57.r2.dev/";
         const codes = ["0", "B2", "C1", "E3", "D2", "R1"];
         
         // 데이터 베이스 (이미지는 약자와 코드를 조합해 자동 생성)
@@ -211,12 +238,10 @@ let current = null, isAwake = false, imgIdx = 0;
             const g = document.getElementById('characterGrid');
             characters.forEach(c => {
                 const card = document.createElement('div');
-                card.className = 'char-card';
+                card.className = 'char-card cursor-pointer';
                 card.onclick = () => openModal(c);
-                card.innerHTML = `<img src="${baseUrl}${c.id}_N0.webp" class="w-full h-full object-cover">
-                                  <div class="absolute bottom-0 p-3 w-full bg-gradient-to-t from-black to-transparent">
-                                      <p class="text-[10px] font-bold text-white">${c.name}</p>
-                                  </div>`;
+                card.innerHTML = `<img src="${baseUrl}${c.id}_N0.webp" class="w-full aspect-[3/4] object-cover mb-2">
+                                  <p class="text-center font-bold text-[#3d2b1f]">${c.name}</p>`;
                 g.appendChild(card);
             });
         }
@@ -224,6 +249,7 @@ let current = null, isAwake = false, imgIdx = 0;
         function openModal(c) {
             current = c; isAwake = false; imgIdx = 0;
             document.getElementById('charModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
             updateUI();
         }
 
@@ -242,26 +268,34 @@ let current = null, isAwake = false, imgIdx = 0;
             codes.forEach((code, idx) => {
                 const img = document.createElement('img');
                 img.src = `${baseUrl}${current.id}_${mode}${code}.webp`;
-                img.className = `thumb ${idx === imgIdx ? 'active' : ''}`;
+                img.className = `w-12 h-12 object-cover border-2 ${idx === imgIdx ? 'border-gold' : 'border-transparent'} cursor-pointer`;
                 img.onclick = () => { imgIdx = idx; updateMainPhoto(); };
                 thumbArea.appendChild(img);
             });
             updateMainPhoto();
 
-            if(isAwake) document.body.classList.add('awakened-active');
-            else document.body.classList.remove('awakened-active');
+            const btn = document.getElementById('awakenBtn');
+            if(isAwake) {
+                document.body.classList.add('awakened-active');
+                btn.innerText = "본성 억제하기";
+            } else {
+                document.body.classList.remove('awakened-active');
+                btn.innerText = "본모습 개방하기";
+            }
         }
 
         function updateMainPhoto() {
             const mode = isAwake ? 'T' : 'N';
             document.getElementById('mainImg').src = `${baseUrl}${current.id}_${mode}${codes[imgIdx]}.webp`;
-            document.querySelectorAll('.thumb').forEach((t, i) => t.classList.toggle('active', i === imgIdx));
+            document.querySelectorAll('#thumbArea img').forEach((t, i) => {
+                t.style.borderColor = i === imgIdx ? (isAwake ? 'var(--danger)' : 'var(--gold)') : 'transparent';
+            });
         }
 
         function nextImg() { imgIdx = (imgIdx + 1) % 6; updateMainPhoto(); }
         function prevImg() { imgIdx = (imgIdx - 1 + 6) % 6; updateMainPhoto(); }
         function toggleAwakening() { isAwake = !isAwake; imgIdx = 0; updateUI(); }
-        function closeModal() { document.getElementById('charModal').classList.add('hidden'); document.body.classList.remove('awakened-active'); }
+        function closeModal() { document.getElementById('charModal').classList.add('hidden'); document.body.style.overflow = 'auto'; document.body.classList.remove('awakened-active'); }
 
         renderGrid();
     </script>
