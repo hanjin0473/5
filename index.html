@@ -3,153 +3,141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>CHEONGEUN PRESTIGE ACADEMY: ARCHIVE</title>
+    <title>CHEONGEUN ACADEMY ARCHIVE</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Noto+Serif+KR:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         :root { 
-            --gold: #d4af37; --silver: #c0c0c0; --deep-brown: #1a0f0a; 
-            --accent: #8b5a2b; --paper: #f4f1ea; --warning-red: #8b0000;
+            --gold: #d4af37; --silver: #a8a8a8; --deep-brown: #2c1e17; 
+            --paper: #f9f7f2; --accent-red: #b30000;
         }
-        body { background: var(--deep-brown); color: var(--paper); font-family: 'Noto Serif KR', serif; scroll-behavior: smooth; }
+        body { background: #1a120e; color: var(--paper); font-family: 'Noto Serif KR', serif; overflow-x: hidden; }
         .cinzel { font-family: 'Cinzel', serif; }
         
-        /* Layout & Borders */
-        .gold-border { border: 1px solid var(--gold); }
-        .gold-gradient { background: linear-gradient(135deg, #d4af37 0%, #f1d592 50%, #d4af37 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        
-        /* Sections */
-        .section-box { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(212, 175, 55, 0.2); padding: 2rem; position: relative; }
-        .section-box::before { content: ''; position: absolute; top: 5px; left: 5px; right: 5px; bottom: 5px; border: 1px solid rgba(212, 175, 55, 0.1); pointer-events: none; }
-        
+        /* Tab System */
+        .tab-content { display: none; animation: fadeIn 0.5s ease forwards; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .tab-btn { padding: 12px 24px; color: var(--silver); border-bottom: 2px solid transparent; transition: 0.3s; font-size: 14px; letter-spacing: 2px; }
+        .tab-btn.active { color: var(--gold); border-bottom-color: var(--gold); font-weight: bold; }
+
+        /* Prologue Style */
+        .prologue-card { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(212, 175, 55, 0.2); position: relative; padding: 3rem 2rem; }
+        .prologue-text { line-height: 2.2; color: #d1d1d1; word-break: keep-all; }
+
         /* Character Card */
-        .char-card { position: relative; background: #2a1b12; border: 1px solid var(--accent); transition: 0.4s; overflow: hidden; cursor: pointer; }
-        .char-card:hover { border-color: var(--gold); box-shadow: 0 0 20px rgba(212, 175, 55, 0.2); transform: translateY(-5px); }
-        .char-card img { filter: sepia(0.3) contrast(1.1); transition: 0.5s; }
-        .char-card:hover img { filter: sepia(0) contrast(1.1); }
+        .char-card { position: relative; border: 1px solid rgba(212, 175, 55, 0.3); transition: 0.3s; overflow: hidden; cursor: pointer; background: #261a14; }
+        .char-card:hover { border-color: var(--gold); transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+        .char-card img { filter: grayscale(20%); transition: 0.5s; }
+        .char-card:hover img { filter: grayscale(0%); }
 
-        /* Modal & Gallery */
-        .modal-bg { background: rgba(10, 5, 2, 0.98); backdrop-blur: 20px; }
-        .thumb { width: 55px; height: 55px; object-fit: cover; border: 1px solid var(--accent); opacity: 0.5; transition: 0.3s; cursor: pointer; }
-        .thumb.active { border-color: var(--gold); opacity: 1; box-shadow: 0 0 10px var(--gold); }
-        
-        .main-photo { border: 1px solid var(--gold); transition: 0.7s cubic-bezier(0.4, 0, 0.2, 1); }
-        
-        /* --- 각성 모드 위험 연출 (사진은 보이게, 위험함은 세게) --- */
-        .awakened-active .main-photo { 
-            filter: brightness(0.7) contrast(1.4) sepia(0.3) hue-rotate(-20deg) drop-shadow(0 0 15px rgba(139, 0, 0, 0.8)); 
-            border-color: var(--warning-red); 
-        }
-        .awakened-active #awakenBtn { background: var(--warning-red) !important; color: white !important; border-color: var(--warning-red); }
-        .awakened-active .thumb.active { border-color: var(--warning-red); box-shadow: 0 0 10px var(--warning-red); }
-        .awakened-active .gold-text { color: var(--warning-red) !important; }
-        .awakened-active .gold-border-inner { border-color: rgba(139, 0, 0, 0.3) !important; }
-        
-        /* Navigation */
-        .nav-link { color: var(--silver); font-size: 13px; transition: 0.3s; letter-spacing: 2px; }
-        .nav-link:hover { color: var(--gold); text-shadow: 0 0 5px var(--gold); }
+        /* Gallery & Awakened Effect */
+        .modal-bg { background: rgba(0, 0, 0, 0.9); backdrop-blur: 10px; }
+        .main-photo { border: 1px solid var(--gold); transition: 0.5s ease-in-out; }
+        .thumb { width: 50px; height: 50px; object-fit: cover; border: 1px solid rgba(255,255,255,0.1); cursor: pointer; transition: 0.3s; }
+        .thumb.active { border-color: var(--gold); box-shadow: 0 0 8px var(--gold); }
 
-        .ornament { width: 100%; height: 20px; background: url('https://www.transparenttextures.com/patterns/gold-glitter.png'); opacity: 0.1; }
-        .custom-scroll::-webkit-scrollbar { width: 3px; }
-        .custom-scroll::-webkit-scrollbar-thumb { background: rgba(212, 175, 55, 0.2); }
+        /* Awakened: Danger but Bright */
+        .awakened-active .main-photo { border-color: var(--accent-red); box-shadow: 0 0 20px rgba(179, 0, 0, 0.6); }
+        .awakened-active #awakenBtn { background: var(--accent-red) !important; color: white !important; }
+        .awakened-active .modal-name { color: var(--accent-red); text-shadow: 0 0 10px rgba(179, 0, 0, 0.5); }
+        .awakened-active .thumb.active { border-color: var(--accent-red); box-shadow: 0 0 8px var(--accent-red); }
+
+        .btn-gold { border: 1px solid var(--gold); color: var(--gold); padding: 15px 40px; transition: 0.3s; font-size: 13px; letter-spacing: 4px; display: inline-block; }
+        .btn-gold:hover { background: var(--gold); color: black; }
     </style>
 </head>
-<body class="p-6 md:p-16">
+<body class="p-4 md:p-12">
 
-    <div class="max-w-6xl mx-auto space-y-20">
+    <div class="max-w-5xl mx-auto">
         
-        <header class="text-center space-y-6">
-            <div class="ornament mb-4"></div>
-            <h1 class="cinzel text-5xl md:text-7xl font-black gold-gradient tracking-widest">CHEONGEUN</h1>
-            <p class="cinzel text-sm text-silver tracking-[0.6em]">PRIVATE PRESTIGE ACADEMY ARCHIVE</p>
-            <div class="flex justify-center gap-10 pt-6">
-                <a href="#intro" class="nav-link cinzel">INTRO</a>
-                <a href="#rules" class="nav-link cinzel">RULES</a>
-                <a href="#list" class="nav-link cinzel">STUDENTS</a>
-            </div>
-            <div class="ornament mt-4"></div>
+        <header class="text-center mb-12">
+            <h1 class="cinzel text-5xl font-black text-white tracking-widest gold-gradient">CHEONGEUN</h1>
+            <p class="cinzel text-[10px] text-gold tracking-[0.5em] mt-2 opacity-70">PRIVATE EDUCATIONAL ARCHIVE</p>
         </header>
 
-        <section id="intro" class="section-box grid md:grid-cols-2 gap-12 items-center">
-            <div class="space-y-6">
-                <h2 class="cinzel text-3xl text-gold font-bold">THE PHILOSOPHY</h2>
-                <p class="text-silver leading-relaxed text-sm">
-                    청은학원은 선택받은 이들의 잠재력을 정제하고, 고결한 인격을 수립하는 것을 목적으로 합니다. 
-                    우리는 단순한 교육을 넘어, 혈통과 재능이 올바른 방향으로 발현될 수 있도록 엄격한 규율 아래 관리합니다. 
-                    이곳의 모든 기록은 기밀이며, 외부 유출 시 엄중한 책임을 묻습니다.
-                </p>
-            </div>
-            <div class="border-l border-gold/20 pl-12 hidden md:block">
-                <p class="cinzel text-[10px] text-gold/50 mb-4 tracking-widest uppercase">Founded 19XX</p>
-                <p class="italic text-slate-400 text-sm">"In silentia, virtus et sanguis." <br>(침묵 속에서, 미덕과 혈통이 증명되리라.)</p>
-            </div>
-        </section>
+        <nav class="flex justify-center border-b border-white/10 mb-12 overflow-x-auto">
+            <button onclick="showTab('intro')" id="btn-intro" class="tab-btn cinzel active">PROLOGUE</button>
+            <button onclick="showTab('rules')" id="btn-rules" class="tab-btn cinzel">RULES</button>
+            <button onclick="showTab('students')" id="btn-students" class="tab-btn cinzel">STUDENTS</button>
+        </nav>
 
-        <section id="rules" class="section-box space-y-8">
-            <h2 class="cinzel text-3xl text-gold font-bold text-center">ACADEMY RULES</h2>
-            <div class="grid md:grid-cols-3 gap-8 text-xs leading-loose">
-                <div class="p-4 border border-gold/10">
-                    <p class="text-gold mb-2 font-bold cinzel">I. INTEGRITY</p>
-                    <p class="text-silver">교내외를 막론하고 기만행위는 엄격히 금지된다. 특히 선도부의 추적 시 협조하지 않는 행위는 즉각 처벌 대상이다.</p>
-                </div>
-                <div class="p-4 border border-gold/10">
-                    <p class="text-gold mb-2 font-bold cinzel">II. ORDER</p>
-                    <p class="text-silver">각 학급 및 부서의 위계질서를 준수해야 한다. 학생회 및 선도부의 지시에 불복종하는 행위는 허용되지 않는다.</p>
-                </div>
-                <div class="p-4 border border-gold/10">
-                    <p class="text-gold mb-2 font-bold cinzel">III. SECRECY</p>
-                    <p class="text-silver">자신의 '본성'이 외부인 혹은 규정된 대상 외의 학생에게 노출되지 않도록 스스로 절제해야 한다.</p>
+        <section id="tab-intro" class="tab-content active">
+            <div class="prologue-card text-center">
+                <div class="max-w-2xl mx-auto space-y-12">
+                    <div class="prologue-text text-sm">
+                        <p>「아침 공기가 아직 차갑다. 새 학기 첫날이라 그런지 교문 앞은 학생들로 붐빈다.」</p>
+                        <p>「교복을 입은 학생들이 삼삼오오 모여 떠들고, 처음 보는 얼굴들끼리 어색하게 인사를 나눈다. 오늘은 청은학원의 입학식 날이었다.」</p>
+                        <p class="py-4">「그리고 당신은, 이제 막 이 학교에 발을 들였다. 부모님이 돌아가신 뒤로 학교와는 조금 멀어졌었다. 생활을 버티는 게 먼저였고, 공부 같은 건 자연스럽게 뒤로 밀려났다.」</p>
+                        <p>「그러다 얼마 전, 부모님과 알고 지내던 지인이 불쑥 봉투 하나를 건넸다. 그 안에는 청은학원의 입학장이 들어 있었다. 이유는 자세히 말해주지 않았다. 다만, 그 사람은 마지막에 이렇게 말했다.」</p>
+                        <p class="text-gold py-4 font-bold text-base">— 거기 가면, 네 인생이 조금은 달라질지도 모른다.</p>
+                        <p>「그래서 결국 여기까지 왔다. 청은학원. 겉보기에는 평범한 사립학교다. 깔끔한 교문, 정돈된 교정, 새 교복을 입은 학생들.」</p>
+                        <p>「그런데 이상하게도 이곳의 공기는 어딘가 묘하게 낯설다. 설명하기 어려운 위화감이, 교문 앞에서부터 희미하게 걸린다.」</p>
+                    </div>
+                    <div class="pt-8">
+                        <a href="https://share.crack.wrtn.ai/w090440" target="_blank" class="btn-gold cinzel">ADMISSION SUBMIT</a>
+                        <p class="text-[9px] text-silver mt-4 opacity-50 tracking-widest uppercase">Warning: Information will be encrypted upon submission.</p>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section id="list" class="space-y-12">
-            <div class="flex items-center gap-4">
-                <div class="h-[1px] flex-grow bg-gold/30"></div>
-                <h2 class="cinzel text-3xl text-gold font-bold">STUDENT ARCHIVE</h2>
-                <div class="h-[1px] flex-grow bg-gold/30"></div>
+        <section id="tab-rules" class="tab-content">
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="section-box border border-gold/20 p-8 space-y-4">
+                    <h3 class="cinzel text-xl text-gold">학원 생활 수칙</h3>
+                    <ul class="text-sm space-y-4 text-silver">
+                        <li>• 모든 학생은 일몰 후 허가 없이 본관을 이탈할 수 없다.</li>
+                        <li>• 학원 내에서 발견되는 '이질적인 흔적'에 대해 발설하지 않는다.</li>
+                        <li>• 선도부의 비정기적 검문에 즉각 응하며, 소지품 검사에 협조한다.</li>
+                        <li>• 자신의 '본성'이 각성될 조짐이 보일 경우 즉시 보건실로 향한다.</li>
+                    </ul>
+                </div>
+                <div class="section-box border border-gold/20 p-8 space-y-4 bg-black/20">
+                    <h3 class="cinzel text-xl text-gold">경고사항</h3>
+                    <p class="text-xs text-silver/70 leading-relaxed italic">
+                        "청은학원은 학생의 안전을 보장하지만, 규칙을 위반한 자에게는 그 권한을 행사하지 않습니다. 이곳은 배움의 전당인 동시에 거대한 '우리'임을 잊지 마십시오."
+                    </p>
+                </div>
             </div>
-            <div id="characterGrid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6"></div>
         </section>
 
-        <footer class="text-center py-20 opacity-30 text-[10px] cinzel tracking-[0.5em]">
-            © CHEONGEUN ACADEMY ALL RIGHTS RESERVED.
-        </footer>
+        <section id="tab-students" class="tab-content">
+            <div id="characterGrid" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4"></div>
+        </section>
+
     </div>
 
     <div id="charModal" class="fixed inset-0 z-[1000] hidden flex items-center justify-center p-0 md:p-4 modal-bg" onclick="closeModal()">
-        <div id="modalContainer" class="bg-[#1a0f0a] w-full max-w-[550px] h-full md:h-auto max-h-[98vh] border border-gold/30 overflow-hidden flex flex-col shadow-2xl" onclick="event.stopPropagation()">
+        <div id="modalContainer" class="bg-[#1a120e] w-full max-w-[500px] h-full md:h-auto max-h-[95vh] border border-gold/30 flex flex-col shadow-2xl" onclick="event.stopPropagation()">
             
-            <div class="relative bg-black h-[400px] flex-shrink-0">
+            <div class="relative bg-black h-[400px] flex-shrink-0 overflow-hidden">
                 <img id="mainImg" src="" class="main-photo w-full h-full object-cover">
-                <button onclick="prevImg()" class="absolute left-2 top-1/2 -translate-y-1/2 text-gold p-4 hover:scale-125 transition">◁</button>
-                <button onclick="nextImg()" class="absolute right-2 top-1/2 -translate-y-1/2 text-gold p-4 hover:scale-125 transition">▷</button>
-                <div class="absolute bottom-6 left-8">
-                    <p id="mSubTitle" class="text-gold/70 text-[10px] cinzel font-bold mb-1 tracking-widest gold-text"></p>
+                <button onclick="prevImg()" class="absolute left-2 top-1/2 -translate-y-1/2 text-white bg-black/30 w-10 h-10 rounded-full hover:bg-gold transition">◁</button>
+                <button onclick="nextImg()" class="absolute right-2 top-1/2 -translate-y-1/2 text-white bg-black/30 w-10 h-10 rounded-full hover:bg-gold transition">▷</button>
+                <div class="absolute bottom-6 left-8 right-8">
+                    <p id="mSubTitle" class="text-gold text-[10px] cinzel tracking-widest"></p>
                     <h2 id="mName" class="text-4xl font-bold text-white tracking-tighter modal-name"></h2>
                 </div>
             </div>
 
-            <div id="thumbArea" class="flex gap-2 p-4 bg-black/40 border-y border-gold/10 overflow-x-auto justify-center custom-scroll"></div>
+            <div id="thumbArea" class="flex gap-2 p-3 bg-black/60 border-y border-white/5 overflow-x-auto justify-center"></div>
 
-            <div class="p-8 space-y-6 overflow-y-auto flex-grow custom-scroll">
-                <div class="grid grid-cols-4 gap-4 text-center pb-6 border-b border-gold/10 gold-border-inner">
-                    <div><p class="text-[9px] text-gold cinzel mb-1 gold-text">HEIGHT</p><p id="mHeight" class="text-[12px] text-silver font-bold"></p></div>
-                    <div><p class="text-[9px] text-gold cinzel mb-1 gold-text">WEIGHT</p><p id="mWeight" class="text-[12px] text-silver font-bold"></p></div>
-                    <div><p class="text-[9px] text-gold cinzel mb-1 gold-text">LIKES</p><p id="mLikes" class="text-[11px] text-silver font-bold truncate"></p></div>
-                    <div><p class="text-[9px] text-gold cinzel mb-1 gold-text">DISLIKES</p><p id="mDislikes" class="text-[11px] text-silver font-bold truncate"></p></div>
+            <div class="p-8 space-y-6 overflow-y-auto flex-grow custom-scroll text-sm">
+                <div class="grid grid-cols-2 gap-4 border-b border-white/5 pb-4">
+                    <p><span class="text-gold text-[9px] cinzel mr-2">HEIGHT</span><span id="mHeight"></span></p>
+                    <p><span class="text-gold text-[9px] cinzel mr-2">WEIGHT</span><span id="mWeight"></span></p>
                 </div>
-
                 <div class="space-y-4">
-                    <p id="mQuote" class="text-[15px] text-white/90 leading-snug italic border-l-2 border-gold pl-6 quote-border"></p>
-                    <p id="mDesc" class="text-[12px] text-silver/70 leading-relaxed"></p>
-                    <div id="mTags" class="flex flex-wrap gap-2 pt-2"></div>
+                    <p id="mQuote" class="text-white italic border-l-2 border-gold pl-4"></p>
+                    <p id="mDesc" class="text-silver text-xs leading-relaxed"></p>
                 </div>
             </div>
 
-            <div class="p-6 bg-black/40 border-t border-gold/10 flex flex-col gap-2 footer-border">
-                <button id="awakenBtn" onclick="toggleAwakening()" class="w-full py-4 cinzel text-[12px] font-black tracking-[0.3em] border border-gold text-gold hover:bg-gold hover:text-black transition-all">UNLEASH INSTINCT</button>
-                <button onclick="closeModal()" class="w-full py-2 cinzel text-[9px] text-silver/40 tracking-widest hover:text-white transition">DISMISS TERMINAL</button>
+            <div class="p-6 border-t border-white/5 bg-black/20 flex flex-col gap-2">
+                <button id="awakenBtn" onclick="toggleAwakening()" class="w-full py-4 cinzel text-[11px] font-black tracking-widest border border-gold text-gold hover:bg-gold hover:text-black transition-all">UNLEASH INSTINCT</button>
+                <button onclick="closeModal()" class="w-full py-1 cinzel text-[8px] text-white/20 tracking-widest">DISMISS</button>
             </div>
         </div>
     </div>
@@ -210,21 +198,24 @@
               awakened: { sub: "홍염의 혈통 / 패도의 비늘", likes: "지배력, 질서, 압도적인 실력", dislikes: "무능, 조롱, 권위 훼손", tags: ["#드래곤혼혈", "#화염", "#전장지배"], quote: "경고는 한 번이면 충분해. 자꾸 선 넘으면 그땐 진짜 제압 들어간다.", desc: "드래곤 혈통의 위압. 강력한 마력과 화염으로 공간을 장악한다." }}
         ];
 
-let current = null;
-        let isAwake = false;
-        let imgIdx = 0;
+let current = null, isAwake = false, imgIdx = 0;
+
+        function showTab(id) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('tab-' + id).classList.add('active');
+            document.getElementById('btn-' + id).classList.add('active');
+        }
 
         function renderGrid() {
             const g = document.getElementById('characterGrid');
-            g.innerHTML = '';
             characters.forEach(c => {
                 const card = document.createElement('div');
                 card.className = 'char-card';
                 card.onclick = () => openModal(c);
                 card.innerHTML = `<img src="${baseUrl}${c.id}_N0.webp" class="w-full h-full object-cover">
-                                  <div class="absolute bottom-0 left-0 right-0 p-3 bg-gradient-to-t from-black to-transparent">
-                                      <p class="text-[11px] font-bold text-white tracking-tighter">${c.name}</p>
-                                      <p class="text-[8px] text-gold/80 cinzel">${c.sub.split(' / ')[1] || c.sub}</p>
+                                  <div class="absolute bottom-0 p-3 w-full bg-gradient-to-t from-black to-transparent">
+                                      <p class="text-[10px] font-bold text-white">${c.name}</p>
                                   </div>`;
                 g.appendChild(card);
             });
@@ -233,20 +224,16 @@ let current = null;
         function openModal(c) {
             current = c; isAwake = false; imgIdx = 0;
             document.getElementById('charModal').classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
             updateUI();
         }
 
         function updateUI() {
             const data = isAwake ? current.awakened : current;
             const mode = isAwake ? 'T' : 'N';
-            
             document.getElementById('mName').innerText = current.name;
             document.getElementById('mSubTitle').innerText = data.sub;
             document.getElementById('mHeight').innerText = current.height;
             document.getElementById('mWeight').innerText = current.weight;
-            document.getElementById('mLikes').innerText = data.likes;
-            document.getElementById('mDislikes').innerText = data.dislikes;
             document.getElementById('mQuote').innerText = data.quote;
             document.getElementById('mDesc').innerText = data.desc;
 
@@ -259,26 +246,10 @@ let current = null;
                 img.onclick = () => { imgIdx = idx; updateMainPhoto(); };
                 thumbArea.appendChild(img);
             });
-
             updateMainPhoto();
 
-            const btn = document.getElementById('awakenBtn');
-            if(isAwake) {
-                document.body.classList.add('awakened-active');
-                btn.innerText = "RESTRICT INSTINCT";
-            } else {
-                document.body.classList.remove('awakened-active');
-                btn.innerText = "UNLEASH INSTINCT";
-            }
-
-            const tagBox = document.getElementById('mTags');
-            tagBox.innerHTML = '';
-            data.tags.forEach(t => {
-                const s = document.createElement('span');
-                s.className = 'text-[9px] text-gold/60 border border-gold/20 px-2 py-0.5 rounded-full';
-                s.innerText = t;
-                tagBox.appendChild(s);
-            });
+            if(isAwake) document.body.classList.add('awakened-active');
+            else document.body.classList.remove('awakened-active');
         }
 
         function updateMainPhoto() {
@@ -290,7 +261,7 @@ let current = null;
         function nextImg() { imgIdx = (imgIdx + 1) % 6; updateMainPhoto(); }
         function prevImg() { imgIdx = (imgIdx - 1 + 6) % 6; updateMainPhoto(); }
         function toggleAwakening() { isAwake = !isAwake; imgIdx = 0; updateUI(); }
-        function closeModal() { document.getElementById('charModal').classList.add('hidden'); document.body.style.overflow = 'auto'; document.body.classList.remove('awakened-active'); }
+        function closeModal() { document.getElementById('charModal').classList.add('hidden'); document.body.classList.remove('awakened-active'); }
 
         renderGrid();
     </script>
