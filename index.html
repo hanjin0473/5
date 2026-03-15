@@ -3,40 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>CHEONGEUN ACADEMY: SECURED ARCHIVE</title>
+    <title>CHEONGEUN ACADEMY: CORE ARCHIVE</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         :root { --silver: #cbd5e1; --black: #020617; --neon-blue: #38bdf8; --warning: #ef4444; }
         body { background: var(--black); color: var(--silver); font-family: 'Noto Sans KR', sans-serif; overflow-x: hidden; }
         .orbitron { font-family: 'Orbitron', sans-serif; }
-        .glass-panel { background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.05); }
-        .filter-btn { color: #64748b; font-size: 11px; font-weight: 700; transition: 0.3s; padding: 0 10px; }
-        .filter-btn.active { color: var(--neon-blue); text-shadow: 0 0 10px var(--neon-blue); }
-        .char-card { position: relative; transition: 0.4s; background: #0f172a; border-radius: 4px; cursor: pointer; border: 1px solid rgba(255,255,255,0.05); }
-        .char-card:hover { border-color: var(--neon-blue); box-shadow: 0 0 20px rgba(56, 189, 248, 0.1); transform: translateY(-3px); }
-        .char-img { width: 100%; aspect-ratio: 3/4; object-fit: cover; opacity: 0.8; transition: 0.5s; filter: grayscale(0.2); }
-        .char-card:hover .char-img { opacity: 1; filter: grayscale(0); }
-        .awakened-modal { border-color: var(--warning) !important; box-shadow: 0 0 60px rgba(239, 68, 68, 0.2) !important; }
-        .tag { font-size: 9px; padding: 2px 8px; background: rgba(255,255,255,0.05); border-radius: 99px; color: #94a3b8; font-weight: 600; }
-        .awakened-tag { background: rgba(239, 68, 68, 0.1); color: var(--warning); border: 1px solid rgba(239, 68, 68, 0.2); }
-        .custom-scroll::-webkit-scrollbar { width: 3px; }
-        .custom-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); }
-        @keyframes pulse-red { 0% { opacity: 0.4; } 50% { opacity: 1; } 100% { opacity: 0.4; } }
-        .warning-light { animation: pulse-red 2s infinite; }
+        .glass-panel { background: rgba(10, 15, 30, 0.98); border: 1px solid rgba(255, 255, 255, 0.05); }
+        
+        /* Thumbnail Styles */
+        .thumb { width: 50px; height: 50px; object-fit: cover; cursor: pointer; border: 2px solid transparent; opacity: 0.4; transition: 0.3s; flex-shrink: 0; }
+        .thumb.active { border-color: var(--neon-blue); opacity: 1; transform: scale(1.1); }
+        
+        /* Awakened Filter */
+        .awakened-active .main-photo { filter: brightness(0.5) contrast(1.3) saturate(0.7) drop-shadow(0 0 10px rgba(255,0,0,0.2)); }
+        .awakened-active .thumb.active { border-color: var(--warning); }
+        .awakened-active #charModal { background: radial-gradient(circle at center, rgba(80, 0, 0, 0.3) 0%, rgba(2, 6, 23, 1) 100%); }
+        
+        .char-card { transition: 0.4s; background: #0f172a; border-radius: 4px; overflow: hidden; cursor: pointer; border: 1px solid rgba(255,255,255,0.05); }
+        .char-card:hover { border-color: var(--neon-blue); transform: translateY(-3px); }
+        
+        .modal-content-area::-webkit-scrollbar { width: 3px; }
+        .modal-content-area::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); }
+        
+        .tag { font-size: 9px; padding: 2px 10px; background: rgba(255,255,255,0.05); border-radius: 99px; color: #94a3b8; }
+        .awakened-active .tag { background: rgba(239, 68, 68, 0.1); color: var(--warning); border: 1px solid rgba(239, 68, 68, 0.2); }
+        
+        .scanner { position: absolute; width: 100%; height: 1px; background: var(--neon-blue); box-shadow: 0 0 10px var(--neon-blue); z-index: 10; animation: scan 4s linear infinite; opacity: 0.4; pointer-events: none; }
+        .awakened-active .scanner { background: var(--warning); box-shadow: 0 0 10px var(--warning); }
+        @keyframes scan { 0% { top: 0%; } 100% { top: 100%; } }
     </style>
 </head>
-<body class="p-6 md:p-12">
+<body class="p-4 md:p-10">
 
-    <header class="max-w-7xl mx-auto mb-10 flex justify-between items-end border-b border-white/10 pb-8">
+    <header class="max-w-7xl mx-auto mb-10 flex justify-between items-end border-b border-white/10 pb-8 px-2">
         <div>
-            <h1 class="orbitron text-3xl font-black tracking-tighter text-white">靑銀 ARCHIVE</h1>
-            <p class="text-[10px] text-slate-500 orbitron tracking-[0.4em] mt-2">BIOMETRIC SECURITY DIVISION</p>
-        </div>
-        <div class="flex gap-4">
-            <button onclick="render('ALL')" class="filter-btn active orbitron" id="btn-ALL">ALL_UNITS</button>
-            <button onclick="render('STUDENT')" class="filter-btn orbitron" id="btn-STUDENT">STUDENTS</button>
-            <button onclick="render('FACULTY')" class="filter-btn orbitron" id="btn-FACULTY">FACULTY</button>
+            <h1 class="orbitron text-2xl font-black tracking-tighter text-white">靑銀 SYSTEM <span class="text-sky-500 text-sm">ARCHIVE</span></h1>
+            <p class="text-[9px] text-slate-500 orbitron tracking-[0.4em] mt-2">MULTIMEDIA BIOMETRIC INTERFACE</p>
         </div>
     </header>
 
@@ -44,266 +48,197 @@
         <div id="characterGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-6"></div>
     </div>
 
-    <div id="charModal" class="fixed inset-0 z-[1000] hidden flex items-center justify-center p-4 bg-black/95 backdrop-blur-md" onclick="closeModal()">
-        <div id="idCard" class="glass-panel w-full max-w-[460px] overflow-hidden transition-all duration-500 shadow-2xl" onclick="event.stopPropagation()">
+    <div id="charModal" class="fixed inset-0 z-[1000] hidden flex items-center justify-center p-0 md:p-4 bg-[#020617]/98 backdrop-blur-xl" onclick="closeModal()">
+        <div id="modalContainer" class="glass-panel w-full max-w-[500px] h-full md:h-auto max-h-[95vh] md:rounded-sm overflow-hidden flex flex-col shadow-2xl" onclick="event.stopPropagation()">
             
-            <div class="relative cursor-pointer group" onclick="toggleAwakening()">
-                <img id="mImg" src="" class="w-full aspect-[4/5] object-cover transition-all duration-700">
-                <div id="modeBadge" class="absolute top-6 left-6 px-4 py-1.5 bg-sky-500 text-black orbitron text-[11px] font-black tracking-widest">NORMAL_MODE</div>
-                <div class="absolute inset-0 bg-gradient-to-t from-[#020617] via-transparent to-transparent opacity-80"></div>
-                <div class="absolute bottom-8 left-8 right-8">
-                    <p id="mSub" class="text-sky-400 text-[11px] font-bold mb-2 tracking-wide"></p>
-                    <h2 id="mName" class="text-5xl font-bold text-white tracking-tighter mb-4"></h2>
-                    <div class="flex flex-wrap gap-2" id="mTags"></div>
+            <div class="relative bg-black h-[400px] md:h-[450px] flex-shrink-0 overflow-hidden">
+                <div class="scanner"></div>
+                <img id="mainImg" src="" class="main-photo w-full h-full object-cover transition-all duration-700">
+                
+                <button onclick="prevImg()" class="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/20 text-white hover:bg-white/10 transition">◀</button>
+                <button onclick="nextImg()" class="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/20 text-white hover:bg-white/10 transition">▶</button>
+                
+                <div class="absolute bottom-6 left-6 right-6">
+                    <p id="mSubTitle" class="text-sky-400 text-[10px] orbitron font-bold mb-1"></p>
+                    <h2 id="mName" class="text-4xl font-bold text-white tracking-tighter"></h2>
                 </div>
-                <div class="absolute inset-0 border-[20px] border-transparent group-hover:border-white/5 transition-all"></div>
             </div>
 
-            <div class="p-8 space-y-8">
-                <div class="grid grid-cols-4 gap-4 text-center border-b border-white/5 pb-6">
-                    <div><p class="text-[9px] text-slate-500 orbitron mb-1">HEIGHT</p><p id="mHeight" class="text-[13px] text-white font-bold"></p></div>
-                    <div><p class="text-[9px] text-slate-500 orbitron mb-1">WEIGHT</p><p id="mWeight" class="text-[13px] text-white font-bold"></p></div>
-                    <div><p class="text-[9px] text-slate-500 orbitron mb-1">LIKES</p><p id="mLikes" class="text-[11px] text-white font-bold truncate px-1"></p></div>
-                    <div><p class="text-[9px] text-slate-500 orbitron mb-1">DISLIKES</p><p id="mDislikes" class="text-[11px] text-white font-bold truncate px-1"></p></div>
+            <div id="thumbArea" class="flex gap-2 p-3 bg-black/60 border-y border-white/5 overflow-x-auto custom-scroll"></div>
+
+            <div class="p-6 space-y-6 modal-content-area overflow-y-auto flex-grow">
+                <div class="grid grid-cols-4 gap-2 text-center pb-4 border-b border-white/5">
+                    <div><p class="text-[8px] text-slate-500 orbitron mb-1">HEIGHT</p><p id="mHeight" class="text-[11px] text-white font-bold"></p></div>
+                    <div><p class="text-[8px] text-slate-500 orbitron mb-1">WEIGHT</p><p id="mWeight" class="text-[11px] text-white font-bold"></p></div>
+                    <div><p class="text-[8px] text-slate-500 orbitron mb-1">LIKES</p><p id="mLikes" class="text-[10px] text-white font-bold truncate"></p></div>
+                    <div><p class="text-[8px] text-slate-500 orbitron mb-1">DISLIKES</p><p id="mDislikes" class="text-[10px] text-white font-bold truncate"></p></div>
                 </div>
 
-                <div class="space-y-5">
-                    <p id="mQuote" class="text-[15px] text-slate-200 leading-snug font-medium italic border-l-4 border-sky-500 pl-5"></p>
-                    <p id="mDesc" class="text-[12px] text-slate-500 leading-relaxed h-20 overflow-y-auto custom-scroll pr-4"></p>
+                <div class="space-y-4">
+                    <div id="mTags" class="flex flex-wrap gap-2"></div>
+                    <p id="mQuote" class="text-[14px] text-slate-200 leading-snug italic border-l-2 border-sky-500 pl-4"></p>
+                    <p id="mDesc" class="text-[12px] text-slate-500 leading-relaxed"></p>
                 </div>
+            </div>
 
-                <div class="pt-6 flex justify-between items-center border-t border-white/5">
-                    <div class="flex items-center gap-2">
-                        <div id="statusDot" class="w-2 h-2 rounded-full bg-sky-500 animate-pulse"></div>
-                        <span id="mLevel" class="orbitron text-[10px] text-sky-500 tracking-widest font-bold uppercase">Authorized Access</span>
-                    </div>
-                    <button onclick="closeModal()" class="orbitron text-[11px] text-slate-500 hover:text-white transition uppercase tracking-widest">Close Terminal</button>
-                </div>
+            <div class="p-4 bg-white/5 border-t border-white/10 flex flex-col gap-2">
+                <button id="awakenBtn" onclick="toggleAwakening()" class="w-full py-3 orbitron text-[11px] font-black tracking-widest bg-sky-500 text-black hover:opacity-90 transition-all">UNLEASH INSTINCT</button>
+                <button onclick="closeModal()" class="w-full py-1.5 orbitron text-[9px] text-slate-500 hover:text-white transition">CLOSE_CONNECTION</button>
             </div>
         </div>
     </div>
 
     <script>
         const baseUrl = "https://pub-1ff16a5c9ef048e3ab851e262c07ba57.r2.dev/";
+        const codes = ["0", "B2", "C1", "E3", "D2", "R1"];
+        
+        // 데이터 베이스 (이미지는 약자와 코드를 조합해 자동 생성)
         const characters = [
-            {
-                name: "서하린", sub: "3학년 / 선도부장", height: "169cm", weight: "52kg", likes: "정적, 규율, 관찰", dislikes: "거짓말, 무질서, 통제 이탈",
-                tags: ["#집착녀", "#선도부장", "#서늘한감시자"], quote: "거짓말하지 마. 아까부터 좀 이상했어.",
-                desc: "차갑고 절제된 분위기의 선도부장. 늘 일정한 거리와 낮은 목소리를 유지하지만, 한번 수상하다고 판단한 상대는 끝까지 놓지 않는다.",
-                awakened: {
-                    sub: "순혈의 그림자 / 흡혈 귀족", height: "169cm", weight: "52kg", likes: "혈향, 집착, 순종", dislikes: "도주, 기만, 통제 불능",
-                    tags: ["#뱀파이어", "#집요한추적", "#야간지배자"], quote: "도망가 봐. 그래도 결국 다시 내 앞에 서게 될 걸.",
-                    desc: "귀족 뱀파이어의 본성을 드러낸 모습. 혈향과 거짓을 집요하게 추적하며, 사냥감을 서서히 조여오듯 심리적으로 압박한다."
-                },
-                imgs: [baseUrl + "HRN_N0.webp", baseUrl + "HRN_TE1.webp"], cat: "STUDENT"
-            },
-            {
-                name: "한서윤", sub: "1학년 / 체육부", height: "171cm", weight: "57kg", likes: "달리기, 승부, 솔직한 사람", dislikes: "비겁함, 회피, 수상한 분위기",
-                tags: ["#직진녀", "#체육부", "#본능파"], quote: "너 이상한 냄새 난다. 숨길 생각이면 더 티 나거든?",
-                desc: "시원시원하고 활기찬 체육부 학생. 생각보다 행동이 먼저 나가는 타입으로, 위협이나 불안 요소를 감지하면 망설이지 않고 들이받는다.",
-                awakened: {
-                    sub: "월하의 사냥꾼 / 늑대의 혈통", height: "171cm", weight: "57kg", likes: "추적, 사냥, 강한 감정", dislikes: "비열함, 도주, 위장",
-                    tags: ["#늑대인간", "#사냥본능", "#위기감지"], quote: "도망쳐도 소용없어. 이미 냄새 다 기억했거든.",
-                    desc: "늑대의 본능이 깨어난 각성 형태. 뛰어난 후각과 반사신경으로 상대를 추적하며, 위협 앞에서는 망설임 없이 몸부터 움직인다."
-                },
-                imgs: [baseUrl + "SEY_N0.webp", baseUrl + "SEY_TB2.webp"], cat: "STUDENT"
-            },
-            {
-                name: "윤채은", sub: "2학년 / 학생회", height: "168cm", weight: "50kg", likes: "기록, 계산, 질서정연한 구조", dislikes: "무질서, 거짓, 충동적 행동",
-                tags: ["#지성파", "#학생회", "#냉정한기록자"], quote: "감정적인 건 비효율적이잖아요. 전 미리 대비해 두는 쪽이에요.",
-                desc: "정중하고 침착한 학생회 기록 담당. 항상 한 발 떨어진 위치에서 상황을 계산하며, 상대의 빈틈과 약점을 빠르게 파악하는 타입이다.",
-                awakened: {
-                    sub: "독사의 서고 / 봉인된 지성", height: "168cm", weight: "50kg", likes: "약점 분석, 제어, 질서", dislikes: "경솔한 접촉, 허위, 혼란",
-                    tags: ["#라미아", "#독과결계", "#차가운판단"], quote: "이제 늦었어요. 당신이 움직일 길은 제가 다 막아놨거든요.",
-                    desc: "라미아의 본성이 드러난 각성 형태. 독과 결계, 추적 능력을 이용해 퇴로를 차단하고 상대를 냉정하게 포위한다."
-                },
-                imgs: [baseUrl + "CHE_N0.webp", baseUrl + "CHE_NA1.webp"], cat: "STUDENT"
-            },
-            {
-                name: "서유리", sub: "1학년 / 미술부", height: "164cm", weight: "48kg", likes: "조용한 공간, 그림, 오래 바라보기", dislikes: "무시, 비교, 노골적인 거절",
-                tags: ["#소심녀", "#미술부", "#불안한집착"], quote:  "아, 아니... 그냥 조금만 더 같이 있으면 안 돼?",
-                desc: "작고 조용한 분위기의 미술부 학생. 사람을 어려워하고 쉽게 불안해하지만, 마음이 기울기 시작하면 시선과 감정이 오래 머문다.",
-                awakened: {
-                    sub: "몽마의 정원 / 감정 포식자", height: "164cm", weight: "48kg", likes: "감정의 동요, 질투, 집착", dislikes: "배제, 외면, 냉담한 단절",
-                    tags: ["#서큐버스", "#감정감지", "#꿈간섭"], quote: "도망가지 마... 지금 무슨 생각 하는지 다 느껴지니까.",
-                    desc: "감정을 먹고 흔드는 서큐버스의 본성이 드러난 모습. 불안과 집착을 증폭시키며 상대의 꿈과 내면 깊숙이 스며든다."
-                },
-                imgs: [baseUrl + "YRI_N0.webp", baseUrl + "YRI_TC1.webp"], cat: "STUDENT"
-            },
-            {
-                name: "차태오", sub: "2학년 / 자율동아리", height: "185cm", weight: "74kg", likes: "체스, 내기, 인간의 당황", dislikes: "지루함, 재미없는 인간",
-                tags: ["#능글남", "#문제아", "#위험한내기꾼"], quote: "진짜 재미있네. 너, 나랑 내기 하나만 할래? 지면 영혼 주는 걸로.",
-                desc: "항상 느긋한 미소를 짓는 문제아. 학원 내 각종 내기와 거래를 주도하며 사람들의 반응을 즐기는 위험한 학생.",
-                awakened: {
-                    sub: "지옥의 후계 / 계약자", height: "185cm", weight: "74kg", likes: "영혼의 절망, 복종", dislikes: "신의 권능, 상식",
-                    tags: ["#계약악마", "#소유욕", "#파멸"], quote: "거래 끝났어. 이제 발 빼겠다는 말은 안 통하는데.",
-                    desc: "지옥의 계약을 다루는 진짜 악마. 상대의 약점을 집요하게 파고들어 심리적으로 굴복시킨 뒤 영혼을 계약으로 묶는다."
-                },
-                imgs: [baseUrl + "TAO_N0.webp", baseUrl + "TAO_TB2.webp"], cat: "STUDENT"
-            },
-            {
-                name: "백진우", sub: "3학년 / 체육부", height: "188cm", weight: "82kg", likes: "농구, 사람 많은 곳, 반응 좋은 장난", dislikes: "지루한 분위기, 진심 무시, 혐오 섞인 거절",
-                tags: ["#인싸남", "#농구부", "#자연스러운스킨십"], quote: "에이, 왜 그렇게 굳어 있어? 장난 좀 친 거 가지고 정색하긴.",
-                desc: "호탕하고 친화력 좋은 체육부 선배. 사람들 사이에 자연스럽게 파고드는 타입으로, 가벼운 장난과 스킨십으로 상대 반응을 읽는다.",
-                awakened: {
-                    sub: "향락의 사자 / 욕망의 매개자", height: "188cm", weight: "82kg", likes: "호감, 흥분, 친밀한 반응", dislikes: "혐오, 감정 단절, 차가운 거절",
-                    tags: ["#인큐버스", "#친화교란", "#매혹"], quote: "지금 그 표정 되게 좋다. 조금만 더 솔직하게 굴어봐, 응?",
-                    desc: "인큐버스의 본성을 드러낸 각성 형태. 접촉과 친화력을 무기로 상대의 경계를 허물고, 감정과 욕망의 흐름을 자신에게 유리하게 이끈다."
-                },
-                imgs: [baseUrl + "JW_N0.webp", baseUrl + "JW_TB2.webp"], cat: "STUDENT"
-            },
-            {
-                name: "유세한", sub: "1학년 / 선도부", height: "183cm", weight: "71kg", likes: "규칙, 절제, 정돈된 질서", dislikes: "위반, 조롱, 타협 강요",
-                tags: ["#금욕남", "#선도부원", "#원칙주의자"], quote: "지금 바로 멈추세요. 규정 위반입니다.",
-                desc: "차갑고 금욕적인 분위기의 선도부원. 감정보다 규칙과 원칙을 우선하며, 위반 사항을 발견하면 망설임 없이 제지에 들어간다.",
-                awakened: {
-                    sub: "심판의 날개 / 성역의 집행자", height: "183cm", weight: "71kg", likes: "정화, 복종, 질서 유지", dislikes: "타락, 권위 무시, 유혹",
-                    tags: ["#천사", "#정화", "#무자비한심판"], quote: "말로는 안 될 것 같네요. 이제부터는 그냥 제 방식대로 정화하겠습니다.",
-                    desc: "엄격한 천사의 본성이 드러난 각성 형태. 정화와 제압, 감응 능력으로 타락과 혼란을 잘라내듯 제거한다."
-                },
-                imgs: [baseUrl + "SH_N0.webp", baseUrl + "SH_TE1.webp"], cat: "STUDENT"
-            },
-            {
-                name: "류해원", sub: "2학년 / 도서부", height: "176cm", weight: "67kg", likes: "조용한 서가, 물소리, 혼자 있는 시간", dislikes: "압박, 놀림, 과한 시선",
-                tags: ["#수줍남", "#도서부", "#조용한보호자"], quote: "죄송해요... 제가 너무 빤히 봤죠.",
-                desc: "말수가 적고 조용한 도서부 학생. 낯을 많이 가리고 위압적인 상황에 약하지만, 익숙해진 상대에게는 조용히 오래 머무르는 편이다.",
-                awakened: {
-                    sub: "심해의 공명 / 균열의 촉수", height: "176cm", weight: "67kg", likes: "공명, 깊은 감각, 조용한 유대", dislikes: "압박, 혐오, 강한 자극",
-                    tags: ["#크라켄혼혈", "#촉수", "#심해공명"], quote: "나한테서 멀어지지 마요. 당신 심장 소리가... 너무 선명하게 들린단 말이에요.",
-                    desc: "심해의 이질적 본성이 드러난 각성 형태. 촉수형 감각기관과 공명 능력으로 주변을 세밀하게 감지하며, 익숙한 존재에게 강하게 반응한다."
-                },
-                imgs: [baseUrl + "HW_N0.webp", baseUrl + "HW_TD2.webp"], cat: "STUDENT"
-            },
-            {
-                name: "강태준", sub: "2학년 / 체육부", height: "190cm", weight: "80kg", likes: "훈련, 고요, 단순한 대화", dislikes: "비겁함, 약자 괴롭힘, 배신",
-                tags: ["#과묵남", "#격투부", "#무심한보호자"], quote:  "넌 뒤로 있어. 여기서부터는 내가 할게.",
-                desc: "말수 적고 침착한 체육부 학생. 위협적인 분위기를 풍기지만 실제로는 약자를 외면하지 못하고, 필요할 때만 조용히 나서는 타입이다.",
-                awakened: {
-                    sub: "설원의 맹수 / 백은의 포식자", height: "190cm", weight: "80kg", likes: "추적, 제압, 보호", dislikes: "비열한 행동, 배반, 약자 학대",
-                    tags: ["#설표", "#위압", "#냉기의사냥꾼"], quote:  "가만히 있어. 더 건드리면 나도 못 참아.",
-                    desc: "설표의 본성이 드러난 각성 형태. 민첩한 움직임과 날카로운 감지 능력, 차가운 위압감으로 적을 몰아붙인다."
-                },
-                imgs: [baseUrl + "TJ_N0.webp", baseUrl + "TJ_TE1.webp"], cat: "STUDENT"
-            },
-            {
-                name: "서은하", sub: "학원장", height: "170cm", weight: "53kg", likes: "균형, 비밀, 흥미로운 변수", dislikes: "질서 붕괴, 책임 회피, 통제 불능",
-                tags: ["#학원장", "#요염한권력자", "#불가측"], quote: "어머, 너무 긴장하지 마세요. 이 정도 소동은 아직 귀여운 수준이니까요.",
-                desc: "부드러운 미소와 농담 섞인 말투를 지닌 학원장. 겉으로는 여유롭고 다정하지만, 모든 흐름을 읽고 있는 듯한 압도적인 존재감을 풍긴다.",
-                awakened: {
-                    sub: "환혹의 군주 / 구미의 지배자", height: "170cm", weight: "53kg", likes: "기억, 유혹, 균형 있는 지배", dislikes: "비밀 누설, 무질서, 통제 상실",
-                    tags: ["#요호", "#환혹", "#기억조작"], quote: "여기 규칙은 제가 정해요. 당신 기억 하나 지우는 건 일도 아니랍니다?",
-                    desc: "상위 요호의 본성이 드러난 모습. 환혹과 기억 조작, 결계로 공간과 인식을 지배하며, 필요하다면 누구보다 냉정하게 개입한다."
-                },
-                imgs: [baseUrl + "EH_N0.webp", baseUrl + "EH_TB2.webp"], cat: "FACULTY"
-            },
-            {
-                name: "이도겸", sub: "보건교사", height: "178cm", weight: "67kg", likes: "차분한 대화, 햇빛, 상태가 나아지는 순간", dislikes: "무리, 환자 방치, 호의 무시",
-                tags: ["#보건교사", "#다정남", "#생활형보호자"], quote: "일단 앉아봐요. 괜찮은 척하는 사람일수록 더 챙겨야 하거든요.",
-                desc: "나긋하고 부드러운 분위기의 보건교사. 상대의 불안과 피로를 잘 읽어내며, 조용하고 생활적인 방식으로 돌봐주는 타입이다.",
-                awakened: {
-                    sub: "생명의 가지 / 녹음의 치유자", height: "178cm", weight: "67kg", likes: "회복, 안정, 생명의 순환", dislikes: "소모, 파괴, 돌봄 거부",
-                    tags: ["#드라이어드", "#치유", "#안정의영역"], quote: "억지로 버티지 마세요. 망가진 건 다시 돌보면 되니까.",
-                    desc: "드라이어드의 본성이 드러난 각성 형태. 치유와 생장, 안정화 능력으로 주변의 마력과 상태를 부드럽게 회복시킨다."
-                },
-                imgs: [baseUrl + "DG_N0.webp", baseUrl + "DG_NA1.webp"], cat: "FACULTY"
-            },
-            {
-                name: "강도윤", sub: "담임교사 / 생활지도부", height: "187cm", weight: "83kg", likes: "책임감 있는 태도, 정돈, 실력 있는 사람", dislikes: "무능, 도발, 책임 회피",
-                tags: ["#담임교사", "#냉정한지도자", "#위압감"], quote: "변명은 나중에 해. 지금은 이거부터 정리한다.",
-                desc: "낮고 단정한 말투와 강한 존재감을 지닌 교사. 질서 위반과 무책임을 싫어하며, 필요하면 직접 나서 상황을 정리하는 타입이다.",
-                awakened: {
-                    sub: "홍염의 혈통 / 패도의 비늘", height: "187cm", weight: "83kg", likes: "지배력, 질서, 압도적인 실력", dislikes: "무능, 조롱, 권위 훼손",
-                    tags: ["#드래곤혼혈", "#화염", "#전장지배"], quote: "경고는 한 번이면 됐다. 더 하면 바로 제압한다.",
-                    desc: "드래곤 혈통의 위압이 드러난 각성 형태. 강대한 마력과 화염, 압도적인 존재감으로 공간 자체를 장악하듯 상대를 눌러버린다."
-                },
-                imgs: [baseUrl + "KDY_N0.webp", baseUrl + "KDY_TE1.webp"], cat: "FACULTY"
-            }
+            { id: "HRN", name: "서하린", sub: "3학년 / 선도부장", height: "169cm", weight: "52kg", likes: "정적, 규율, 관찰", dislikes: "거짓말, 무질서, 통제 이탈",
+              tags: ["#집착녀", "#선도부장", "#서늘한감시자"], quote: "거짓말하지 마. 네 냄새, 조금 전이랑 달라졌어.",
+              desc: "차갑고 절제된 분위기의 선도부장. 늘 일정한 거리와 낮은 목소리를 유지하지만, 한번 수상하다고 판단한 상대는 끝까지 놓지 않는다.",
+              awakened: { sub: "순혈의 그림자 / 흡혈 귀족", likes: "혈향, 집착, 순종", dislikes: "도주, 기만, 통제 불능", tags: ["#뱀파이어", "#집요한추적", "#야간지배자"], quote: "도망쳐 봐. 결국 네 맥박은 다시 내게 들릴 테니까.", desc: "귀족 뱀파이어의 본성을 드러낸 모습. 혈향과 거짓을 집요하게 추적한다." }},
+            { id: "SEY", name: "한서윤", sub: "1학년 / 체육부", height: "171cm", weight: "57kg", likes: "달리기, 승부, 솔직한 사람", dislikes: "비겁함, 회피, 수상한 분위기",
+              tags: ["#직진녀", "#체육부", "#본능파"], quote: "너 이상한 냄새 난다. 숨길 생각이면 더 티 나거든?",
+              desc: "시원시원하고 활기찬 체육부 학생. 생각보다 행동이 먼저 나가는 타입으로, 위협 요소를 감지하면 망설이지 않고 들이받는다.",
+              awakened: { sub: "월하의 사냥꾼 / 늑대의 혈통", likes: "추적, 사냥, 강한 감정", dislikes: "비열함, 도주, 위장", tags: ["#늑대인간", "#사냥본능", "#위기감지"], quote: "도망쳐도 소용없어. 난 이미 네 냄새를 기억했으니까.", desc: "늑대의 본능이 깨어난 형태. 뛰어난 후각과 반사신경으로 상대를 추적한다." }},
+            { id: "CHE", name: "윤채은", sub: "2학년 / 학생회", height: "168cm", weight: "50kg", likes: "기록, 계산, 질서정연한 구조", dislikes: "무질서, 거짓, 충동적 행동",
+              tags: ["#지성파", "#학생회", "#냉정한기록자"], quote: "감정은 변수예요. 그래서 저는, 늘 대비해 두는 편이죠.",
+              desc: "정중하고 침착한 학생회 기록 담당. 항상 한 발 떨어진 위치에서 상황을 계산하며, 상대의 빈틈을 파악한다.",
+              awakened: { sub: "독사의 서고 / 봉인된 지성", likes: "약점 분석, 제어, 질서", dislikes: "경솔한 접촉, 허위, 혼란", tags: ["#라미아", "#독과결계", "#차가운판단"], quote: "당신은 이미 선택지를 잃었어요. 제가 미리 막아 두었거든요.", desc: "라미아의 본성이 드러난 형태. 독과 결계로 상대를 냉정하게 포위한다." }},
+            { id: "YRI", name: "서유리", sub: "1학년 / 미술부", height: "164cm", weight: "48kg", likes: "조용한 공간, 그림, 오래 바라보기", dislikes: "무시, 비교, 노골적인 거절",
+              tags: ["#소심녀", "#미술부", "#불안한집착"], quote: "아, 아니... 그냥... 조금만 더 여기 있어주면 안 돼?",
+              desc: "작고 조용한 분위기의 미술부 학생. 사람을 어려워하지만, 마음이 기울면 감정이 오래 머문다.",
+              awakened: { sub: "몽마의 정원 / 감정 포식자", likes: "감정의 동요, 질투, 집착", dislikes: "배제, 외면, 냉담한 단절", tags: ["#서큐버스", "#감정감지", "#꿈간섭"], quote: "도망치지 마... 네 감정, 전부 내게 들리고 있으니까.", desc: "감정을 먹고 흔드는 서큐버스의 모습. 상대의 꿈과 내면 깊숙이 스며든다." }},
+            { id: "TAO", name: "차태오", sub: "2학년 / 자율동아리", height: "185cm", weight: "74kg", likes: "체스, 내기, 인간의 당황", dislikes: "지루함, 재미없는 인간",
+              tags: ["#능글남", "#문제아", "#위험한내기꾼"], quote: "진짜 재미있네. 너, 나랑 내기 하나만 할래? 지면 영혼 주는 걸로.",
+              desc: "항상 느긋한 미소를 짓는 문제아. 사람들의 반응을 즐기는 위험한 학생.",
+              awakened: { sub: "지옥의 후계 / 계약자", likes: "영혼의 절망, 복종", dislikes: "신의 권능, 상식", tags: ["#계약악마", "#소유욕", "#파멸"], quote: "거래 성립이야. 이제 네 모든 건 내 거야. 딴소리하기 없기다?", desc: "지옥의 계약을 다루는 진짜 악마. 영혼을 계약으로 묶어버린다." }},
+            { id: "JW", name: "백진우", sub: "3학년 / 체육부", height: "188cm", weight: "82kg", likes: "농구, 사람 많은 곳, 반응 좋은 장난", dislikes: "지루한 분위기, 진심 무시, 혐오 섞인 거절",
+              tags: ["#인싸남", "#농구부", "#자연스러운스킨십"], quote: "에이, 왜 그렇게 굳어 있어? 장난 좀 친 거 가지고 정색하긴.",
+              desc: "호탕하고 친화력 좋은 체육부 선배. 가벼운 장난으로 상대 반응을 읽는다.",
+              awakened: { sub: "향락의 사자 / 욕망의 매개자", likes: "호감, 흥분, 친밀한 반응", dislikes: "혐오, 감정 단절, 차가운 거절", tags: ["#인큐버스", "#친화교란", "#매혹"], quote: "지금 그 표정 되게 좋다. 조금만 더 솔직하게 굴어봐, 응?", desc: "인큐버스의 본성을 드러낸 형태. 감정과 욕망의 흐름을 자신에게 이끈다." }},
+            { id: "SH", name: "유세한", sub: "1학년 / 선도부", height: "183cm", weight: "71kg", likes: "규칙, 절제, 정돈된 질서", dislikes: "위반, 조롱, 타협 강요",
+              tags: ["#금욕남", "#선도부원", "#원칙주의자"], quote: "규칙은 예외를 위해 존재하지 않습니다. 지금 즉시 멈추세요.",
+              desc: "차갑고 금욕적인 선도부원. 감정보다 원칙을 우선하며 위반자를 제지한다.",
+              awakened: { sub: "심판의 날개 / 성역의 집행자", likes: "정화, 복종, 질서 유지", dislikes: "타락, 권위 무시, 유혹", tags: ["#천사", "#정화", "#무자비한심판"], quote: "말로는 안 될 것 같네요. 이제부터는 그냥 제 방식대로 정화하겠습니다.", desc: "엄격한 천사의 본성. 타락과 혼란을 잘라내듯 제거한다." }},
+            { id: "HW", name: "류해원", sub: "2학년 / 도서부", height: "181cm", weight: "67kg", likes: "조용한 서가, 물소리, 혼자 있는 시간", dislikes: "압박, 놀림, 과한 시선",
+              tags: ["#수줍남", "#도서부", "#조용한보호자"], quote: "죄, 죄송해요... 그게, 저도 모르게 너무 쳐다봐서.",
+              desc: "말수가 적고 조용한 도서부 학생. 낯을 많이 가리지만 조용히 곁에 머문다.",
+              awakened: { sub: "심해의 공명 / 균열의 촉수", likes: "공명, 깊은 감각, 조용한 유대", dislikes: "압박, 혐오, 강한 자극", tags: ["#크라켄혼혈", "#촉수", "#심해공명"], quote: "나한테서 멀어지지 마요. 당신 심장 소리가... 너무 선명하단 말이에요.", desc: "심해의 이질적 본성. 주변을 세밀하게 감지하며 강하게 반응한다." }},
+            { id: "TJ", name: "강태준", sub: "2학년 / 체육부", height: "186cm", weight: "80kg", likes: "훈련, 고요, 단순한 대화", dislikes: "비겁함, 약자 괴롭힘, 배신",
+              tags: ["#과묵남", "#격투부", "#무심한보호자"], quote: "너는 뒤로 물러나 있어. 여기서부턴 내가 알아서 할 테니까.",
+              desc: "말수 적고 침착한 체육부 학생. 약자를 외면하지 못하는 무심한 보호자.",
+              awakened: { sub: "설원의 맹수 / 백은의 포식자", likes: "추적, 제압, 보호", dislikes: "비열한 행동, 배반, 약자 학대", tags: ["#설표", "#위압", "#냉기의사냥꾼"], quote: "가만히 있어. 지금 건드리면 나도 나를 참아줄 자신이 없거든.", desc: "설표의 본성. 민첩한 움직임과 차가운 위압감으로 적을 몰아붙인다." }},
+            { id: "EH", name: "서은하", sub: "학원장", height: "170cm", weight: "53kg", likes: "균형, 비밀, 흥미로운 변수", dislikes: "질서 붕괴, 책임 회피, 통제 불능",
+              tags: ["#학원장", "#요염한권력자", "#불가측"], quote: "어머, 너무 긴장하지 마세요. 이 정도 소동은 아직 귀여운 수준이니까요.",
+              desc: "부드러운 미소와 농담 섞인 말투를 지닌 학원장. 모든 흐름을 읽고 있다.",
+              awakened: { sub: "환혹의 군주 / 구미의 지배자", likes: "기억, 유혹, 균형 있는 지배", dislikes: "비밀 누설, 무질서, 통제 상실", tags: ["#요호", "#환혹", "#기억조작"], quote: "여기의 질서는 내가 정해요. 당신 기억 하나 지우는 건 일도 아니랍니다?", desc: "상위 요호의 모습. 환혹과 기억 조작으로 인식을 지배한다." }},
+            { id: "DG", name: "이도겸", sub: "보건교사", height: "178cm", weight: "67kg", likes: "차분한 대화, 햇빛, 상태가 나아지는 순간", dislikes: "무리, 환자 방치, 호의 무시",
+              tags: ["#보건교사", "#다정남", "#생활형보호자"], quote: "거기 좀 앉아봐요. 괜찮은 척하는 사람일수록 더 챙겨줘야 하거든요.",
+              desc: "나긋하고 부드러운 보건교사. 불안과 피로를 잘 읽어내 돌봐준다.",
+              awakened: { sub: "생명의 가지 / 녹음의 치유자", likes: "회복, 안정, 생명의 순환", dislikes: "소모, 파괴, 돌봄 거부", tags: ["#드라이어드", "#치유", "#안정의영역"], quote: "억지로 버티지 마세요. 무너진 곳은 다시 자라게 하면 그만이니까.", desc: "드라이어드의 본성. 치유 능력으로 마력과 상태를 회복시킨다." }},
+            { id: "KDY", name: "강도윤", sub: "담임교사 / 생활지도부", height: "187cm", weight: "83kg", likes: "책임감 있는 태도, 정돈, 실력 있는 사람", dislikes: "무능, 도발, 책임 회피",
+              tags: ["#담임교사", "#냉정한지도자", "#위압감"], quote: "변명은 나중에 해. 지금은 일단 이거부터 수습하는 게 먼저다.",
+              desc: "강한 존재감을 지닌 교사. 질서 위반을 싫어하며 직접 나서서 정리한다.",
+              awakened: { sub: "홍염의 혈통 / 패도의 비늘", likes: "지배력, 질서, 압도적인 실력", dislikes: "무능, 조롱, 권위 훼손", tags: ["#드래곤혼혈", "#화염", "#전장지배"], quote: "경고는 한 번이면 충분해. 자꾸 선 넘으면 그땐 진짜 제압 들어간다.", desc: "드래곤 혈통의 위압. 강력한 마력과 화염으로 공간을 장악한다." }}
         ];
 
         let current = null;
         let isAwake = false;
+        let imgIdx = 0;
 
-        function render(f) {
+        function renderGrid() {
             const g = document.getElementById('characterGrid');
             g.innerHTML = '';
-            const filtered = f === 'ALL' ? characters : characters.filter(c => c.cat === f);
-            
-            filtered.forEach(c => {
+            characters.forEach(c => {
                 const card = document.createElement('div');
                 card.className = 'char-card';
                 card.onclick = () => openModal(c);
-                card.innerHTML = `
-                    <img src="${c.imgs[0]}" class="char-img">
-                    <div class="p-4 bg-gradient-to-b from-transparent to-[#0f172a]">
-                        <p class="text-[12px] font-bold text-white mb-0.5">${c.name}</p>
-                        <p class="text-[8px] text-sky-500 orbitron tracking-wider">${c.sub.split(' / ')[1] || c.sub}</p>
-                    </div>
-                `;
+                card.innerHTML = `<img src="${baseUrl}${c.id}_N0.webp" class="w-full aspect-[3/4] object-cover opacity-80 transition hover:opacity-100">
+                                  <div class="p-3 bg-gradient-to-t from-black to-transparent"><p class="text-[11px] font-bold text-white">${c.name}</p></div>`;
                 g.appendChild(card);
             });
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById(`btn-${f}`).classList.add('active');
         }
 
         function openModal(c) {
-            current = c; isAwake = false; updateUI();
+            current = c; isAwake = false; imgIdx = 0;
             document.getElementById('charModal').classList.remove('hidden');
-        }
-
-        function toggleAwakening() {
-            isAwake = !isAwake;
-            const card = document.getElementById('idCard');
-            card.style.transform = 'scale(0.98)';
-            setTimeout(() => card.style.transform = 'scale(1)', 100);
             updateUI();
         }
 
         function updateUI() {
-            const d = isAwake ? current.awakened : current;
-            const badge = document.getElementById('modeBadge');
-            const dot = document.getElementById('statusDot');
-            const level = document.getElementById('mLevel');
+            const data = isAwake ? current.awakened : current;
+            const mode = isAwake ? 'T' : 'N';
             
             document.getElementById('mName').innerText = current.name;
-            document.getElementById('mSub').innerText = d.sub;
-            document.getElementById('mHeight').innerText = d.height;
-            document.getElementById('mWeight').innerText = d.weight;
-            document.getElementById('mLikes').innerText = d.likes;
-            document.getElementById('mDislikes').innerText = d.dislikes;
-            document.getElementById('mQuote').innerText = d.quote;
-            document.getElementById('mDesc').innerText = d.desc;
-            document.getElementById('mImg').src = isAwake ? current.imgs[1] : current.imgs[0];
+            document.getElementById('mSubTitle').innerText = data.sub;
+            document.getElementById('mHeight').innerText = current.height;
+            document.getElementById('mWeight').innerText = current.weight;
+            document.getElementById('mLikes').innerText = data.likes;
+            document.getElementById('mDislikes').innerText = data.dislikes;
+            document.getElementById('mQuote').innerText = data.quote;
+            document.getElementById('mDesc').innerText = data.desc;
 
-            const tagContainer = document.getElementById('mTags');
-            tagContainer.innerHTML = '';
-            d.tags.forEach(t => {
-                const span = document.createElement('span');
-                span.className = `tag ${isAwake ? 'awakened-tag' : ''}`;
-                span.innerText = t;
-                tagContainer.appendChild(span);
+            // Thumbnail List Generation (6 per mode)
+            const thumbArea = document.getElementById('thumbArea');
+            thumbArea.innerHTML = '';
+            codes.forEach((code, idx) => {
+                const imgUrl = `${baseUrl}${current.id}_${mode}${code}.webp`;
+                const img = document.createElement('img');
+                img.src = imgUrl;
+                img.className = `thumb ${idx === imgIdx ? 'active' : ''}`;
+                img.onclick = () => { imgIdx = idx; updateMainPhoto(); };
+                thumbArea.appendChild(img);
             });
 
+            updateMainPhoto();
+
+            // Awake Mode Styling
+            const btn = document.getElementById('awakenBtn');
             if(isAwake) {
-                document.getElementById('idCard').classList.add('awakened-modal');
-                badge.innerText = "INSTINCT_UNLEASHED";
-                badge.style.background = 'var(--warning)';
-                dot.style.background = 'var(--warning)';
-                level.innerText = "RESTRICTION LIFTED";
-                level.style.color = 'var(--warning)';
-                document.getElementById('mQuote').style.borderColor = 'var(--warning)';
+                document.body.classList.add('awakened-active');
+                btn.innerText = "RESTRICT INSTINCT";
+                btn.classList.replace('bg-sky-500', 'bg-rose-600');
             } else {
-                document.getElementById('idCard').classList.remove('awakened-modal');
-                badge.innerText = "NORMAL_MODE";
-                badge.style.background = 'var(--neon-blue)';
-                dot.style.background = 'var(--neon-blue)';
-                level.innerText = "Authorized Access";
-                level.style.color = 'var(--neon-blue)';
-                document.getElementById('mQuote').style.borderColor = 'var(--neon-blue)';
+                document.body.classList.remove('awakened-active');
+                btn.innerText = "UNLEASH INSTINCT";
+                btn.classList.replace('bg-rose-600', 'bg-sky-500');
             }
+
+            // Tags
+            const tagBox = document.getElementById('mTags');
+            tagBox.innerHTML = '';
+            data.tags.forEach(t => {
+                const s = document.createElement('span');
+                s.className = 'tag';
+                s.innerText = t;
+                tagBox.appendChild(s);
+            });
         }
 
-        function closeModal() { document.getElementById('charModal').classList.add('hidden'); }
-        render('ALL');
+        function updateMainPhoto() {
+            const mode = isAwake ? 'T' : 'N';
+            const code = codes[imgIdx];
+            document.getElementById('mainImg').src = `${baseUrl}${current.id}_${mode}${code}.webp`;
+            document.querySelectorAll('.thumb').forEach((t, i) => t.classList.toggle('active', i === imgIdx));
+        }
+
+        function nextImg() { imgIdx = (imgIdx + 1) % 6; updateMainPhoto(); }
+        function prevImg() { imgIdx = (imgIdx - 1 + 6) % 6; updateMainPhoto(); }
+
+        function toggleAwakening() {
+            isAwake = !isAwake;
+            imgIdx = 0; 
+            updateUI();
+        }
+
+        function closeModal() {
+            document.getElementById('charModal').classList.add('hidden');
+            document.body.classList.remove('awakened-active');
+        }
+
+        renderGrid();
     </script>
 </body>
 </html>
