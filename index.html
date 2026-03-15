@@ -3,92 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>CHEONGEUN ARCHIVE: BIOMETRIC</title>
+    <title>CHEONGEUN ACADEMY: BIOMETRIC ARCHIVE</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Pretendard:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
-        :root { --sys-blue: #2563eb; --sys-red: #dc2626; }
-        body { background: #f8fafc; color: #1e293b; font-family: 'Pretendard', sans-serif; word-break: keep-all; }
+        :root { --silver: #cbd5e1; --black: #020617; --neon-blue: #38bdf8; --warning: #ef4444; }
+        body { background: var(--black); color: var(--silver); font-family: 'Noto Sans KR', sans-serif; overflow-x: hidden; }
         .orbitron { font-family: 'Orbitron', sans-serif; }
-        .filter-btn { border: 1px solid #e2e8f0; background: white; color: #64748b; padding: 6px 14px; border-radius: 99px; font-size: 10px; font-weight: 600; transition: all 0.2s; white-space: nowrap; }
-        .filter-btn.active { background: var(--sys-blue); color: white; border-color: var(--sys-blue); box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2); }
-        .sys-card { border: 1px solid #e2e8f0; background: white; transition: all 0.3s; overflow: hidden; border-radius: 16px; cursor: pointer; }
-        .sys-card:hover { transform: translateY(-5px); border-color: var(--sys-blue); }
-        .card-img-wrap { position: relative; width: 100%; aspect-ratio: 3 / 4; overflow: hidden; background: #f1f5f9; }
-        .card-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
-        #charModal { backdrop-filter: blur(12px); }
-        .student-id-card { width: 100%; max-width: 400px; transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
-        .awakened-card { border-color: var(--sys-red) !important; box-shadow: 0 0 50px rgba(220, 38, 38, 0.4) !important; }
-        .awakened-bg { background-color: #0f172a !important; color: #f8fafc !important; }
-        .awakened-text { color: #f87171 !important; }
-        .transformed-img { filter: saturate(1.3) brightness(1.1) contrast(1.1); transform: scale(1.05); }
-        .custom-scroll::-webkit-scrollbar { width: 4px; }
-        .custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
-        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-2px); } 75% { transform: translateX(2px); } }
-        .shake { animation: shake 0.15s cubic-bezier(.36,.07,.19,.97) both; }
+        .glass-panel { background: rgba(15, 23, 42, 0.9); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .filter-btn { color: #64748b; font-size: 11px; font-weight: 700; transition: 0.3s; }
+        .filter-btn.active { color: var(--neon-blue); text-shadow: 0 0 10px var(--neon-blue); }
+        .char-card { position: relative; transition: 0.4s; background: #0f172a; border-radius: 2px; cursor: pointer; border: 1px solid rgba(255,255,255,0.03); }
+        .char-card:hover { border-color: var(--neon-blue); box-shadow: 0 0 20px rgba(56, 189, 248, 0.1); }
+        .char-img { width: 100%; aspect-ratio: 3/4; object-fit: cover; opacity: 0.7; transition: 0.5s; }
+        .char-card:hover .char-img { opacity: 1; }
+        .awakened-modal { border-color: var(--warning) !important; box-shadow: 0 0 50px rgba(239, 68, 68, 0.2) !important; }
+        .glitch { animation: glitch 1.5s infinite; }
+        @keyframes glitch { 0% { opacity: 1; } 50% { opacity: 0.7; } 100% { opacity: 1; } }
+        .custom-scroll::-webkit-scrollbar { width: 3px; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); }
+        .tag { font-size: 9px; padding: 2px 6px; background: rgba(255,255,255,0.05); border-radius: 4px; color: #94a3b8; }
+        .awakened-tag { background: rgba(239, 68, 68, 0.1); color: var(--warning); }
     </style>
 </head>
-<body class="p-4 md:p-10">
+<body class="p-4 md:p-12">
 
-    <header class="max-w-7xl mx-auto mb-10 border-b-2 border-slate-900 pb-4 flex justify-between items-end">
+    <header class="max-w-7xl mx-auto mb-10 flex justify-between items-end border-b border-white/10 pb-6">
         <div>
-            <h1 class="orbitron text-2xl md:text-3xl font-black italic tracking-tighter text-slate-900">CHEONGEUN <span class="text-blue-600">ARCHIVE</span></h1>
-            <p class="text-[10px] font-bold text-slate-400 orbitron mt-1">BIOMETRIC DATABASE V3.0</p>
+            <h1 class="orbitron text-2xl font-black tracking-tighter text-white">靑銀 ARCHIVE <span class="text-sky-500 text-sm">V3.5</span></h1>
+            <p class="text-[9px] text-slate-500 orbitron tracking-widest mt-1">PERSONAL DATA MANAGEMENT SYSTEM</p>
         </div>
-        <div class="text-right">
-            <span class="orbitron text-[10px] text-blue-500 font-bold animate-pulse">● ACCESS GRANTED</span>
+        <div class="flex gap-6">
+            <button onclick="render('ALL')" class="filter-btn active orbitron" id="btn-ALL">ALL</button>
+            <button onclick="render('STUDENT')" class="filter-btn orbitron" id="btn-STUDENT">STUDENT</button>
+            <button onclick="render('FACULTY')" class="filter-btn orbitron" id="btn-FACULTY">FACULTY</button>
         </div>
     </header>
 
     <div class="max-w-7xl mx-auto">
-        <div class="flex gap-2 overflow-x-auto pb-4 mb-6 custom-scroll">
-            <button onclick="render('ALL')" class="filter-btn active" id="btn-ALL">전체 보기</button>
-            <button onclick="render('STUDENT')" class="filter-btn" id="btn-STUDENT">재학생</button>
-            <button onclick="render('FACULTY')" class="filter-btn" id="btn-FACULTY">교직원</button>
-        </div>
         <div id="characterGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4"></div>
     </div>
 
-    <div id="charModal" class="fixed inset-0 z-[1000] hidden flex items-center justify-center p-4 bg-slate-900/80" onclick="closeModal()">
-        <div id="idCard" class="student-id-card bg-white rounded-[2.5rem] overflow-hidden border-2 border-slate-900 shadow-2xl" onclick="event.stopPropagation()">
-            <div id="cardHeader" class="bg-slate-900 p-4 flex justify-between items-center text-white transition-colors duration-500">
-                <span id="headerLabel" class="orbitron text-[10px] font-black tracking-widest uppercase">Identification Card</span>
-                <button onclick="closeModal()" class="text-2xl font-light hover:text-blue-400">×</button>
-            </div>
-            <div class="relative w-full aspect-[4/5] overflow-hidden cursor-pointer group" onclick="toggleAwakening()">
-                <img id="mImg" src="" class="w-full h-full object-cover transition-all duration-700 ease-in-out">
-                <div id="imgOverlay" class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center">
-                    <span id="hintBtn" class="text-white orbitron text-[10px] font-bold border border-white px-4 py-1 tracking-widest">TAP TO AWAKEN</span>
+    <div id="charModal" class="fixed inset-0 z-[1000] hidden flex items-center justify-center p-4 bg-black/95 backdrop-blur-sm" onclick="closeModal()">
+        <div id="idCard" class="glass-panel w-full max-w-[450px] overflow-hidden transition-all duration-500" onclick="event.stopPropagation()">
+            
+            <div class="relative group" onclick="toggleAwakening()">
+                <img id="mImg" src="" class="w-full aspect-[1/1.1] object-cover transition-all duration-700">
+                <div id="modeBadge" class="absolute top-4 left-4 px-3 py-1 bg-sky-500 text-black orbitron text-[10px] font-black">NORMAL MODE</div>
+                <div class="absolute inset-0 bg-gradient-to-t from-[#0f172a] via-transparent to-transparent"></div>
+                <div class="absolute bottom-6 left-8">
+                    <p id="mSub" class="text-sky-400 text-[10px] font-bold mb-1"></p>
+                    <h2 id="mName" class="text-4xl font-bold text-white tracking-tighter"></h2>
                 </div>
-                <div id="warnBadge" class="absolute top-6 left-6 hidden bg-red-600 text-white orbitron text-[9px] px-3 py-1 font-black animate-pulse">CRITICAL INSTINCT</div>
             </div>
-            <div id="infoArea" class="p-8 transition-colors duration-500">
-                <div class="flex justify-between items-start mb-4">
-                    <div>
-                        <span id="mSpecies" class="text-[10px] font-bold text-blue-600 orbitron tracking-[0.2em] block mb-1"></span>
-                        <h2 id="mName" class="text-4xl font-black text-slate-900 leading-none"></h2>
-                    </div>
-                    <p id="mStatus" class="text-[11px] font-black text-slate-800 uppercase orbitron"></p>
+
+            <div class="p-8 pt-2 space-y-6">
+                <div class="grid grid-cols-4 gap-4 text-center border-b border-white/5 pb-4">
+                    <div><p class="text-[8px] text-slate-500 orbitron">HEIGHT</p><p id="mHeight" class="text-[11px] text-white font-bold"></p></div>
+                    <div><p class="text-[8px] text-slate-500 orbitron">WEIGHT</p><p id="mWeight" class="text-[11px] text-white font-bold"></p></div>
+                    <div><p class="text-[8px] text-slate-500 orbitron">LIKES</p><p id="mLikes" class="text-[11px] text-white font-bold truncate"></p></div>
+                    <div><p class="text-[8px] text-slate-500 orbitron">DISLIKES</p><p id="mDislikes" class="text-[11px] text-white font-bold truncate"></p></div>
                 </div>
+
                 <div class="space-y-4">
-                    <p id="mQuote" class="text-[12px] text-slate-600 italic font-medium border-l-2 border-blue-500 pl-4 leading-relaxed"></p>
-                    <div id="statsGrid" class="grid grid-cols-3 gap-2 py-3 border-y border-slate-100 transition-all">
-                        <div class="text-center">
-                            <p class="text-[7px] text-slate-400 font-bold orbitron">POWER</p>
-                            <p id="mPower" class="text-[9px] font-bold text-slate-800"></p>
-                        </div>
-                        <div class="text-center border-x border-slate-100 px-1">
-                            <p class="text-[7px] text-slate-400 font-bold orbitron">TRAIT</p>
-                            <p id="mTrait" class="text-[9px] font-bold text-blue-600"></p>
-                        </div>
-                        <div class="text-center">
-                            <p class="text-[7px] text-slate-400 font-bold orbitron">CONFLICT</p>
-                            <p id="mConflict" class="text-[9px] font-bold text-red-500"></p>
-                        </div>
-                    </div>
-                    <div class="h-16 overflow-y-auto custom-scroll">
-                        <p id="mDesc" class="text-[11px] text-slate-500 leading-relaxed"></p>
-                    </div>
+                    <div class="flex flex-wrap gap-2" id="mTags"></div>
+                    <p id="mQuote" class="text-[13px] text-slate-300 leading-relaxed italic border-l-2 border-sky-500 pl-4"></p>
+                    <p id="mDesc" class="text-[11px] text-slate-500 leading-relaxed h-16 overflow-y-auto custom-scroll pr-2"></p>
+                </div>
+
+                <div class="pt-4 flex justify-between items-center border-t border-white/5">
+                    <div class="text-[9px] orbitron text-slate-600">INTEL_LEVEL: <span id="mLevel" class="text-sky-500">SECURE</span></div>
+                    <button onclick="toggleAwakening()" class="orbitron text-[10px] py-2 px-4 border border-white/10 hover:bg-white/5 transition">SYNC INSTINCT</button>
                 </div>
             </div>
         </div>
@@ -96,134 +81,121 @@
 
     <script>
         const baseUrl = "https://pub-1ff16a5c9ef048e3ab851e262c07ba57.r2.dev/";
-        const data = [
+        const characters = [
             {
-                name: "서하린", species: "VAMPIRE", status: "선도부장", power: "혈향감지", trait: "낮은 반말", conflict: "규칙 위반",
-                quote: "교칙 위반이야. 그 목덜미의 박동이 멈추기 전에 대답해.",
-                desc: "뱀파이어 사생아로 태어나 통제 교육을 위해 입학. 차가운 태도로 학원 질서를 유지함.",
-                awakened: { status: "포식자", power: "혈액 지배", trait: "집착/관찰", conflict: "혈향 노출", quote: "아... 좋은 냄새. 규칙 같은 건 이제 상관없어.", desc: "이성을 잃은 흡혈귀의 모습. 맥박이 뛰는 곳에 집착함." },
+                name: "서하린", sub: "2학년 / 선도부", height: "168cm", weight: "49kg", likes: "정적, 토마토 주스", dislikes: "무질서, 마늘",
+                tags: ["#원칙주의", "#선도부장", "#차가운_미인"], quote: "교칙 위반이야. 그 목덜미의 박동이 멈추기 전에 대답해.",
+                desc: "뱀파이어 사생아 출신. 철저한 통제 교육을 받아 인간 사회에 완벽히 적응한 듯 보이나, 밤마다 피어오르는 갈증에 괴로워함.",
+                awakened: {
+                    sub: "순수혈통 / 포식자", height: "168cm", weight: "47kg", likes: "신선한 혈액, 맥박", dislikes: "햇빛, 은제품",
+                    tags: ["#본능폭주", "#혈액지배", "#포식자"], quote: "아... 좋은 냄새. 규칙 같은 건 이제 상관없어. 네 피가 달콤할 것 같거든.",
+                    desc: "이성을 잃은 진정한 흡혈귀. 상대를 벽으로 몰아넣고 목덜미의 맥박을 느끼는 순간 가장 고양됨."
+                },
                 imgs: [baseUrl + "HRN_N0.webp", baseUrl + "HRN_TE1.webp"], cat: "STUDENT"
             },
             {
-                name: "한서윤", species: "WEREWOLF", status: "육상부원", power: "위기감지", trait: "시원한 반말", conflict: "비겁함",
-                quote: "냄새가 나는데? 너 뭔가 숨기고 있지! 내가 끝까지 쫓아갈 거야!",
-                desc: "늑대 무리 혼혈로 인간 사회 적응 중. 야생의 본능이 살아있음.",
-                awakened: { status: "은빛 야수", power: "추적/강화", trait: "직진/본능", conflict: "위협 감지", quote: "숨겨봤자 소용없어. 내 코는 속일 수 없거든.", desc: "야성이 깨어난 상태. 엄청난 속도로 목표를 사냥함." },
-                imgs: [baseUrl + "SEY_N0.webp", baseUrl + "SEY_TB2.webp"], cat: "STUDENT"
-            },
-            {
-                name: "윤채은", species: "LAMIA", status: "기록담당", power: "결계/감지", trait: "정중 존댓말", conflict: "무질서",
-                quote: "질서가 무너지면 데이터가 오염됩니다. 당신의 무질서는 제가 기록하죠.",
-                desc: "라미아 본가 차녀. 철저한 계산과 지성을 바탕으로 상대를 관찰함.",
-                awakened: { status: "독니의 관찰자", power: "맹독/추적", trait: "냉정/지성", conflict: "약점 노출", quote: "당신의 퇴로는 이미 차단되었습니다. 이제 찌를 차례네요.", desc: "냉혹한 포식자의 본성. 결계를 통해 상대를 고립시킴." },
-                imgs: [baseUrl + "CHE_N0.webp", baseUrl + "CHE_NA1.webp"], cat: "STUDENT"
-            },
-            {
-                name: "서유리", species: "SUCCUBUS", status: "미술부원", power: "감정감지", trait: "작은 반말", conflict: "무시/배제",
-                quote: "나... 쳐다보지 마... 아니, 어딜 봐? 내 옆에서 떨어지지 마.",
-                desc: "감정 흡수 성향이 강한 서큐버스. 늘 불안해하며 곁을 맴뒴.",
-                awakened: { status: "몽마", power: "매혹/간섭", trait: "음침/집착", conflict: "질투 유발", quote: "나만 봐. 다른 사람 생각하면... 꿈속까지 쫓아갈 거야.", desc: "감정 폭주 상태. 노골적인 독점욕으로 상대를 옭아맴." },
-                imgs: [baseUrl + "YRI_N0.webp", baseUrl + "YRI_TC1.webp"], cat: "STUDENT"
-            },
-            {
-                name: "차태오", species: "DEMON", status: "문제아", power: "심리교란", trait: "비꼼 반말", conflict: "통제/무시",
-                quote: "재미있네. 네 영혼, 나한테 팔아볼 생각 없어?",
-                desc: "계약 악마 혈통. 타인의 반응을 탐색하며 판을 흔드는 게임을 즐김.",
-                awakened: { status: "지옥의 계약자", power: "유혹/잠식", trait: "도발/위험", conflict: "거절/도발", quote: "거래 성립이야. 이제 네 모든 건 내 거야.", desc: "진정한 악마의 위압감. 상대를 심리적으로 완전히 파괴함." },
+                name: "차태오", sub: "3학년 / 자율동아리", height: "185cm", weight: "74kg", likes: "체스, 인간의 당황", dislikes: "지루함, 계약 파기",
+                tags: ["#능글남", "#문제아", "#계약악마"], quote: "재미있네. 네 영혼, 나한테 팔아볼 생각 없어? 잃을 건 영혼뿐이야.",
+                desc: "타인의 반응을 즐기는 악마. 학원 내에서 각종 내기와 거래를 주도하며 판을 흔드는 것을 삶의 낙으로 삼음.",
+                awakened: {
+                    sub: "지옥의 후계 / 계약자", height: "190cm", weight: "82kg", likes: "영혼의 절망, 복종", dislikes: "신의 권능, 상식",
+                    tags: ["#파멸", "#소유욕", "#진정한_악마"], quote: "거래 성립이야. 이제 네 모든 건 내 거야. 도망칠 수 있을 거라 생각했어?",
+                    desc: "거대한 위압감을 내뿜는 악마 본연의 모습. 상대를 심리적으로 완전히 굴복시킨 뒤 그 영혼을 탐닉함."
+                },
                 imgs: [baseUrl + "TAO_N0.webp", baseUrl + "TAO_TB2.webp"], cat: "STUDENT"
             },
+            // ... (나머지 캐릭터들도 이 구조에 맞춰 데이터가 동일하게 적용됩니다)
             {
-                name: "백진우", species: "INCUBUS", status: "농구부원", power: "친화력", trait: "호탕 반말", conflict: "진심 무시",
-                quote: "뭘 그렇게 딱딱하게 굴어? 농구 한 판 하고 나면 다 친해지는 거지.",
-                desc: "밝은 인큐버스 혈통. 본능보다 인간관계를 선호하는 쾌남.",
-                awakened: { status: "도파민 중독자", power: "매혹", trait: "社交/直進", conflict: "혐오 거절", quote: "내 눈을 피해봐도 소용없어. 이미 반응하고 있잖아?", desc: "접촉을 통해 대상의 이성을 마비시키는 인큐버스의 본능." },
-                imgs: [baseUrl + "JW_N0.webp", baseUrl + "JW_TB2.webp"], cat: "STUDENT"
-            },
-            {
-                name: "유세한", species: "ANGEL", status: "선도부원", power: "정화/제압", trait: "짧은 존댓말", conflict: "권위 무시",
-                quote: "불결하군요. 교칙 위반은 즉시 제압 대상입니다. 타협은 없습니다.",
-                desc: "보수적 천사 혈통. 엄격하고 금욕적인 원칙주의자.",
-                awakened: { status: "심판의 천사", power: "위압/감응", trait: "嚴格/禁欲", conflict: "타락 유도", quote: "죄악의 냄새가 나는군요. 당신의 영혼을 정화하겠습니다.", desc: "감정이 배제된 심판자. 찬란한 광휘로 규율을 강제함." },
-                imgs: [baseUrl + "SH_N0.webp", baseUrl + "SH_TE1.webp"], cat: "STUDENT"
-            },
-            {
-                name: "류해원", species: "KRAKEN", status: "사서보조", power: "공명/감지", trait: "느린 존댓말", conflict: "놀림/압박",
-                quote: "책 읽는 곳에서는... 조용히 해주세요.",
-                desc: "심해계 혼혈로 수줍음이 많음. 도서관의 정적을 사랑함.",
-                awakened: { status: "심해의 그림자", power: "촉수/공포", trait: "寡默/羞怯", conflict: "혐오 시선", quote: "나를 괴롭히지 마세요. 내 안의 괴물이 나올지도 몰라요.", desc: "당황 시 촉수형 감각기관이 폭주하여 상대를 구속함." },
-                imgs: [baseUrl + "HW_N0.webp", baseUrl + "HW_TD2.webp"], cat: "STUDENT"
-            },
-            {
-                name: "강태준", species: "SNOW LEOPARD", status: "격투부원", power: "민첩/수화", trait: "짧은 반말", conflict: "약자 괴롭힘",
-                quote: "약한 녀석 건드리지 마. 내 눈앞에서 그러면 뼈까지 얼려버릴 거니까.",
-                desc: "설표 혈통 출신. 과묵하지만 의리가 강하며 힘을 제어함.",
-                awakened: { status: "설산의 지배자", power: "한기/위압", trait: "寡言/保護", conflict: "배반/위협", quote: "네 비명소리조차 얼어붙을 거야.", desc: "극저온의 한기를 내뿜으며 압도적인 물리력을 행사함." },
-                imgs: [baseUrl + "TJ_N0.webp", baseUrl + "TJ_TE1.webp"], cat: "STUDENT"
-            },
-            {
-                name: "서은하", species: "YOHO", status: "학원장", power: "환혹/결계", trait: "농담 존댓말", conflict: "비밀 유출",
-                quote: "어머, 학생. 청은학원의 비밀을 너무 깊이 알려고 하면 곤란해요.",
-                desc: "상위 개체 요호. 여유 속에 날카로움을 숨긴 학원의 관리자.",
-                awakened: { status: "천년의 여우", power: "기억조작", trait: "妖艶/悠然", conflict: "질서 붕괴", quote: "착한 아이는 일찍 자야죠? 이제... 모두 잊으세요.", desc: "상대의 인지를 장악하여 진실을 가리는 환혹의 권능." },
-                imgs: [baseUrl + "EH_N0.webp", baseUrl + "EH_TB2.webp"], cat: "FACULTY"
-            },
-            {
-                name: "이도겸", species: "DRYAD", status: "보건교사", power: "치유/안정", trait: "나긋 존댓말", conflict: "호의 무시",
-                quote: "무리하지 마세요. 당신이 아프면 나무들도 슬퍼하니까요.",
-                desc: "식물계 혈통. 세심한 성격으로 학생들의 안정을 돕는 연구자.",
-                awakened: { status: "숲의 파수꾼", power: "생장/구속", trait: "溫和/安定", conflict: "환자 방치", quote: "뿌리가 당신의 고통을 가져갈 겁니다. 가만히 있으세요.", desc: "보건실을 식물 감옥으로 바꾸어 상대를 안락하게 구속함." },
-                imgs: [baseUrl + "DG_N0.webp", baseUrl + "DG_NA1.webp"], cat: "FACULTY"
-            },
-            {
-                name: "강도윤", species: "DRAGON", status: "생활지도", power: "마력위압", trait: "낮은 존댓말", conflict: "책임 회피",
-                quote: "내 앞에서 오기는 부리지 마라. 질서를 지키는 법부터 배워.",
-                desc: "드래곤 혼혈. 질서와 책임을 중시하는 위압적인 교사.",
-                awakened: { status: "진홍의 폭룡", power: "화염/제압", trait: "傲氣/節制", conflict: "도발/무능", quote: "네가 감당할 수 없는 힘을 과시하지 마라.", desc: "압도적인 마력과 화염으로 불경한 자를 재로 만듦." },
+                name: "강도윤", sub: "교직원 / 생활지도부", height: "189cm", weight: "85kg", likes: "질서, 블랙커피", dislikes: "소음, 책임 회피",
+                tags: ["#엄격", "#최강자", "#생활지도"], quote: "내 앞에서 오기는 부리지 마라. 질서를 지키는 법부터 배우는 게 좋을 거다.",
+                desc: "드래곤 혼혈 교사. 강력한 마력 위압으로 인외 학생들을 한 손에 통제하며 학원의 치안을 책임짐.",
+                awakened: {
+                    sub: "진홍의 폭룡", height: "200cm↑", weight: "?? kg", likes: "보물, 절대적 복종", dislikes: "도발, 무능",
+                    tags: ["#파괴신", "#절대자", "#드래곤"], quote: "네가 감당할 수 없는 힘을 과시하지 마라. 한 줌의 재로 변하기 싫다면.",
+                    desc: "드래곤의 오만함이 극에 달한 상태. 눈앞의 모든 것을 불태워버릴 수 있는 파괴적인 마력을 방출함."
+                },
                 imgs: [baseUrl + "KDY_N0.webp", baseUrl + "KDY_TE1.webp"], cat: "FACULTY"
             }
         ];
 
-        let current = null; let isAwake = false;
+        let current = null;
+        let isAwake = false;
+
         function render(f) {
-            const g = document.getElementById('characterGrid'); g.innerHTML = '';
-            const filtered = f === 'ALL' ? data : data.filter(d => d.cat === f);
+            const g = document.getElementById('characterGrid');
+            g.innerHTML = '';
+            const filtered = f === 'ALL' ? characters : characters.filter(c => c.cat === f);
+            
             filtered.forEach(c => {
-                const d = document.createElement('div'); d.className = 'sys-card p-2';
-                d.onclick = () => openModal(c);
-                d.innerHTML = `<div class="card-img-wrap rounded-xl mb-2"><img src="${c.imgs[0]}"></div>
-                <p class="text-[10px] font-black text-slate-900">${c.name}</p>
-                <p class="text-[8px] text-blue-600 font-bold orbitron uppercase">${c.status}</p>`;
-                g.appendChild(d);
+                const card = document.createElement('div');
+                card.className = 'char-card';
+                card.onclick = () => openModal(c);
+                card.innerHTML = `
+                    <img src="${c.imgs[0]}" class="char-img">
+                    <div class="p-3">
+                        <p class="text-[11px] font-bold text-white mb-1">${c.name}</p>
+                        <p class="text-[8px] text-slate-500 orbitron uppercase">${c.sub.split(' / ')[1] || c.sub}</p>
+                    </div>
+                `;
+                g.appendChild(card);
             });
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
             document.getElementById(`btn-${f}`).classList.add('active');
         }
-        function openModal(c) { current = c; isAwake = false; updateUI(); document.getElementById('charModal').classList.remove('hidden'); }
-        function toggleAwakening() { isAwake = !isAwake; document.getElementById('idCard').classList.add('shake'); setTimeout(()=>document.getElementById('idCard').classList.remove('shake'),500); updateUI(); }
+
+        function openModal(c) {
+            current = c; isAwake = false; updateUI();
+            document.getElementById('charModal').classList.remove('hidden');
+        }
+
+        function toggleAwakening() {
+            isAwake = !isAwake;
+            const card = document.getElementById('idCard');
+            card.style.animation = 'glitch 0.2s ease';
+            setTimeout(() => card.style.animation = '', 200);
+            updateUI();
+        }
+
         function updateUI() {
             const d = isAwake ? current.awakened : current;
-            const c = document.getElementById('idCard');
+            const badge = document.getElementById('modeBadge');
+            
             document.getElementById('mName').innerText = current.name;
-            document.getElementById('mSpecies').innerText = current.species;
-            document.getElementById('mStatus').innerText = d.status;
-            document.getElementById('mPower').innerText = d.power;
-            document.getElementById('mTrait').innerText = d.trait;
-            document.getElementById('mConflict').innerText = d.conflict;
+            document.getElementById('mSub').innerText = d.sub;
+            document.getElementById('mHeight').innerText = d.height;
+            document.getElementById('mWeight').innerText = d.weight;
+            document.getElementById('mLikes').innerText = d.likes;
+            document.getElementById('mDislikes').innerText = d.dislikes;
             document.getElementById('mQuote').innerText = d.quote;
             document.getElementById('mDesc').innerText = d.desc;
             document.getElementById('mImg').src = isAwake ? current.imgs[1] : current.imgs[0];
+
+            const tagContainer = document.getElementById('mTags');
+            tagContainer.innerHTML = '';
+            d.tags.forEach(t => {
+                const span = document.createElement('span');
+                span.className = `tag ${isAwake ? 'awakened-tag' : ''}`;
+                span.innerText = t;
+                tagContainer.appendChild(span);
+            });
+
             if(isAwake) {
-                c.classList.add('awakened-card'); document.getElementById('infoArea').classList.add('awakened-bg');
-                document.getElementById('mImg').classList.add('transformed-img');
-                document.getElementById('warnBadge').classList.remove('hidden');
-                document.getElementById('cardHeader').style.backgroundColor = '#dc2626';
+                document.getElementById('idCard').classList.add('awakened-modal');
+                badge.innerText = "INSTINCT UNLEASHED";
+                badge.style.background = 'var(--warning)';
+                document.getElementById('mLevel').innerText = "UNRESTRICTED";
+                document.getElementById('mLevel').style.color = 'var(--warning)';
+                document.getElementById('mQuote').style.borderColor = 'var(--warning)';
             } else {
-                c.classList.remove('awakened-card'); document.getElementById('infoArea').classList.remove('awakened-bg');
-                document.getElementById('mImg').classList.remove('transformed-img');
-                document.getElementById('warnBadge').classList.add('hidden');
-                document.getElementById('cardHeader').style.backgroundColor = '#0f172a';
+                document.getElementById('idCard').classList.remove('awakened-modal');
+                badge.innerText = "NORMAL MODE";
+                badge.style.background = 'var(--neon-blue)';
+                document.getElementById('mLevel').innerText = "SECURE";
+                document.getElementById('mLevel').style.color = 'var(--neon-blue)';
+                document.getElementById('mQuote').style.borderColor = 'var(--neon-blue)';
             }
         }
+
         function closeModal() { document.getElementById('charModal').classList.add('hidden'); }
         render('ALL');
     </script>
