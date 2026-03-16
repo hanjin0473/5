@@ -186,7 +186,7 @@
 
     <script>
         const baseUrl = "https://pub-1ff16a5c9ef048e3ab851e262c07ba57.r2.dev/";
-        const codes = ["0", "B2", "C1", "E3", "D2", "R1"];
+        const codes = ["0", "B2", "C1", "A3", "D2", "R1"];
         
         // 데이터 베이스 (이미지는 약자와 코드를 조합해 자동 생성)
         const characters = [
@@ -300,7 +300,7 @@ let current = null, isAwake = false, imgIdx = 0;
                 btn.innerText = "돌아오기";
             } else {
                 document.body.classList.remove('awakened-active');
-                btn.innerText = "본모습";
+                btn.innerText = "본모습 개방하기";
             }
         }
 
