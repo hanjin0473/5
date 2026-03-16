@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>청은학원 기록보관소 v9.4</title>
+    <title>청은학원 정보 v9.6</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
@@ -27,17 +27,17 @@
             border: 1px solid #d4c5a9;
         }
 
-        .tab-nav { display: flex; justify-content: center; gap: 2px; }
+        .tab-nav { display: flex; justify-content: center; gap: 4px; margin-bottom: -1px; }
         .tab-btn { 
-            padding: 12px 30px; 
+            padding: 10px 20px; 
             color: #8c7865; 
             font-weight: 700; 
-            font-size: 16px; 
+            font-size: 14px; 
             transition: 0.3s;
             background: #e8dec5;
             border: 1px solid #d4c5a9;
             border-bottom: none;
-            border-radius: 12px 12px 0 0;
+            border-radius: 8px 8px 0 0;
             position: relative;
             z-index: 1;
         }
@@ -46,143 +46,164 @@
             background: var(--paper);
             z-index: 3;
             height: calc(100% + 2px);
-            margin-bottom: -1px;
         }
 
-        .main-content { border-radius: 1rem; position: relative; z-index: 2; margin-top: -1px; }
+        .main-content { border-radius: 1rem; position: relative; z-index: 2; }
 
         .tab-content { display: none; animation: fadeIn 0.4s ease; }
         .tab-content.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
-        .section-title { font-size: 1.2rem; font-weight: 900; color: var(--gold); border-bottom: 2px solid var(--gold); padding-bottom: 8px; margin-bottom: 25px; margin-top: 40px; letter-spacing: 0.2em; text-align: center; }
+        .section-title { font-size: 1.3rem; font-weight: 900; color: var(--gold); border-bottom: 2px solid var(--gold); padding-bottom: 12px; margin-bottom: 35px; margin-top: 50px; letter-spacing: 0.2em; text-align: center; }
 
-        .char-card { border: 1px solid #d4c5a9; background: #fff; padding: 10px; transition: 0.4s; border-radius: 8px; }
-        .char-card:hover { border-color: var(--gold); transform: translateY(-3px); }
+        .char-card { border: 1px solid #d4c5a9; background: #fff; padding: 12px; transition: 0.4s; border-radius: 12px; }
+        .char-card:hover { border-color: var(--gold); transform: translateY(-5px); box-shadow: 0 10px 25px rgba(176,141,87,0.2); }
+        .char-card img { border-radius: 8px; margin-bottom: 12px; }
 
         .main-photo-container {
             position: relative;
             background-color: #0f0f0f;
-            height: 480px;
-            border: 10px solid #fff; 
-            transition: border-color 0.6s;
+            height: 520px; 
+            border-bottom: 4px solid var(--gold);
             overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
         }
-        .main-photo {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            background: radial-gradient(circle, #222 0%, #000 100%);
-        }
+        .main-photo { width: 100%; height: 100%; object-fit: contain; background: radial-gradient(circle, #222 0%, #000 100%); }
 
-        .awakened-active .main-photo-container { border-color: var(--danger-red) !important; }
+        .awakened-active .main-photo-container { border-bottom-color: var(--danger-red) !important; }
         .awakened-active .info-area { background-color: #080808 !important; color: #ccc !important; }
 
-        .world-section { border-left: 3px solid var(--gold); padding-left: 20px; margin-bottom: 30px; }
-        .world-h3 { font-size: 1.2rem; font-weight: 900; color: var(--deep-brown); margin-bottom: 10px; }
+        .world-section { border-left: 4px solid var(--gold); padding-left: 24px; margin-bottom: 45px; }
+        .world-h3 { font-size: 1.25rem; font-weight: 900; color: var(--deep-brown); margin-bottom: 12px; }
 
-        .danger-btn { background: var(--danger-red); color: #fff; padding: 16px; font-weight: 900; letter-spacing: 0.3em; transition: 0.3s; }
-        .link-btn { display: inline-block; background: var(--deep-brown); color: #fff; padding: 10px 24px; font-weight: 700; border-radius: 8px; margin-top: 20px; transition: 0.3s; font-size: 14px; border: 1px solid var(--gold); }
-        .link-btn:hover { background: var(--gold); transform: translateY(-2px); }
+        .danger-btn { background: var(--danger-red); color: #fff; padding: 18px; font-weight: 900; letter-spacing: 0.3em; transition: 0.3s; }
+        .link-btn { display: inline-block; background: var(--deep-brown); color: #fff; padding: 12px 28px; font-weight: 700; border-radius: 8px; margin-top: 25px; transition: 0.3s; font-size: 14px; border: 1px solid var(--gold); }
         
-        .tag-item { font-size: 0.75rem; color: #b08d57; font-weight: 700; background: rgba(176, 141, 87, 0.1); padding: 2px 8px; border-radius: 4px; margin-right: 4px; border: 1px solid rgba(176,141,87,0.2); }
-        .custom-scroll::-webkit-scrollbar { width: 4px; }
-        .custom-scroll::-webkit-scrollbar-thumb { background: rgba(176, 141, 87, 0.3); }
+        .tag-item { font-size: 0.8rem; color: #b08d57; font-weight: 700; background: rgba(176, 141, 87, 0.1); padding: 4px 10px; border-radius: 6px; margin-right: 6px; border: 1px solid rgba(176,141,87,0.2); }
+        .custom-scroll::-webkit-scrollbar { width: 5px; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: rgba(176, 141, 87, 0.3); border-radius: 10px; }
+
+        .facility-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        .facility-item { background: #f5f0e1; padding: 10px 15px; border-radius: 8px; border: 1px solid #d4c5a9; font-size: 14px; display: flex; align-items: center; gap: 10px; }
+        .facility-num { color: var(--gold); font-weight: 900; font-family: monospace; border-right: 1px solid #d4c5a9; padding-right: 10px; }
     </style>
 </head>
 <body class="p-4 md:p-12">
 
     <div class="max-w-5xl mx-auto">
-        <header class="text-center py-10">
-            <h1 class="text-5xl font-black text-[#f2e8cf] tracking-[0.2em]">청은학원</h1>
-            <p class="text-lg text-[#b08d57] mt-3 font-bold tracking-[0.4em]">학원 명부 및 정보</p>
+        <header class="text-center py-12">
+            <h1 class="text-6xl font-black text-[#f2e8cf] tracking-[0.2em]">사립 청은학원</h1>
+            <p class="text-xl text-[#b08d57] mt-4 font-bold tracking-[0.5em]">학원 정보 v9.6</p>
         </header>
 
-        <nav class="tab-nav max-w-3xl mx-auto">
-            <button onclick="showTab('intro')" id="btn-intro" class="tab-btn active">학원 안내</button>
+        <nav class="tab-nav max-w-2xl mx-auto">
+            <button onclick="showTab('prologue')" id="btn-prologue" class="tab-btn active">프롤로그</button>
+            <button onclick="showTab('intro')" id="btn-intro" class="tab-btn">학원 안내</button>
             <button onclick="showTab('students')" id="btn-students" class="tab-btn">구성원 명부</button>
         </nav>
 
-        <main class="paper-sheet main-content p-8 md:p-14 min-h-[70vh] max-w-3xl mx-auto">
-            <section id="tab-intro" class="tab-content active space-y-12">
-                <div class="pb-10 border-b-2 border-gold/20">
-                    <p class="text-xs text-gold font-bold tracking-[0.3em] mb-6 uppercase text-center">Prologue</p>
-                    <div class="text-[14px] md:text-[15px] leading-[2.2] text-[#4a3a2a] space-y-6">
-                        <p>차가운 아침 공기를 뚫고 도착한 청은학원의 교문 앞은 입학식 열기로 북적입니다. 부모님을 여의고 생활을 버티는 데 급급했던 당신에게, 어느 날 지인이 건넨 의문의 입학장 한 장. </p>
-                        <p class="italic font-bold">“거기 가면, 네 인생이 조금은 달라질지도 모른다.”</p>
-                        <p>그 한마디에 이끌려 도착한 이곳은 겉보기엔 평범한 사립학교지만, 정체 모를 묘한 위화감이 공기 중에 흐릅니다. 낯선 기대와 희미한 경계심 속에서, 당신은 이제 막 이 학교에 첫발을 내디뎠습니다.</p>
-                    </div>
-                    <div class="text-center">
-                        <a href="https://share.crack.wrtn.ai/w090440" target="_blank" class="link-btn">청은학교에 입학하기 ↗</a>
+        <main class="paper-sheet main-content p-8 md:p-16 min-h-[70vh] max-w-3xl mx-auto">
+            
+            <section id="tab-prologue" class="tab-content active">
+                <p class="text-xs text-gold font-bold tracking-[0.4em] mb-10 uppercase text-center">— THE BEGINNING —</p>
+                <div class="text-[15px] md:text-[16px] leading-[2.4] text-[#4a3a2a] space-y-8">
+                    <p>차가운 아침 공기를 뚫고 도착한 청은학원의 교문 앞은 입학식 열기로 북적입니다. 부모님을 여의고 생활을 버티는 데 급급했던 당신에게, 어느 날 지인이 건넨 의문의 입학장 한 장. </p>
+                    <p class="text-xl italic font-bold text-center py-6 text-deep-brown">“거기 가면, 네 인생이 조금은 달라질지도 모른다.”</p>
+                    <p>그 한마디에 이끌려 도착한 이곳은 겉보기엔 평범한 사립학교지만, 정체 모를 묘한 위화감이 공기 중에 흐릅니다. 낯선 기대와 희미한 경계심 속에서, 당신은 이제 막 이 학교에 첫발을 내디뎠습니다.</p>
+                </div>
+                <div class="text-center mt-12">
+                    <a href="https://share.crack.wrtn.ai/w090440" target="_blank" class="link-btn">입학 절차 밟기 ↗</a>
+                </div>
+            </section>
+
+            <section id="tab-intro" class="tab-content space-y-16">
+                <div class="world-section">
+                    <h3 class="world-h3">학원 주요 시설</h3>
+                    <p class="text-[13px] text-[#8c7865] mb-6">청은학원 내부에서 인가된 활동 구역 리스트입니다.</p>
+                    <div class="facility-grid">
+                        <div class="facility-item"><span class="facility-num">02</span> 교실</div>
+                        <div class="facility-item"><span class="facility-num">03</span> 운동장</div>
+                        <div class="facility-item"><span class="facility-num">04</span> 기숙사 (월영관)</div>
+                        <div class="facility-item"><span class="facility-num">05</span> 선도부실</div>
+                        <div class="facility-item"><span class="facility-num">06</span> 옥상</div>
+                        <div class="facility-item"><span class="facility-num">07</span> 보건실</div>
+                        <div class="facility-item"><span class="facility-num">08</span> 학생회실</div>
                     </div>
                 </div>
 
-                <div class="space-y-10">
-                    <div class="world-section">
-                        <h3 class="world-h3">기밀 관리 지침</h3>
-                        <p class="text-[13px] text-[#8c7865] mb-4 font-bold">※ 구성원 전원 필수 준수 사항</p>
-                        <ul class="grid grid-cols-1 md:grid-cols-2 gap-3 text-[13px] font-bold text-red-900">
-                            <li>• 비인가 포식 및 흡혈 금지</li>
-                            <li>• 지정 외 구역 마력 발현 제한</li>
-                            <li>• 종족 서열 기반 사적 제재 금지</li>
-                            <li>• 인간 접촉 시 정체 은폐 엄수</li>
-                        </ul>
+                <div class="world-section">
+                    <h3 class="world-h3">기숙사 운영 규정</h3>
+                    <div class="text-[14px] text-[#5d4a3a] space-y-4">
+                        <p class="bg-red-50 p-4 border border-red-200 rounded-lg text-red-900 font-bold">
+                            청은학원의 모든 학생은 안전한 마력 제어와 신변 보호를 위해 학원 내 기숙사인 '월영관' 입소가 의무화되어 있습니다. 외부 거주 및 비인가 외박은 엄격히 금지됩니다.
+                        </p>
+                        <p>• 통금 시간: 매일 자정 (24:00) 이후 출입 통제</p>
+                        <p>• 룸메이트는 종족 상성을 고려하여 학원측에서 임의 배정합니다.</p>
                     </div>
+                </div>
+
+                <div class="world-section">
+                    <h3 class="world-h3">기밀 관리 지침</h3>
+                    <ul class="grid grid-cols-1 md:grid-cols-2 gap-4 text-[13px] font-bold text-red-900">
+                        <li>• 비인가 포식 및 흡혈 금지</li>
+                        <li>• 지정 외 구역 마력 발현 제한</li>
+                        <li>• 종족 서열 기반 사적 제재 금지</li>
+                        <li>• 인간 접촉 시 정체 은폐 엄수</li>
+                    </ul>
                 </div>
             </section>
 
             <section id="tab-students" class="tab-content">
                 <h3 class="section-title">교직원</h3>
-                <div class="grid grid-cols-2 sm:grid-cols-3 gap-6 mb-16" id="staffGrid"></div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-20" id="staffGrid"></div>
                 
                 <h3 class="section-title">학생</h3>
-                <div class="grid grid-cols-2 sm:grid-cols-3 gap-6" id="studentGrid"></div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-8" id="studentGrid"></div>
             </section>
         </main>
     </div>
 
-    <div id="charModal" class="fixed inset-0 z-[1000] hidden flex items-center justify-center p-4 bg-black/90 backdrop-blur-md" onclick="closeModal()">
-        <div id="modalContainer" class="paper-sheet w-full max-w-xl h-auto max-h-[92vh] overflow-hidden flex flex-col rounded-2xl" onclick="event.stopPropagation()">
+    <div id="charModal" class="fixed inset-0 z-[1000] hidden flex items-center justify-center p-4 bg-black/95 backdrop-blur-xl" onclick="closeModal()">
+        <div id="modalContainer" class="paper-sheet w-full max-w-2xl h-auto max-h-[95vh] overflow-hidden flex flex-col rounded-3xl" onclick="event.stopPropagation()">
             
             <div class="main-photo-container flex-shrink-0">
                 <img id="mainImg" src="" class="main-photo">
-                <button onclick="prevImg()" class="absolute left-4 top-1/2 -translate-y-1/2 bg-black/40 text-white w-10 h-10 rounded-full z-10 hover:bg-black/60">◀</button>
-                <button onclick="nextImg()" class="absolute right-4 top-1/2 -translate-y-1/2 bg-black/40 text-white w-10 h-10 rounded-full z-10 hover:bg-black/60">▶</button>
-                <div class="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black/80 to-transparent">
-                    <p id="mSubTitle" class="text-gold text-[10px] font-bold mb-1 tracking-[0.2em] uppercase"></p>
-                    <h2 id="mName" class="text-3xl font-black text-white"></h2>
-                    <div id="mTags" class="mt-2 flex flex-wrap gap-1"></div>
+                <button onclick="prevImg()" class="absolute left-6 top-1/2 -translate-y-1/2 bg-black/50 text-white w-12 h-12 rounded-full z-10 hover:bg-gold transition">◀</button>
+                <button onclick="nextImg()" class="absolute right-6 top-1/2 -translate-y-1/2 bg-black/50 text-white w-12 h-12 rounded-full z-10 hover:bg-gold transition">▶</button>
+                <div class="absolute bottom-0 left-0 w-full p-10 bg-gradient-to-t from-black/90 to-transparent">
+                    <p id="mSubTitle" class="text-gold text-xs font-bold mb-2 tracking-[0.3em] uppercase"></p>
+                    <h2 id="mName" class="text-4xl font-black text-white"></h2>
+                    <div id="mTags" class="mt-4 flex flex-wrap gap-2"></div>
                 </div>
             </div>
 
-            <div id="thumbArea" class="flex gap-2 p-3 bg-black/5 overflow-x-auto justify-center"></div>
+            <div id="thumbArea" class="flex gap-3 p-4 bg-black/5 overflow-x-auto justify-center border-b border-gold/10"></div>
 
-            <div id="infoArea" class="info-area p-8 space-y-6 overflow-y-auto flex-grow custom-scroll">
-                <div class="grid grid-cols-3 gap-2 border-b border-[#d4c5a9]/50 pb-5 text-center">
-                    <div><p class="text-[9px] text-gold font-bold uppercase mb-1">Age</p><p id="mAge" class="text-sm font-black"></p></div>
-                    <div><p class="text-[9px] text-gold font-bold uppercase mb-1">Height</p><p id="mHeight" class="text-sm font-black"></p></div>
-                    <div><p class="text-[9px] text-gold font-bold uppercase mb-1">Weight</p><p id="mWeight" class="text-sm font-black"></p></div>
+            <div id="infoArea" class="info-area p-10 md:p-14 space-y-10 overflow-y-auto flex-grow custom-scroll">
+                <div class="grid grid-cols-3 gap-6 border-b border-[#d4c5a9]/50 pb-8 text-center">
+                    <div><p class="text-[10px] text-gold font-bold uppercase mb-2">Age</p><p id="mAge" class="text-base font-black"></p></div>
+                    <div><p class="text-[10px] text-gold font-bold uppercase mb-2">Height</p><p id="mHeight" class="text-base font-black"></p></div>
+                    <div><p class="text-[10px] text-gold font-bold uppercase mb-2">Weight</p><p id="mWeight" class="text-base font-black"></p></div>
                 </div>
-                <div class="space-y-4">
-                    <p id="mQuote" class="text-lg italic font-bold border-l-4 border-gold pl-4 text-[#3d2b1f] leading-snug"></p>
-                    <p id="mDesc" class="text-[14px] leading-relaxed text-justify opacity-90"></p>
+                <div class="space-y-8">
+                    <p id="mQuote" class="text-xl italic font-bold border-l-6 border-gold pl-6 text-[#3d2b1f] leading-relaxed"></p>
+                    <p id="mDesc" class="text-[15px] leading-[2.0] text-justify opacity-90 text-[#555]"></p>
                 </div>
             </div>
 
-            <div class="p-4 bg-black/5">
-                <button id="awakenBtn" onclick="toggleAwakening()" class="danger-btn w-full rounded-xl">본모습 개방(覺醒)</button>
+            <div class="p-6 bg-black/5">
+                <button id="awakenBtn" onclick="toggleAwakening()" class="danger-btn w-full rounded-2xl shadow-xl">본모습 개방(覺醒)</button>
             </div>
         </div>
     </div>
 
     <script>
-        // (JavaScript 데이터 및 로직은 이전 버전과 동일하므로 유지됩니다)
         const baseUrl = "https://pub-1ff16a5c9ef048e3ab851e262c07ba57.r2.dev/";
         const codes = ["0", "B2", "C1", "A3", "D2", "R1"];
         
+        // 데이터 유지
         const characters = [
             { id: "EH", name: "서은하", age: "32", type: "staff", sub: "사립 청은학원 학원장", height: "170cm", weight: "53kg", tags: ["#카리스마", "#완벽주의", "#우아함"], quote: "학원의 질서를 어지럽히는 행위는 용납하지 않습니다. 그게 누구든 말이죠.", desc: "청은학원을 총괄하는 학원장입니다. 늘 침착하고 부드러운 미소를 짓고 있지만, 그 내면은 누구보다 철저한 원칙주의자로 알려져 있습니다.", awakened: { age: "1000", sub: "구미호", tags: ["#천년의환혹", "#기억조작"], quote: "인간의 법도는 여기까지예요. 이제부터는 '나의 법'을 따르도록 하세요.", desc: "오랜 세월을 살아온 요호의 우두머리입니다. 본모습을 드러내면 압도적인 마력으로 상대의 정신을 지배하며, 환혹과 기억 조작을 통해 상황을 통제합니다." }},
             { id: "DG", name: "이도겸", age: "26", type: "staff", sub: "학원 보건교사", height: "178cm", weight: "67kg", tags: ["#상냥함", "#치유", "#섬세함"], quote: "어디 봐요, 많이 다쳤네. 아프지 않게 치료해 줄게요.", desc: "학생들에게 인기가 많은 다정한 보건교사입니다. 늘 식물을 가꾸는 취미가 있으며, 부드러운 말투로 환자들을 안심시킵니다.", awakened: { age: "240", sub: "드라이어드", tags: ["#녹음의마력", "#생명치유"], quote: "뿌리가 깊을수록 아픔도 깊은 법이죠. 제가 그 고통을 거두어 드릴게요.", desc: "숲의 정령인 드라이어드입니다. 각성 시 주변의 생명력을 다루어 치명적인 상처도 순식간에 회복시키며, 온화하지만 단호하게 대상을 보호합니다." }},
@@ -215,9 +236,9 @@
                 const card = document.createElement('div');
                 card.className = 'char-card cursor-pointer overflow-hidden';
                 card.onclick = () => openModal(c);
-                card.innerHTML = `<img src="${baseUrl}${c.id}_N0.webp" class="w-full aspect-[3/4] object-cover mb-2 rounded-md">
-                                  <p class="text-center font-black text-sm text-[#3d2b1f]">${c.name}</p>
-                                  <p class="text-center text-[10px] text-gold font-bold opacity-80">${c.sub}</p>`;
+                card.innerHTML = `<img src="${baseUrl}${c.id}_N0.webp" class="w-full aspect-[4/5] object-cover">
+                                  <p class="text-center font-black text-lg text-[#3d2b1f]">${c.name}</p>
+                                  <p class="text-center text-xs text-gold font-bold opacity-80 mt-1">${c.sub}</p>`;
                 if(c.type === 'staff') staffGrid.appendChild(card);
                 else studentGrid.appendChild(card);
             });
@@ -254,7 +275,7 @@
                 const imgUrl = `${baseUrl}${current.id}_${mode}${code}.webp`;
                 const img = document.createElement('img');
                 img.src = imgUrl;
-                img.className = `w-10 h-10 object-cover border-2 rounded ${idx === imgIdx ? 'border-gold' : 'border-transparent'} cursor-pointer transition`;
+                img.className = `w-14 h-14 object-cover border-2 rounded-lg ${idx === imgIdx ? 'border-gold shadow-lg scale-110' : 'border-transparent opacity-60'} cursor-pointer transition-all`;
                 img.onclick = () => { imgIdx = idx; updateMainPhoto(); };
                 thumbArea.appendChild(img);
             });
@@ -270,6 +291,7 @@
             document.getElementById('mainImg').src = `${baseUrl}${current.id}_${mode}${code}.webp`;
             document.querySelectorAll('#thumbArea img').forEach((img, i) => {
                 img.style.borderColor = i === imgIdx ? 'var(--gold)' : 'transparent';
+                img.style.opacity = i === imgIdx ? '1' : '0.6';
             });
         }
 
