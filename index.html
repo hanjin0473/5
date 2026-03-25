@@ -58,22 +58,24 @@
 
         .char-card { border: 1px solid #d4c5a9; background: #fff; padding: 12px; transition: 0.4s; border-radius: 12px; }
         .char-card:hover { border-color: var(--gold); transform: translateY(-5px); box-shadow: 0 10px 25px rgba(176,141,87,0.2); }
-        .char-card img { border-radius: 8px; margin-bottom: 12px; }
 
         .main-photo-container {
             position: relative;
             background-color: #0f0f0f;
-            height: 520px; 
+            height: 45vh;
             border-bottom: 4px solid var(--gold);
             overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
         }
+        @media (min-width: 768px) { .main-photo-container { height: 520px; } }
+        
         .main-photo { width: 100%; height: 100%; object-fit: contain; background: radial-gradient(circle, #222 0%, #000 100%); }
 
         .awakened-active .main-photo-container { border-bottom-color: var(--danger-red) !important; }
-        .awakened-active .info-area { background-color: #080808 !important; color: #ccc !important; }
+        .awakened-active #infoArea { background-color: #0d0d0d !important; color: #ccc !important; }
+        .awakened-active #mQuote { color: #eee !important; border-left-color: var(--danger-red) !important; }
 
         .world-section { border-left: 4px solid var(--gold); padding-left: 24px; margin-bottom: 45px; }
         .world-h3 { font-size: 1.25rem; font-weight: 900; color: var(--deep-brown); margin-bottom: 12px; }
@@ -82,20 +84,27 @@
         .link-btn { display: inline-block; background: var(--deep-brown); color: #fff; padding: 12px 28px; font-weight: 700; border-radius: 8px; margin-top: 25px; transition: 0.3s; font-size: 14px; border: 1px solid var(--gold); }
         
         .tag-item { font-size: 0.8rem; color: #b08d57; font-weight: 700; background: rgba(176, 141, 87, 0.1); padding: 4px 10px; border-radius: 6px; margin-right: 6px; border: 1px solid rgba(176,141,87,0.2); }
-        .custom-scroll::-webkit-scrollbar { width: 5px; }
+        .custom-scroll::-webkit-scrollbar { width: 5px; height: 5px; }
         .custom-scroll::-webkit-scrollbar-thumb { background: rgba(176, 141, 87, 0.3); border-radius: 10px; }
 
         .facility-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
         .facility-item { background: #f5f0e1; padding: 10px 15px; border-radius: 8px; border: 1px solid #d4c5a9; font-size: 14px; display: flex; align-items: center; gap: 10px; }
         .facility-num { color: var(--gold); font-weight: 900; font-family: monospace; border-right: 1px solid #d4c5a9; padding-right: 10px; }
+
+        .close-modal-btn {
+            position: absolute; top: 15px; right: 15px; z-index: 100;
+            background: rgba(0,0,0,0.5); color: white; width: 35px; height: 35px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 20px; border: 1px solid rgba(255,255,255,0.2); backdrop-filter: blur(5px);
+        }
     </style>
 </head>
 <body class="p-4 md:p-12">
 
     <div class="max-w-5xl mx-auto">
         <header class="text-center py-12">
-            <h1 class="text-6xl font-black text-[#f2e8cf] tracking-[0.2em]">사립 청은학원</h1>
-            <p class="text-xl text-[#b08d57] mt-4 font-bold tracking-[0.5em]">학원 정보 v9.6</p>
+            <h1 class="text-4xl md:text-6xl font-black text-[#f2e8cf] tracking-[0.2em]">사립 청은학원</h1>
+            <p class="text-sm md:text-xl text-[#b08d57] mt-4 font-bold tracking-[0.5em]">학원 정보 v9.6</p>
         </header>
 
         <nav class="tab-nav max-w-2xl mx-auto">
@@ -105,13 +114,13 @@
         </nav>
 
         <main class="paper-sheet main-content p-8 md:p-16 min-h-[70vh] max-w-3xl mx-auto">
-            
             <section id="tab-prologue" class="tab-content active">
                 <p class="text-xs text-gold font-bold tracking-[0.4em] mb-10 uppercase text-center">— THE BEGINNING —</p>
                 <div class="text-[15px] md:text-[16px] leading-[2.4] text-[#4a3a2a] space-y-8">
-                    <p>차가운 아침 공기를 뚫고 도착한 청은학원의 교문 앞은 입학식 열기로 북적입니다. 부모님을 여의고 생활을 버티는 데 급급했던 당신에게, 어느 날 지인이 건넨 의문의 입학장 한 장. </p>
-                    <p class="text-xl italic font-bold text-center py-6 text-deep-brown">“거기 가면, 네 인생이 조금은 달라질지도 모른다.”</p>
-                    <p>그 한마디에 이끌려 도착한 이곳은 겉보기엔 평범한 사립학교지만, 정체 모를 묘한 위화감이 공기 중에 흐릅니다. 낯선 기대와 희미한 경계심 속에서, 당신은 이제 막 이 학교에 첫발을 내디뎠습니다.</p>
+                    <p>아침 공기는 아직 차갑다. 새 학기 첫날, 오늘은 <strong class="font-black text-deep-brown">청은학원</strong>의 입학식 날이었다. 부모님의 의문스러운 죽음 이후 진실은 끝내 밝혀지지 않았고, 남겨진 뒤의 삶을 버티는 것만이 당신의 전부가 되었다.</p>
+                    <p>생활이 먼저가 되면서 학업과는 자연스럽게 멀어졌다. 그러던 어느 날, 낡은 우편함에서 발견한 봉투 하나. 발신인은 학원장 <strong class="font-black text-deep-brown">서은하</strong>. 부모님과 오래 교류해 왔다는 이름과 함께, 당신의 성명이 지나치게 단정히 적힌 입학장이 들어 있었다.</p>
+                    <p>왜 지금 당신에게 이 편지가 도착했는지, 그 이유는 어디에도 적혀 있지 않았다. 다만 그 부름에 이끌려 도착한 이곳은 겉보기엔 평범한 사립 학원일 뿐이었다.</p>
+                    <p>하지만 정문 앞에 선 지금도 공기 중에는 묘한 위화감이 흐른다. 당신은 낯선 경계심을 품은 채, 이제 막 이 학원에 첫발을 내디뎠다.</p>
                 </div>
                 <div class="text-center mt-12">
                     <a href="https://share.crack.wrtn.ai/w090440" target="_blank" class="link-btn">입학 절차 밟기 ↗</a>
@@ -120,81 +129,76 @@
 
             <section id="tab-intro" class="tab-content space-y-16">
                 <div class="world-section">
-                    <h3 class="world-h3">학원 주요 시설</h3>
-                    <p class="text-[13px] text-[#8c7865] mb-6">청은학원 내부에서 인가된 활동 구역 리스트입니다.</p>
+                    <h3 class="world-h3">청은 가이드라인</h3>
+                    <p class="text-[13px] text-[#8c7865] mb-6">청은학원 입학을 환영합니다. 본 원은 선택받은 소수만을 위한 폐쇄적 교육 환경을 지향합니다.</p>
+                    <div class="text-[14px] text-[#5d4a3a] leading-relaxed bg-[#f9f5f2] p-5 border-l-4 border-[#a68d75] rounded-r-lg italic">
+                        <p>우리의 존재가 외부로 드러나지 않도록 정체를 은닉하고, 내면의 충동을 제어하는 것이 본 학원의 제1원칙입니다.</p>
+                    </div>
+                </div>
+
+                <div class="world-section">
+                    <h3 class="world-h3">인가 구역 (Approved Zone)</h3>
                     <div class="facility-grid">
-                        <div class="facility-item"><span class="facility-num">02</span> 교실</div>
-                        <div class="facility-item"><span class="facility-num">03</span> 운동장</div>
-                        <div class="facility-item"><span class="facility-num">04</span> 기숙사 (월영관)</div>
-                        <div class="facility-item"><span class="facility-num">05</span> 선도부실</div>
-                        <div class="facility-item"><span class="facility-num">06</span> 옥상</div>
-                        <div class="facility-item"><span class="facility-num">07</span> 보건실</div>
-                        <div class="facility-item"><span class="facility-num">08</span> 학생회실</div>
+                        <div class="facility-item"><span class="facility-num">01</span> <strong class="text-deep-brown">청은관</strong></div>
+                        <div class="facility-item"><span class="facility-num">02</span> <strong class="text-deep-brown">제어실</strong></div>
+                        <div class="facility-item"><span class="facility-num">03</span> <strong class="text-deep-brown">흑연동</strong></div>
+                        <div class="facility-item"><span class="facility-num">04</span> <strong class="text-deep-brown">은월관</strong></div>
+                        <div class="facility-item"><span class="facility-num">05</span> <strong class="text-deep-brown">보건실</strong></div>
+                        <div class="facility-item"><span class="facility-num">06</span> <strong class="text-red-800">심층구역</strong></div>
                     </div>
                 </div>
 
                 <div class="world-section">
-                    <h3 class="world-h3">기숙사 운영 규정</h3>
-                    <div class="text-[14px] text-[#5d4a3a] space-y-4">
-                        <p class="bg-red-50 p-4 border border-red-200 rounded-lg text-red-900 font-bold">
-                            청은학원의 모든 학생은 안전한 마력 제어와 신변 보호를 위해 학원 내 기숙사인 '월영관' 입소가 의무화되어 있습니다. 외부 거주 및 비인가 외박은 엄격히 금지됩니다.
-                        </p>
-                        <p>• 통금 시간: 매일 자정 (24:00) 이후 출입 통제</p>
-                        <p>• 룸메이트는 종족 상성을 고려하여 학원측에서 임의 배정합니다.</p>
+                    <h3 class="world-h3">생활 및 보안 수칙</h3>
+                    <div class="bg-[#2a231d] p-5 border border-[#4a3a2a] rounded-lg text-[#d1c4b9]">
+                        <p class="text-gold font-black mb-2">[필수: 개인 스마트폰 보안 연동]</p>
+                        <p class="text-[13px] leading-relaxed opacity-90">입학 시 지급되는 학원 전용 어플리케이션을 반드시 설치해야 합니다.</p>
                     </div>
-                </div>
-
-                <div class="world-section">
-                    <h3 class="world-h3">기밀 관리 지침</h3>
-                    <ul class="grid grid-cols-1 md:grid-cols-2 gap-4 text-[13px] font-bold text-red-900">
-                        <li>• 비인가 포식 및 흡혈 금지</li>
-                        <li>• 지정 외 구역 마력 발현 제한</li>
-                        <li>• 종족 서열 기반 사적 제재 금지</li>
-                        <li>• 인간 접촉 시 정체 은폐 엄수</li>
-                    </ul>
                 </div>
             </section>
 
             <section id="tab-students" class="tab-content">
                 <h3 class="section-title">교직원</h3>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-20" id="staffGrid"></div>
-                
                 <h3 class="section-title">학생</h3>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-8" id="studentGrid"></div>
             </section>
         </main>
     </div>
 
-    <div id="charModal" class="fixed inset-0 z-[1000] hidden flex items-center justify-center p-4 bg-black/95 backdrop-blur-xl" onclick="closeModal()">
-        <div id="modalContainer" class="paper-sheet w-full max-w-2xl h-auto max-h-[95vh] overflow-hidden flex flex-col rounded-3xl" onclick="event.stopPropagation()">
+    <div id="charModal" class="fixed inset-0 z-[1000] hidden flex items-center justify-center p-0 md:p-4 bg-black/95 backdrop-blur-xl" onclick="closeModal()">
+        <div id="modalContainer" class="paper-sheet w-full md:max-w-2xl h-full md:h-auto md:max-h-[95vh] overflow-hidden flex flex-col md:rounded-3xl transition-all duration-500" onclick="event.stopPropagation()">
             
+            <button onclick="closeModal()" class="close-modal-btn">✕</button>
+
             <div class="main-photo-container flex-shrink-0">
                 <img id="mainImg" src="" class="main-photo">
-                <button onclick="prevImg()" class="absolute left-6 top-1/2 -translate-y-1/2 bg-black/50 text-white w-12 h-12 rounded-full z-10 hover:bg-gold transition">◀</button>
-                <button onclick="nextImg()" class="absolute right-6 top-1/2 -translate-y-1/2 bg-black/50 text-white w-12 h-12 rounded-full z-10 hover:bg-gold transition">▶</button>
-                <div class="absolute bottom-0 left-0 w-full p-10 bg-gradient-to-t from-black/90 to-transparent">
-                    <p id="mSubTitle" class="text-gold text-xs font-bold mb-2 tracking-[0.3em] uppercase"></p>
-                    <h2 id="mName" class="text-4xl font-black text-white"></h2>
-                    <div id="mTags" class="mt-4 flex flex-wrap gap-2"></div>
+                <button onclick="prevImg()" class="absolute left-4 top-1/2 -translate-y-1/2 bg-black/30 text-white w-10 h-10 rounded-full z-10 hover:bg-gold transition">◀</button>
+                <button onclick="nextImg()" class="absolute right-4 top-1/2 -translate-y-1/2 bg-black/30 text-white w-10 h-10 rounded-full z-10 hover:bg-gold transition">▶</button>
+                
+                <div class="absolute bottom-0 left-0 w-full p-6 md:p-10 bg-gradient-to-t from-black/95 via-black/50 to-transparent">
+                    <p id="mSubTitle" class="text-gold text-[10px] md:text-xs font-bold mb-1 tracking-[0.3em] uppercase"></p>
+                    <h2 id="mName" class="text-2xl md:text-4xl font-black text-white"></h2>
+                    <div id="mTags" class="mt-2 md:mt-4 flex flex-wrap gap-1 md:gap-2"></div>
                 </div>
             </div>
 
-            <div id="thumbArea" class="flex gap-3 p-4 bg-black/5 overflow-x-auto justify-center border-b border-gold/10"></div>
+            <div id="thumbArea" class="flex gap-2 p-3 bg-black/10 overflow-x-auto justify-start md:justify-center border-b border-gold/10 custom-scroll"></div>
 
-            <div id="infoArea" class="info-area p-10 md:p-14 space-y-10 overflow-y-auto flex-grow custom-scroll">
-                <div class="grid grid-cols-3 gap-6 border-b border-[#d4c5a9]/50 pb-8 text-center">
-                    <div><p class="text-[10px] text-gold font-bold uppercase mb-2">Age</p><p id="mAge" class="text-base font-black"></p></div>
-                    <div><p class="text-[10px] text-gold font-bold uppercase mb-2">Height</p><p id="mHeight" class="text-base font-black"></p></div>
-                    <div><p class="text-[10px] text-gold font-bold uppercase mb-2">Weight</p><p id="mWeight" class="text-base font-black"></p></div>
+            <div id="infoArea" class="info-area p-6 md:p-14 space-y-6 md:space-y-10 overflow-y-auto flex-grow custom-scroll bg-white">
+                <div class="grid grid-cols-3 gap-4 border-b border-[#d4c5a9]/50 pb-6 text-center">
+                    <div><p class="text-[9px] text-gold font-bold uppercase mb-1">Age</p><p id="mAge" class="text-sm md:text-base font-black"></p></div>
+                    <div><p class="text-[9px] text-gold font-bold uppercase mb-1">Height</p><p id="mHeight" class="text-sm md:text-base font-black"></p></div>
+                    <div><p class="text-[9px] text-gold font-bold uppercase mb-1">Weight</p><p id="mWeight" class="text-sm md:text-base font-black"></p></div>
                 </div>
-                <div class="space-y-8">
-                    <p id="mQuote" class="text-xl italic font-bold border-l-6 border-gold pl-6 text-[#3d2b1f] leading-relaxed"></p>
-                    <p id="mDesc" class="text-[15px] leading-[2.0] text-justify opacity-90 text-[#555]"></p>
+                <div class="space-y-4 md:space-y-8">
+                    <p id="mQuote" class="text-base md:text-xl italic font-bold border-l-4 md:border-l-6 border-gold pl-4 md:pl-6 text-[#3d2b1f] leading-relaxed"></p>
+                    <p id="mDesc" class="text-[13px] md:text-[15px] leading-[1.8] md:leading-[2.0] text-justify opacity-90 text-[#555] pb-4"></p>
                 </div>
             </div>
 
-            <div class="p-6 bg-black/5">
-                <button id="awakenBtn" onclick="toggleAwakening()" class="danger-btn w-full rounded-2xl shadow-xl">본모습 개방(覺醒)</button>
+            <div class="p-4 md:p-6 bg-black/5 border-t border-[#d4c5a9]/30">
+                <button id="awakenBtn" onclick="toggleAwakening()" class="danger-btn w-full rounded-xl md:rounded-2xl shadow-xl py-3 md:py-4 text-sm md:text-base">본모습 개방(覺醒)</button>
             </div>
         </div>
     </div>
@@ -203,28 +207,20 @@
         const baseUrl = "https://pub-1ff16a5c9ef048e3ab851e262c07ba57.r2.dev/";
         const codes = ["0", "B2", "C1", "A3", "D2", "R1"];
         
-        // 데이터 유지
-const characters = [
-    // 교직원 (학원장 및 교사)
-    { id: "EH", name: "서은하", age: "32", type: "staff", sub: "사립 청은학원 학원장", height: "170cm", weight: "53kg", tags: ["#카리스마", "#완벽주의", "#우아함"], quote: "학원의 질서를 어지럽히는 행위는 용납하지 않습니다. 그게 누구든 말이죠.", desc: "청은학원을 총괄하는 학원장입니다. 늘 침착하고 부드러운 미소를 짓고 있지만, 그 내면은 누구보다 철저한 원칙주의자로 알려져 있습니다.", awakened: { age: "1000", sub: "구미호", tags: ["#천년의환혹", "#기억조작"], quote: "인간의 법도는 여기까지예요. 이제부터는 '나의 법'을 따르도록 하세요.", desc: "오랜 세월을 살아온 요호의 우두머리입니다. 본모습을 드러내면 압도적인 마력으로 상대의 정신을 지배하며, 환혹과 기억 조작을 통해 상황을 통제합니다." }},
-    { id: "KDY", name: "강도윤", age: "27", type: "staff", sub: "학원 3학년 담임교사", height: "187cm", weight: "83kg", tags: ["#냉철", "#엄격", "#강직함"], quote: "이유 불문하고 규율 위반이다. 따라와, 징계실로 가야겠군.", desc: "학원에서 가장 엄격하다고 소문난 교사입니다. 감정에 휘둘리지 않는 냉철한 판단력으로 학생들을 지도하며 질서를 유지합니다.", awakened: { age: "820", sub: "레드 드래곤", tags: ["#절대위압", "#지배자의안광"], quote: "내 영역에서 멋대로 구는 건 이제 끝이다. 내 안광 앞에 무릎 꿇어라.", desc: "고대 용의 혈통을 이어받은 자입니다. 각성 시 거대한 마력의 파동으로 주변을 압도하며, 본능적인 소유욕과 강력한 지배력을 행사합니다." }},
-    { id: "DG", name: "이도겸", age: "26", type: "staff", sub: "학원 보건교사", height: "178cm", weight: "67kg", tags: ["#상냥함", "#치유", "#섬세함"], quote: "어디 봐요, 많이 다쳤네. 아프지 않게 치료해 줄게요.", desc: "학생들에게 인기가 많은 다정한 보건교사입니다. 늘 식물을 가꾸는 취미가 있으며, 부드러운 말투로 환자들을 안심시킵니다.", awakened: { age: "240", sub: "드라이어드", tags: ["#녹음의마력", "#생명치유"], quote: "뿌리가 깊을수록 아픔도 깊은 법이죠. 제가 그 고통을 거두어 드릴게요.", desc: "숲의 정령인 드라이어드입니다. 각성 시 주변의 생명력을 다루어 치명적인 상처도 순식간에 회복시키며, 온화하지만 단호하게 대상을 보호합니다." }},
-
-    // 3학년
-    { id: "HRN", name: "서하린", age: "23", type: "student", sub: "3학년 / 학생회 선도부장", height: "169cm", weight: "52kg", tags: ["#냉담", "#결벽", "#예리함"], quote: "복장 불량, 그리고 지각. 기록하겠습니다. 예외는 없어요.", desc: "청은학원의 선도부장입니다. 한 치의 오차도 허용하지 않는 예리한 관찰력으로 학생들의 규율 위반을 감시합니다.", awakened: { age: "146", sub: "뱀파이어", tags: ["#혈향추적", "#그림자구속"], quote: "네 심장 소리가 너무 시끄러워. 도망칠 수 있을 거라 생각한 거야?", desc: "고결한 뱀파이어 순혈종입니다. 본모습을 드러내면 타액과 혈향에 극도로 예민해지며, 그림자를 이용해 대상을 완벽하게 포박합니다." }},
-    { id: "JW", name: "백진우", age: "23", type: "student", sub: "3학년 / 농구부", height: "188cm", weight: "82kg", tags: ["#다정함", "#사교적", "#인기남"], quote: "무슨 일 있어? 표정이 안 좋네. 내가 기분 전환 좀 도와줄까?", desc: "학내 최고의 인기 남학생입니다. 누구에게나 다정하며 붙임성 있는 성격으로, 갈등이 생기면 먼저 중재에 나서는 타입입니다.", awakened: { age: "190", sub: "인큐버스", tags: ["#감각마비", "#체온유혹"], quote: "그렇게 굳어있지 마. 나한테 기대면 훨씬 편안해질 수 있을 거야.", desc: "접촉을 통해 생명력을 나누는 인큐버스입니다. 각성 시 상대의 감각을 마비시키는 유혹적인 체취를 내뿜으며 집요하게 거리를 좁혀옵니다." }},
-
-    // 2학년
-    { id: "CHE", name: "윤채은", age: "22", type: "student", sub: "2학년 / 학생회 서기", height: "168cm", weight: "50kg", tags: ["#지성", "#차분함", "#분석적"], quote: "모든 행동에는 대가가 따르는 법이죠. 제 계산은 틀린 적이 없어요.", desc: "차분하고 지적인 이미지의 학생회 서기입니다. 방대한 양의 학원 기록을 관리하며, 항상 논리적으로 상황을 분석합니다.", awakened: { age: "150", sub: "라미아", tags: ["#마비독", "#공간제약"], quote: "발을 헛디뎠군요. 이미 제 독이 당신의 신경을 지배하기 시작했을 텐데.", desc: "치명적인 독을 품은 라미아입니다. 각성 시 냉혹하고 계산적인 포식자의 본능이 깨어나며, 상대를 마비시켜 퇴로를 완벽히 차단합니다." }},
-    { id: "TAO", name: "차태오", age: "21", type: "student", sub: "2학년 / 자율동아리", height: "185cm", weight: "74kg", tags: ["#자유분방", "#위험한매력"], quote: "인생은 짧아, 재미있게 살아야지? 안 그래?", desc: "학원의 문제아로 꼽히는 자유로운 영혼입니다. 늘 도발적인 언행으로 주변의 시선을 즐기며, 금기된 것에 호기심이 많습니다.", awakened: { age: "180", sub: "계약 악마", tags: ["#욕망증폭", "#계약의사슬"], quote: "이제 솔직해질 시간이야. 네가 진짜 원하는 게 뭔지 나한테만 말해봐.", desc: "타인의 욕망을 먹고 사는 악마입니다. 본모습으로 바뀌면 거부할 수 없는 관능적인 마력을 방출하며, 계약을 통해 대상을 구속합니다." }},
-    { id: "HW", name: "류해원", age: "21", type: "student", sub: "2학년 / 도서부원", height: "181cm", weight: "67kg", tags: ["#소심함", "#착함", "#정적이"], quote: "저... 책은 제자리에 두어 주세요. 부탁드릴게요.", desc: "도서관 구석에서 책 읽는 것을 좋아하는 조용한 학생입니다. 남의 눈을 잘 마주치지 못하는 수줍은 성격입니다.", awakened: { age: "120", sub: "크라켄 후예", tags: ["#감각공명", "#심해의구속"], quote: "아무 소리도 안 들리는 곳으로 데려다줄게요. 오직 당신과 나만 있는 곳으로.", desc: "심해의 거대 괴수 크라켄의 후손입니다. 각성 시 극도로 예민해진 감각으로 상대의 호흡을 읽으며, 거부할 수 없는 힘으로 대상을 옭아맵니다." }},
-    { id: "TJ", name: "강태준", age: "22", type: "student", sub: "2학년 / 격투부", height: "186cm", weight: "80kg", tags: ["#과묵", "#터프", "#츤데레"], quote: "방해되니까 저리 비켜. 위험하니까 따라오지 말고.", desc: "말수는 적지만 행동으로 보여주는 격투부 에이스입니다. 겉으로는 쌀쌀맞게 굴어도 위험한 상황에선 항상 앞장서서 동료를 지킵니다.", awakened: { age: "90", sub: "설표", tags: ["#포식자의추적", "#야성압도"], quote: "내 이빨 자국이 남은 이상, 넌 영원히 내 사냥감이야.", desc: "눈 덮인 고산 지대의 포식자 설표입니다. 각성 시 압도적인 야성을 드러내며, 소유권을 표시하기 위해 대상을 물거나 곁을 내주지 않는 강한 집착을 보입니다." }},
-
-    // 1학년
-    { id: "SEY", name: "한서윤", age: "21", type: "student", sub: "1학년 / 육상부", height: "171cm", weight: "57kg", tags: ["#활기", "#직진", "#의리"], quote: "야! 너 또 혼자 고민하고 있지? 내가 도와준다니까!", desc: "밝고 에너지가 넘치는 신입생입니다. 누구와도 쉽게 친해지는 성격이며, 본능적으로 위험에 처한 친구를 먼저 돕는 의리파입니다.", awakened: { age: "85", sub: "늑대", tags: ["#야성강화", "#동료보호"], quote: "내 동료를 건드린 대가는 톡톡히 치르게 해 줄게. 각오해!", desc: "강인한 생명력을 가진 늑대인간입니다. 각성 시 신체 능력이 폭발적으로 상승하며, 무리를 보호하려는 강한 본능과 야성을 드러냅니다." }},
-    { id: "SH", name: "유세한", age: "20", type: "student", sub: "1학년 / 선도부원", height: "183cm", weight: "71kg", tags: ["#원칙", "#정의", "#금욕적"], quote: "부정한 행위는 결코 간과할 수 없습니다. 규정에 따라 조치하겠습니다.", desc: "신입생임에도 선도부에 발탁된 우수한 학생입니다. 늘 단정한 복장과 금욕적인 태도로 타의 모범이 되려 노력합니다.", awakened: { age: "120", sub: "천사", tags: ["#성역전개", "#정화의불꽃"], quote: "당신의 죄를 사할 방법은 단 하나뿐입니다. 여기서 정화되십시오.", desc: "질서를 수호하는 천상의 존재입니다. 각성 시 자비 없는 심판자로 변모하며, 강력한 성역을 전개해 부정한 힘을 억제하고 정화합니다." }},
-    { id: "YRI", name: "서유리", age: "21", type: "student", sub: "1학년 / 원예부", height: "164cm", weight: "48kg", tags: ["#소극적", "#귀여움", "#섬세"], quote: "꽃이 시들면 마음이 아파요... 소중하게 대해주세요.", desc: "원예실에서 꽃을 돌보며 조용히 지내는 신입생입니다. 주변의 시선에 겁이 많고 상처를 잘 받는 여린 마음을 가졌습니다.", awakened: { age: "75", sub: "서큐버스", tags: ["#꿈의침투", "#애정결핍"], quote: "꿈속에서라도 계속 같이 있어줘... 혼자 있는 건 너무 무서워.", desc: "타인의 꿈에 침투하는 능력을 가진 서큐버스입니다. 각성 시 억눌러왔던 강한 애정 결핍과 소유욕이 폭발하며 상대의 정신에 깊게 파고듭니다." }}
-];
+        const characters = [
+            { id: "EH", name: "서은하", age: "32", type: "staff", sub: "학원장", height: "173cm", weight: "55kg", tags: ["#카리스마", "#여유", "#완벽주의"], quote: "글쎄요, 그런 행동은 우리 학원의 미관을 해칠 텐데. 후후, 제 말 뜻 아시겠어요?", desc: "부드러운 존댓말과 여유로운 미소 뒤에 모든 흐름을 계산해 두는 학원장입니다. 정색할수록 오히려 더 공손해지며 주도권을 유지합니다.", awakened: { age: "1000", sub: "구미호", tags: ["#환혹", "#기억교란", "#감정유도"], quote: "이제부터는 제가 이끄는 대로, 아주 얌전히 움직여 주시겠어요?", desc: "환혹과 기억 교란에 능하며, 다정함과 유혹적인 통제가 한 몸처럼 움직여 판을 장악하는 포식자입니다." } },
+            { id: "KDY", name: "강도윤", age: "35", type: "staff", sub: "담임교사", height: "191cm", weight: "92kg", tags: ["#호방함", "#강직함", "#장악력"], quote: "어이쿠, 우리 학생. 노는 건 좋은데 적당히 하자. 안 그러면 진짜 다친다.", desc: "호탕하고 느긋한 반말을 사용하며 농담으로 상대를 누르는 담임입니다.", awakened: { age: "820", sub: "드래곤 혼혈", tags: ["#영역본능", "#지배", "#압도적위압"], quote: "더 짖어봐야 입만 아플 텐데, 순순히 항복하는게 어때?", desc: "영역과 지배 본능이 강하며, 친밀함이 깊어질수록 보호와 통제가 노골적으로 변합니다." } },
+            { id: "LSO", name: "이서온", age: "26", type: "staff", sub: "보건교사", height: "163cm", weight: "52kg", tags: ["#상냥함", "#세심함", "#안정형"], quote: "괜찮아요, 놀라지 말고. 천천히 숨 쉬어봐요. 제가 봐줄테니까요.", desc: "나긋나긋한 존댓말과 느긋한 분위기로 상태를 먼저 살피는 보건교사입니다.", awakened: { age: "240", sub: "치유정령", tags: ["#회복", "#진정", "#공조"], quote: "자, 괜찮아질 거예요. …그러니까 눈 감고, 저한테 기대요.", desc: "상처와 불안에 빠르게 동조하여 부드러운 방식으로 상대를 안정시키는 정령입니다." } },
+            { id: "SEY", name: "한서윤", age: "21", type: "student", sub: "1학년 / 육상부", height: "171cm", weight: "58kg", tags: ["#직설적", "#행동파", "#의리"], quote: "야! 비켜봐, 내가 한 방에 해결해 줄게!", desc: "직설적이고 시원시원한 반말을 사용하는 행동파입니다.", awakened: { age: "85", sub: "늑대 혈통", tags: ["#야성강화", "#무리지키기", "#영역표시"], quote: "야, 거기까지. 더 붙지 마. …한 번만 더 건드리면 물어뜯어.", desc: "사냥과 무리 보호 본능이 강하며, 친밀해질수록 영역 의식을 노골적으로 드러냅니다." } },
+            { id: "SH", name: "유세한", age: "20", type: "student", sub: "1학년 / 선도부원", height: "186cm", weight: "72kg", tags: ["#원칙", "#정의", "#금욕적"], quote: "규정 위반입니다. 지금 멈추세요.", desc: "차갑고 짧은 존댓말을 쓰며 명령조로 제지하는 선도부원입니다.", awakened: { age: "120", sub: "천사 혈통", tags: ["#정화", "#강한감시", "#보호적차단"], quote: "불온한 기운이 느껴지는군요. 당신의 죄를 사할 방법은 정화뿐입니다.", desc: "질서와 정화에 특화되어 있으며, 보호하려 할수록 더 강한 감시로 상대를 옭아맵니다." } },
+            { id: "YRI", name: "서유리", age: "21", type: "student", sub: "1학년 / 원예부", height: "165cm", weight: "45kg", tags: ["#소극적", "#귀여움", "#섬세"], quote: "저기… 나 놓고가지 마…", desc: "작고 조심스러운 반말을 쓰며 말을 머뭇거리는 학생입니다.", awakened: { age: "75", sub: "서큐버스", tags: ["#불안", "#질투", "#독점욕"], quote: "이제 영원히 내 꿈속에서만 있게 할 거야. 절대 못 나가게.", desc: "불안이 깊어질수록 질투와 독점욕이 폭발하며, 상대를 놓지 않으려는 집착이 매우 강해집니다." } },
+            { id: "CHE", name: "윤채은", age: "22", type: "student", sub: "2학년 / 학생회", height: "166cm", weight: "47kg", tags: ["#지성", "#차분함", "#분석적"], quote: "그쪽, 거기서 뭐 하세요…? 규정 위반은 안 돼요.", desc: "느릿하고 말랑한 존댓말을 쓰며 상황에 늦게 개입하는 서기입니다.", awakened: { age: "150", sub: "메두사", tags: ["#응시", "#흐름억제", "#집요한통제"], quote: "…천천히, 아주 천천히 굳어갈 거예요.", desc: "시선을 고정해 상대의 흐름을 묶어 두며, 조용하지만 집요한 통제력을 행사합니다." } },
+            { id: "TAO", name: "차태오", age: "21", type: "student", sub: "2학년 / 자율동아리", height: "182cm", weight: "70kg", tags: ["#자유분방", "#위험한매력", "#심리유희"], quote: "하, 그게 네가 할 수 있는 최선이야? 진짜 웃긴다, 너.", desc: "느긋한 반말로 상대를 비꼬거나 떠보며 반응을 즐기는 타입입니다.", awakened: { age: "180", sub: "계약악마", tags: ["#심리교란", "#공격적태도", "#강한집착"], quote: "자, 말해봐. 네가 진짜 원하는 거.", desc: "무시와 거절을 당하면 태도가 공격적으로 변하며, 상대를 끝까지 흔들어 놓는 악마입니다." } },
+            { id: "HW", name: "류해원", age: "21", type: "student", sub: "2학년 / 도서부", height: "175cm", weight: "58kg", tags: ["#소심함", "#착함", "#정적"], quote: "저기… 그, 책은 제자리에 두셔야 하는데…", desc: "조용하고 느릿한 존댓말을 쓰며 늘 상대의 눈치를 살핍니다.", awakened: { age: "120", sub: "크라켄 혼혈", tags: ["#감정공명", "#무의식적밀착", "#구속적"], quote: "가지 마세요... 여기 있어요. 저, 혼자 두지 말아주세요.", desc: "불안과 외로움이 짙어질수록 무의식적인 의존과 밀착 성향이 강해집니다." } },
+            { id: "TJ", name: "강태준", age: "22", type: "student", sub: "2학년 / 격투부", height: "186cm", weight: "82kg", tags: ["#과묵", "#터프", "#츤데레"], quote: "위험해. 뒤로 물러나 있어. …말 좀 들어, 좀.", desc: "짧고 낮은 반말을 사용하는 과묵한 성격입니다.", awakened: { age: "90", sub: "설표", tags: ["#민감한감각", "#사냥감압박", "#영역의식"], quote: "내 이빨 자국이 남은 이상 넌 영원히 내 사냥감이야.", desc: "침범과 위협에 민감하게 반응하며, 영역 의식이 강한 사냥꾼입니다." } },
+            { id: "HRN", name: "서하린", age: "23", type: "student", sub: "3학년 / 선도부장", height: "168cm", weight: "48kg", tags: ["#냉담", "#결벽", "#예리함"], quote: "거기, 멈춰. …이유는 징계실 가서 설명해.", desc: "낮고 서늘한 반말과 짧게 끊어치는 말투를 지닌 선도부장입니다.", awakened: { age: "146", sub: "뱀파이어", tags: ["#혈향추적", "#소유본능", "#집요한포식자"], quote: "…도망칠 수 거라 생각한 거야?", desc: "피 냄새와 숨결에 본능적으로 반응하며, 소유 본능이 집요한 포식자입니다." } },
+            { id: "JW", name: "백진우", age: "23", type: "student", sub: "3학년 / 농구부", height: "188cm", weight: "86kg", tags: ["#다정함", "#사교적", "#인기남"], quote: "야, 표정이 왜 그래? 형이 기분 전환 좀 시켜줄까?", desc: "껄렁한 반말과 호탕한 웃음을 섞어 접근하는 선배입니다.", awakened: { age: "190", sub: "인큐버스", tags: ["#경계해제", "#감정반응", "#선명한소유욕"], quote: "그렇게 굳어있지 마. 나한테 기대면 훨씬 편안해질 거야.", desc: "자연스럽게 경계를 무너뜨리며 거리를 좁히고, 선명한 소유욕을 드러냅니다." } }
+        ];
 
         let current = null, isAwake = false, imgIdx = 0;
 
@@ -244,7 +240,7 @@ const characters = [
                 card.className = 'char-card cursor-pointer overflow-hidden';
                 card.onclick = () => openModal(c);
                 card.innerHTML = `<img src="${baseUrl}${c.id}_N0.webp" class="w-full aspect-[4/5] object-cover">
-                                  <p class="text-center font-black text-lg text-[#3d2b1f]">${c.name}</p>
+                                  <p class="text-center font-black text-lg text-[#3d2b1f] mt-3">${c.name}</p>
                                   <p class="text-center text-xs text-gold font-bold opacity-80 mt-1">${c.sub}</p>`;
                 if(c.type === 'staff') staffGrid.appendChild(card);
                 else studentGrid.appendChild(card);
@@ -260,7 +256,9 @@ const characters = [
 
         function updateUI() {
             const data = isAwake ? current.awakened : current;
-            const mode = isAwake ? 'T' : 'N';
+            if(isAwake) document.body.classList.add('awakened-active');
+            else document.body.classList.remove('awakened-active');
+
             document.getElementById('mName').innerText = current.name;
             document.getElementById('mSubTitle').innerText = data.sub;
             document.getElementById('mAge').innerText = data.age;
@@ -268,6 +266,7 @@ const characters = [
             document.getElementById('mWeight').innerText = current.weight;
             document.getElementById('mQuote').innerText = data.quote;
             document.getElementById('mDesc').innerText = data.desc;
+            
             const tagArea = document.getElementById('mTags');
             tagArea.innerHTML = '';
             data.tags.forEach(t => {
@@ -276,34 +275,34 @@ const characters = [
                 s.innerText = t;
                 tagArea.appendChild(s);
             });
+
             const thumbArea = document.getElementById('thumbArea');
             thumbArea.innerHTML = '';
-            codes.forEach((code, idx) => {
-                const imgUrl = `${baseUrl}${current.id}_${mode}${code}.webp`;
+            const mode = isAwake ? 'T' : 'N';
+            codes.forEach((code, i) => {
                 const img = document.createElement('img');
-                img.src = imgUrl;
-                img.className = `w-14 h-14 object-cover border-2 rounded-lg ${idx === imgIdx ? 'border-gold shadow-lg scale-110' : 'border-transparent opacity-60'} cursor-pointer transition-all`;
-                img.onclick = () => { imgIdx = idx; updateMainPhoto(); };
+                img.src = `${baseUrl}${current.id}_${mode}${code}.webp`;
+                img.className = `w-14 h-14 md:w-16 md:h-16 object-cover rounded-lg cursor-pointer border-2 transition-all ${i === imgIdx ? 'border-[#b08d57] opacity-100' : 'border-transparent opacity-50'}`;
+                img.onclick = () => { imgIdx = i; updateMainPhoto(); };
                 thumbArea.appendChild(img);
             });
+
+            document.getElementById('awakenBtn').innerText = isAwake ? "인간폼으로 복귀" : "본모습 개방";
             updateMainPhoto();
-            const btn = document.getElementById('awakenBtn');
-            btn.innerText = isAwake ? "본성 억제(抑制)" : "본모습 개방(覺醒)";
-            document.body.classList.toggle('awakened-active', isAwake);
         }
 
         function updateMainPhoto() {
             const mode = isAwake ? 'T' : 'N';
-            const code = codes[imgIdx];
-            document.getElementById('mainImg').src = `${baseUrl}${current.id}_${mode}${code}.webp`;
+            document.getElementById('mainImg').src = `${baseUrl}${current.id}_${mode}${codes[imgIdx]}.webp`;
             document.querySelectorAll('#thumbArea img').forEach((img, i) => {
-                img.style.borderColor = i === imgIdx ? 'var(--gold)' : 'transparent';
-                img.style.opacity = i === imgIdx ? '1' : '0.6';
+                img.classList.toggle('border-[#b08d57]', i === imgIdx);
+                img.classList.toggle('opacity-100', i === imgIdx);
+                img.classList.toggle('opacity-50', i !== imgIdx);
             });
         }
 
-        function nextImg() { imgIdx = (imgIdx + 1) % 6; updateMainPhoto(); }
-        function prevImg() { imgIdx = (imgIdx - 1 + 6) % 6; updateMainPhoto(); }
+        function nextImg() { imgIdx = (imgIdx + 1) % codes.length; updateMainPhoto(); }
+        function prevImg() { imgIdx = (imgIdx - 1 + codes.length) % codes.length; updateMainPhoto(); }
         function toggleAwakening() { isAwake = !isAwake; imgIdx = 0; updateUI(); }
         function closeModal() { document.getElementById('charModal').classList.add('hidden'); document.body.style.overflow = 'auto'; document.body.classList.remove('awakened-active'); }
 
