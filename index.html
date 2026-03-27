@@ -119,11 +119,24 @@ body {
 </head>
 <body class="p-4 md:p-12">
 
-    <div class="max-w-5xl mx-auto">
-        <header class="text-center py-12">
-            <h1 class="text-4xl md:text-6xl font-black text-[#f2e8cf] tracking-[0.2em]">사립 청은학원</h1>
-            <p class="text-sm md:text-xl text-[#b08d57] mt-4 font-bold tracking-[0.5em]">학원 정보</p>
-        </header>
+<header class="text-center py-16 md:py-24 relative">
+    <div class="flex justify-center items-center gap-4 mb-4">
+        <div class="h-[1px] w-8 md:w-12 bg-gold/40"></div>
+        <span class="text-[10px] md:text-xs text-gold tracking-[0.6em] uppercase font-bold">Private Academy</span>
+        <div class="h-[1px] w-8 md:w-12 bg-gold/40"></div>
+    </div>
+
+    <h1 class="text-3xl md:text-5xl font-black text-[#f2e8cf] tracking-[0.25em] mb-4 drop-shadow-lg">
+        사립 <span class="text-white">청은</span>학원
+    </h1>
+
+    <div class="relative inline-block">
+        <p class="text-[11px] md:text-sm text-[#b08d57] font-medium tracking-[0.8em] pl-[0.8em] uppercase">
+            Institutional Information
+        </p>
+        <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 w-12 h-[2px] bg-gold/60"></div>
+    </div>
+</header>
 
         <nav class="tab-nav max-w-2xl mx-auto">
             <button onclick="showTab('prologue')" id="btn-prologue" class="tab-btn active">프롤로그</button>
