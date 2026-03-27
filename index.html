@@ -75,6 +75,17 @@ body {
 .awakened-active #mQuote::after {
     color: var(--danger-red);
 }
+        /* 각성 모드일 때 모달 내부 배경을 더 어둡고 붉은 기가 돌게 변경 */
+.awakened-active #infoArea {
+    background-color: #1a0a0a !important; /* 아주 어두운 핏빛 갈색 */
+    color: #e0d0d0 !important;
+}
+
+/* 각성 모드일 때 일반 텍스트 색상도 살짝 밝게 조정 (가독성) */
+.awakened-active #mDesc, 
+.awakened-active .text-[#555] {
+    color: #ccc !important;
+}
         #mDesc, .tab-content p {
         letter-spacing: -0.02em;
         word-break: keep-all; /* 단어 단위로 줄바꿈되어 더 깔끔함 */
@@ -223,6 +234,16 @@ body {
             특히 <span class="font-bold text-[#8c7865]">격양된 감정 표출이나 무질서한 언행</span>은 엄격히 규제하며, 
             언제 어디서나 평정심을 유지하여 정돈된 태도를 갖추는 것을 제1의 원칙으로 삼는다.
         </p>
+        <div class="text-[14px] text-[#5d4a3a] leading-relaxed bg-[#f9f5f2] p-6 border-l-4 border-[#8b0000] rounded-r-lg shadow-sm mt-4">
+    <p class="font-bold mb-3 text-[#3d2b1f] flex items-center gap-2">
+        <span class="bg-[#8b0000] text-white text-[10px] px-2 py-0.5 rounded">제2조</span>
+        교내 금기 구역 및 야간 통행 제한
+    </p>
+    <p class="text-[13px] leading-[1.8] text-justify">
+        일몰 후 <span class="font-bold text-[#8b0000]">심층 구역(06)</span> 인근의 통행을 엄격히 금한다. 
+        해당 구역에서 발생하는 소음이나 환각에 반응하지 말아야 하며, 이를 어기고 발생하는 신변의 변화에 대해 본교는 어떠한 책임도 지지 않는다.
+    </p>
+</div>
     </div>
     <p class="text-[11px] text-[#a68d75] px-2 font-medium">
         * 본 규정 위반 시 학생상벌위원회 규정에 의거하여 즉각적인 징계 처분이 내려질 수 있습니다.
@@ -341,8 +362,8 @@ body {
                 <button onclick="nextImg()" class="absolute right-4 top-1/2 -translate-y-1/2 bg-black/30 text-white w-10 h-10 rounded-full z-10 hover:bg-gold transition">▶</button>
                 
                 <div class="absolute bottom-0 left-0 w-full p-6 md:p-10 bg-gradient-to-t from-black/95 via-black/50 to-transparent">
-                    <p id="mSubTitle" class="text-gold text-[10px] md:text-xs font-bold mb-1 tracking-[0.3em] uppercase"></p>
-                    <h2 id="mName" class="text-2xl md:text-4xl font-black text-white"></h2>
+<p id="mSubTitle" class="text-[#f2e8cf] text-[10px] md:text-xs font-bold mb-1 tracking-[0.3em] uppercase drop-shadow-md"></p>
+<h2 id="mName" class="text-2xl md:text-4xl font-black text-white drop-shadow-lg"></h2>
                     <div id="mTags" class="mt-2 md:mt-4 flex flex-wrap gap-1 md:gap-2"></div>
                 </div>
             </div>
@@ -569,6 +590,12 @@ function updateUI() {
         img.onclick = () => { imgIdx = i; updateMainPhoto(); };
         thumbArea.appendChild(img);
     });
+    const subTitle = document.getElementById('mSubTitle');
+if (isAwake) {
+    subTitle.style.color = '#ff4d4d'; // 각성 시 붉은색 (위험 신호)
+} else {
+    subTitle.style.color = '#f2e8cf'; // 평소 연한 금색
+}
 
     document.getElementById('awakenBtn').innerText = isAwake ? "돌아가기" : "본모습 개방";
     updateMainPhoto();
