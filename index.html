@@ -37,10 +37,44 @@ body {
         border: 1px solid #d4c5a9;
     }
 #mQuote {
-        font-family: var(--font-point);
-        font-weight: 700;
-        font-style: normal; /* 궁서체 느낌을 빼기 위해 기울임 해제 권장 */
-    }
+    font-family: 'Nanum Myeongjo', serif;
+    font-weight: 800;
+    font-size: 1.15rem; /* 크기를 살짝 키움 */
+    line-height: 1.8;
+    color: #3d2b1f;
+    position: relative;
+    padding: 0 30px; /* 따옴표가 들어갈 공간 */
+    text-align: center; /* 대사는 중앙 정렬이 더 예뻐요 */
+    word-break: keep-all;
+}
+        /* 가상 요소로 큰따옴표 넣기 */
+#mQuote::before {
+    content: '“';
+    position: absolute;
+    left: 0;
+    top: -10px;
+    font-size: 3rem;
+    color: var(--gold);
+    opacity: 0.3;
+    font-family: serif;
+}
+
+#mQuote::after {
+    content: '”';
+    position: absolute;
+    right: 0;
+    bottom: -25px;
+    font-size: 3rem;
+    color: var(--gold);
+    opacity: 0.3;
+    font-family: serif;
+}
+
+/* 각성 모드일 때 따옴표 색상 변경 */
+.awakened-active #mQuote::before,
+.awakened-active #mQuote::after {
+    color: var(--danger-red);
+}
         #mDesc, .tab-content p {
         letter-spacing: -0.02em;
         word-break: keep-all; /* 단어 단위로 줄바꿈되어 더 깔끔함 */
@@ -119,22 +153,34 @@ body {
 </head>
 <body class="p-4 md:p-12">
 
-<header class="text-center py-16 md:py-24 relative">
-    <div class="flex justify-center items-center gap-4 mb-4">
-        <div class="h-[1px] w-8 md:w-12 bg-gold/40"></div>
-        <span class="text-[10px] md:text-xs text-gold tracking-[0.6em] uppercase font-bold">Private Academy</span>
-        <div class="h-[1px] w-8 md:w-12 bg-gold/40"></div>
+<header class="text-center py-20 md:py-32 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-5 flex items-center justify-center">
+        <div class="w-[500px] h-[500px] rounded-full border-[1px] border-gold animate-pulse-slow"></div>
+        <div class="absolute w-[300px] h-[300px] rounded-full border-[1px] border-gold/50 rotate-45"></div>
     </div>
 
-    <h1 class="text-3xl md:text-5xl font-black text-[#f2e8cf] tracking-[0.25em] mb-4 drop-shadow-lg">
+    <div class="flex justify-center items-center mb-8 relative z-10">
+        <div class="relative w-16 h-16 md:w-20 md:h-20 flex items-center justify-center">
+            <div class="absolute inset-0 rounded-full border-2 border-gold/60 scale-100 animate-pulse-slow"></div>
+            <div class="absolute inset-2 border-[1px] border-gold/40 rotate-45"></div>
+            <div class="text-3xl md:text-4xl text-gold font-black tracking-widest opacity-80 z-20" style="font-family: 'Nanum Myeongjo', serif;">
+                淸
+            </div>
+            <div class="absolute -bottom-2 text-[10px] text-gold/70 font-bold tracking-[0.5em] uppercase">
+                Grace
+            </div>
+        </div>
+    </div>
+
+    <h1 class="text-3xl md:text-5xl font-black text-[#f2e8cf] tracking-[0.3em] mb-6 drop-shadow-[0_2px_10px_rgba(176,141,87,0.5)] relative z-10">
         사립 <span class="text-white">청은</span>학원
     </h1>
 
-    <div class="relative inline-block">
-        <p class="text-[11px] md:text-sm text-[#b08d57] font-medium tracking-[0.8em] pl-[0.8em] uppercase">
+    <div class="relative inline-block z-10">
+        <p class="text-[11px] md:text-sm text-[#b08d57] font-medium tracking-[0.8em] pl-[0.8em] uppercase opacity-90">
             Institutional Information
         </p>
-        <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 w-12 h-[2px] bg-gold/60"></div>
+        <div class="absolute -bottom-3 left-1/2 -translate-x-1/2 w-24 h-[1px] bg-gradient-to-r from-transparent via-gold/80 to-transparent"></div>
     </div>
 </header>
 
@@ -457,60 +503,76 @@ const characters = [
         }
 
 function updateUI() {
-            const data = isAwake ? current.awakened : current;
-            if(isAwake) document.body.classList.add('awakened-active');
-            else document.body.classList.remove('awakened-active');
+    const data = isAwake ? current.awakened : current;
+    
+    // 1. 모드에 따른 바디 클래스 제어
+    if(isAwake) document.body.classList.add('awakened-active');
+    else document.body.classList.remove('awakened-active');
 
-            document.getElementById('mName').innerText = current.name;
-            document.getElementById('mSubTitle').innerText = data.sub;
-            document.getElementById('mAge').innerText = data.age;
-            document.getElementById('mHeight').innerText = current.height;
-            document.getElementById('mWeight').innerText = current.weight;
-            document.getElementById('mQuote').innerText = data.quote;
-            
-            // --- 이 부분이 핵심 수정 사항입니다 ---
-            const infoArea = document.getElementById('infoArea');
-            const descHtml = `<p id="mDesc" class="text-[13px] md:text-[15px] leading-[1.8] md:leading-[2.0] text-justify opacity-90 text-[#555] pb-4">${data.desc}</p>`;
-            
-            const preferenceHtml = `
-                <div class="mt-6 pt-6 border-t border-[#d4c5a9]/30 grid grid-cols-1 gap-4 text-[13px]">
-                    <div class="flex items-start"><span class="text-gold font-bold mr-3 w-16 shrink-0 uppercase tracking-wider">Like</span> <span class="text-[#555]">${data.likes}</span></div>
-                    <div class="flex items-start"><span class="text-[#8b0000] font-bold mr-3 w-16 shrink-0 uppercase tracking-wider">Dislike</span> <span class="text-[#555]">${data.dislikes}</span></div>
-                </div>
-            `;
-            
-            // 설명문과 선호도 정보를 합쳐서 infoArea의 뒷부분(설명 섹션)에 삽입
-            const contentContainer = infoArea.querySelector('.space-y-4');
-            contentContainer.innerHTML = `
-                <p id="mQuote" class="text-base md:text-xl italic font-bold border-l-4 md:border-l-6 border-gold pl-4 md:pl-6 text-[#3d2b1f] leading-relaxed">${data.quote}</p>
-                ${descHtml}
-                ${preferenceHtml}
-            `;
-            // --------------------------------------
+    // 2. 기본 정보 업데이트
+    document.getElementById('mName').innerText = current.name;
+    document.getElementById('mSubTitle').innerText = data.sub;
+    document.getElementById('mAge').innerText = data.age;
+    document.getElementById('mHeight').innerText = current.height;
+    document.getElementById('mWeight').innerText = current.weight;
 
-            const tagArea = document.getElementById('mTags');
-            tagArea.innerHTML = '';
-            data.tags.forEach(t => {
-                const s = document.createElement('span');
-                s.className = 'tag-item';
-                s.innerText = t;
-                tagArea.appendChild(s);
-            });
+    // 3. 메인 콘텐츠 영역(대사 + 설명 + 선호도) 렌더링
+    // 기존에 존재하던 내용을 싹 비우고 새로 작성하여 구조 충돌을 방지합니다.
+    const infoArea = document.getElementById('infoArea');
+    
+    // 상단 스탯 그리드는 유지하고, 그 아래의 내용만 교체
+    const statsGrid = infoArea.querySelector('.grid.grid-cols-3').outerHTML;
+    
+    const descHtml = `<p id="mDesc" class="text-[13px] md:text-[15px] leading-[1.8] md:leading-[2.0] text-justify opacity-90 text-[#555] pb-4">${data.desc}</p>`;
+    const preferenceHtml = `
+        <div class="mt-6 pt-6 border-t border-[#d4c5a9]/30 grid grid-cols-1 gap-4 text-[13px]">
+            <div class="flex items-start">
+                <span class="text-gold font-bold mr-3 w-16 shrink-0 uppercase tracking-wider">Like</span> 
+                <span class="text-[#555]">${data.likes}</span>
+            </div>
+            <div class="flex items-start">
+                <span class="text-[#8b0000] font-bold mr-3 w-16 shrink-0 uppercase tracking-wider">Dislike</span> 
+                <span class="text-[#555]">${data.dislikes}</span>
+            </div>
+        </div>
+    `;
 
-            const thumbArea = document.getElementById('thumbArea');
-            thumbArea.innerHTML = '';
-            const mode = isAwake ? 'T' : 'N';
-            codes.forEach((code, i) => {
-                const img = document.createElement('img');
-                img.src = `${baseUrl}${current.id}_${mode}${code}.webp`;
-                img.className = `w-14 h-14 md:w-16 md:h-16 object-cover rounded-lg cursor-pointer border-2 transition-all ${i === imgIdx ? 'border-[#b08d57] opacity-100' : 'border-transparent opacity-50'}`;
-                img.onclick = () => { imgIdx = i; updateMainPhoto(); };
-                thumbArea.appendChild(img);
-            });
+    // 전체 infoArea를 다시 구성 (스탯 + 대사 + 설명 + 선호도)
+    infoArea.innerHTML = `
+        ${statsGrid}
+        <div class="space-y-6 md:space-y-10 mt-8">
+            <div class="py-10 mb-4"> 
+                <p id="mQuote">${data.quote}</p>
+            </div>
+            ${descHtml}
+            ${preferenceHtml}
+        </div>
+    `;
 
-            document.getElementById('awakenBtn').innerText = isAwake ? "인간 폼으로 복귀" : "본모습 개방(覺醒)";
-            updateMainPhoto();
-        }
+    // 4. 태그 및 썸네일 업데이트 (기존 로직 유지)
+    const tagArea = document.getElementById('mTags');
+    tagArea.innerHTML = '';
+    data.tags.forEach(t => {
+        const s = document.createElement('span');
+        s.className = 'tag-item';
+        s.innerText = t;
+        tagArea.appendChild(s);
+    });
+
+    const thumbArea = document.getElementById('thumbArea');
+    thumbArea.innerHTML = '';
+    const mode = isAwake ? 'T' : 'N';
+    codes.forEach((code, i) => {
+        const img = document.createElement('img');
+        img.src = `${baseUrl}${current.id}_${mode}${code}.webp`;
+        img.className = `w-14 h-14 md:w-16 md:h-16 object-cover rounded-lg cursor-pointer border-2 transition-all ${i === imgIdx ? 'border-[#b08d57] opacity-100' : 'border-transparent opacity-50'}`;
+        img.onclick = () => { imgIdx = i; updateMainPhoto(); };
+        thumbArea.appendChild(img);
+    });
+
+    document.getElementById('awakenBtn').innerText = isAwake ? "돌아가기" : "본모습 개방";
+    updateMainPhoto();
+}
 
         function updateMainPhoto() {
             const mode = isAwake ? 'T' : 'N';
