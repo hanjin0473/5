@@ -5,28 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>청은학원 정보 v9.6</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Noto+Sans+KR:wght@300;400;700;900&display=swap" rel="stylesheet">
     <style>
-        :root { 
-            --gold: #b08d57; --deep-brown: #3d2b1f; 
-            --paper: #fdfaf1; --ink: #1a1a1a; --danger-red: #8b0000;
-        }
-        body { 
-            background: #120c09; 
-            color: var(--ink); 
-            font-family: 'Noto Serif KR', serif; 
-            background-image: url('https://www.transparenttextures.com/patterns/dark-leather.png');
-            line-height: 1.8;
-            overflow-x: hidden;
-        }
+:root { 
+        --gold: #b08d57; --deep-brown: #3d2b1f; 
+        --paper: #fdfaf1; --ink: #1a1a1a; --danger-red: #8b0000;
+        /* 신규 폰트 변수 */
+        --font-main: 'Noto Sans KR', sans-serif;
+        --font-point: 'Nanum Myeongjo', serif;
+    }
+body { 
+        background: #120c09; 
+        color: var(--ink); 
+        font-family: var(--font-main); /* 전체적으로 깔끔한 산세리프 적용 */
+        background-image: url('https://www.transparenttextures.com/patterns/dark-leather.png');
+        line-height: 1.8;
+        overflow-x: hidden;
+    }
         
-        .paper-sheet { 
-            background: var(--paper); 
-            background-image: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
-            box-shadow: 0 20px 60px rgba(0,0,0,0.7);
-            border: 1px solid #d4c5a9;
-        }
+        header h1, .section-title, .world-h3, #mName, .tab-btn {
+        font-family: var(--font-point);
+        letter-spacing: 0.1em;
+    }
 
+    header h1 { font-weight: 800; } 
+        
+.paper-sheet { 
+        background: var(--paper); 
+        background-image: url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+        box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+        border: 1px solid #d4c5a9;
+    }
+#mQuote {
+        font-family: var(--font-point);
+        font-weight: 700;
+        font-style: normal; /* 궁서체 느낌을 빼기 위해 기울임 해제 권장 */
+    }
+        #mDesc, .tab-content p {
+        letter-spacing: -0.02em;
+        word-break: keep-all; /* 단어 단위로 줄바꿈되어 더 깔끔함 */
+    }
         .tab-nav { display: flex; justify-content: center; gap: 4px; margin-bottom: -1px; }
         .tab-btn { 
             padding: 10px 20px; 
@@ -104,7 +122,7 @@
     <div class="max-w-5xl mx-auto">
         <header class="text-center py-12">
             <h1 class="text-4xl md:text-6xl font-black text-[#f2e8cf] tracking-[0.2em]">사립 청은학원</h1>
-            <p class="text-sm md:text-xl text-[#b08d57] mt-4 font-bold tracking-[0.5em]">학원 정보 v9.6</p>
+            <p class="text-sm md:text-xl text-[#b08d57] mt-4 font-bold tracking-[0.5em]">학원 정보</p>
         </header>
 
         <nav class="tab-nav max-w-2xl mx-auto">
