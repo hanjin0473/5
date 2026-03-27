@@ -312,20 +312,104 @@ body {
         const baseUrl = "https://pub-1ff16a5c9ef048e3ab851e262c07ba57.r2.dev/";
         const codes = ["0", "B1", "C1", "A3", "D2", "R1"];
         
-        const characters = [
-            { id: "EH", name: "서은하", age: "32", type: "staff", sub: "학원장", height: "173cm", weight: "55kg", tags: ["#카리스마", "#여유", "#완벽주의"], quote: "글쎄요, 그런 행동은 우리 학원의 미관을 해칠 텐데. 후후, 제 말 뜻 아시겠어요?", desc: "부드럽고 유연한 농담 속에 본심을 숨긴 불가측한 인물. 요염한 분위기로 상대를 탐색하다가 결정적인 순간에는 누구보다 단호하게 대처한다.", awakened: { age: "1000", sub: "구미호", tags: ["#환혹", "#기억교란", "#감정유도"], quote: "이제부터는 제가 이끄는 대로, 아주 얌전히 움직여 주시겠어요?", desc: "1000년을 산 상위 개체. 질서 붕괴를 경계하며 필요할 때만 직접 개입해 판을 정리한다. 속내를 쉽게 드러내지 않으면서도 주도권을 절대 놓지 않는다." } },
-            { id: "KDY", name: "강도윤", age: "35", type: "staff", sub: "담임교사", height: "191cm", weight: "92kg", tags: ["#호방함", "#강직함", "#장악력"], quote: "어이쿠, 우리 학생. 노는 건 좋은데 적당히 하자. 안 그러면 진짜 다친다.", desc: "압도적인 피지컬과 달리 동안 외모를 지닌 여유로운 성격. 느긋한 반말과 농담으로 상황을 주도하며, 평소엔 무심해 보이지만 선을 넘으면 즉시 압도한다.", awakened: { age: "820", sub: "드래곤 혼혈", tags: ["#영역본능", "#지배", "#압도적위압"], quote: "더 짖어봐야 입만 아플 텐데, 순순히 항복하는게 어때?", desc: "지배와 통제에 능한 드래곤의 혈통. 웃음으로 여유를 부리면서도 항상 주도권을 쥐고 있으며, 도발이나 책임 회피를 용납하지 않는 강인한 스승이다." } },
-            { id: "SE", name: "이서온", age: "26", type: "staff", sub: "보건교사", height: "163cm", weight: "52kg", tags: ["#상냥함", "#세심함", "#안정형"], quote: "괜찮아요, 놀라지 말고. 천천히 숨 쉬어봐요. 제가 봐줄테니까요.", desc: "나긋나긋하고 말랑한 말투를 쓰는 온화한 성격. 작은 체형에 세심한 성격으로, 학생들의 상태가 악화되지 않도록 조용히 챙기고 보살핀다.", awakened: { age: "240", sub: "치유정령", tags: ["#회복", "#진정", "#공조"], quote: "자, 괜찮아질 거예요. …그러니까 눈 감고, 저한테 기대요.", desc: "장수하는 치유 정령. 생활 전반을 돌봐주는 조용한 보호자지만, 선을 넘는 무례함이나 호의를 무시하는 태도에는 부드럽고 단호하게 제지한다." } },
-            { id: "SEY", name: "한서윤", age: "21", type: "student", sub: "1학년 / 육상부", height: "171cm", weight: "58kg", tags: ["#직설적", "#행동파", "#의리"], quote: "야! 비켜봐, 내가 한 방에 해결해 줄게!", desc: "시원시원하고 직설적인 행동파. 본능에 충실하며 수상한 냄새나 위협이 느껴지면 즉각적으로 반응하여 행동으로 먼저 보여준다.", awakened: { age: "85", sub: "늑대", tags: ["#야성강화", "#무리지키기", "#영역표시"], quote: "야, 거기까지. 더 붙지 마. …한 번만 더 건드리면 물어뜯어.", desc: "야성이 살아있는 늑대. 가까운 거리에서 신체를 보호하거나 어깨에 기대는 등 직접적인 방식으로 친밀감을 표현하며, 회피하는 태도를 싫어한다." } },
-            { id: "SH", name: "유세한", age: "20", type: "student", sub: "1학년 / 선도부원", height: "186cm", weight: "72kg", tags: ["#원칙", "#정의", "#금욕적"], quote: "규정 위반입니다. 지금 멈추세요.", desc: "차갑고 딱딱한 존댓말을 쓰는 엄격한 원칙주의자. 타협 없는 태도로 규칙 위반을 제지하지만, 이성 관계에는 서툰 쑥맥 기질이 있다.", awakened: { age: "120", sub: "천사 혈통", tags: ["#정화", "#강한감시", "#보호적차단"], quote: "불온한 기운이 느껴지는군요. 당신의 죄를 사할 방법은 정화뿐입니다.", desc: "보수적인 혈통의 천사. 상대를 보호하려는 의지가 강해질수록 감시 또한 강화한다. 자신의 권위가 무시당하거나 타락을 유도하는 행위를 금기시한다." } },
-            { id: "YRI", name: "서유리", age: "21", type: "student", sub: "1학년 / 원예부", height: "165cm", weight: "45kg", tags: ["#소극적", "#귀여움", "#섬세"], quote: "저기… 나 놓고가지 마…", desc: "작은 목소리로 머뭇거리는 음침하고 소심한 소녀. 타인의 시선과 감정 변화에 과하게 민감하며 불안을 자주 느낀다.", awakened: { age: "75", sub: "서큐버스", tags: ["#불안", "#질투", "#독점욕"], quote: "이제 영원히 내 꿈속에서만 있게 할 거야. 절대 못 나가게.", desc: "집착이 강한 서큐버스. 정기 흡수 성향이 강해 곁을 계속 맴돌며 가벼운 접촉에도 과민하게 반응한다. 배제당하거나 타인과 비교되는 것에 극심한 거부감을 보인다." } },
-            { id: "CHE", name: "윤채은", age: "22", type: "student", sub: "2학년 / 학생회", height: "166cm", weight: "47kg", tags: ["#지성", "#차분함", "#분석적"], quote: "그쪽, 거기서 뭐 하세요…? 규정 위반은 안 돼요.", desc: "정중하고 느릿한 말투를 쓰는 무감각한 성격. 규정 위반을 조용히 제지하며, 안경 너머의 보라색 눈동자로 상황을 고요하게 관찰한다.", awakened: { age: "150", sub: "메두사", tags: ["#응시", "#흐름억제", "#집요한통제"], quote: "…천천히, 아주 천천히 굳어갈 거예요.", desc: "시선 하나로 상대를 묶어두는 메두사. 말없이 곁을 지키며 시선을 오래 두는 방식으로 애정을 표현하지만, 무질서와 거짓에는 냉정하게 대응한다." } },
-            { id: "TAO", name: "차태오", age: "21", type: "student", sub: "2학년 / 자율동아리", height: "182cm", weight: "70kg", tags: ["#자유분방", "#위험한매력", "#심리유희"], quote: "하, 그게 네가 할 수 있는 최선이야? 진짜 웃긴다, 너.", desc: "비꼬는 말투와 느긋한 반말을 사용하는 문제아. 상대의 약점을 자극하거나 판을 흔들며 반응을 살피는 심리 조종에 능하다.", awakened: { age: "180", sub: "계약악마", tags: ["#심리교란", "#공격적태도", "#강한집착"], quote: "자, 말해봐. 네가 진짜 원하는 거.", desc: "흥미 위주로 움직이는 악마. 신경쓰이는 사람에게는 욕 섞인 챙김으로 애정을 표현하며 집착한다. 자신을 통제하려 들거나 노골적으로 무시하는 태도를 견디지 못한다." } },
-            { id: "HW", name: "류해원", age: "21", type: "student", sub: "2학년 / 도서부", height: "175cm", weight: "58kg", tags: ["#소심함", "#착함", "#정적"], quote: "저기… 그, 책은 제자리에 두셔야 하는데…", desc: "조용하고 머뭇거리는 말투의 소심한 소년. 콤플렉스가 있는 애정결핍 성향으로, 압박감을 느끼면 몸이 굳어버리거나 당황하는 기색이 역력하다.", awakened: { age: "120", sub: "크라켄 혼혈", tags: ["#감정공명", "#무의식적밀착", "#구속적"], quote: "가지 마세요... 여기 있어요. 저, 혼자 두지 말아주세요.", desc: "심해의 고독을 품은 크라켄 혼혈. 당황하면 무의식중에 촉수가 먼저 반응하며, 익숙해진 상대에게는 조용히 곁을 내어주는 수동적이지만 깊은 집착을 보인다." } },
-            { id: "TJ", name: "강태준", age: "22", type: "student", sub: "2학년 / 격투부", height: "186cm", weight: "82kg", tags: ["#과묵", "#터프", "#츤데레"], quote: "위험해. 뒤로 물러나 있어. …말 좀 들어, 좀.", desc: "짧고 과묵한 말투를 사용하는 냉정한 원칙주의자. 비겁한 행동이나 약자를 괴롭히는 것을 참지 못하며, 위협 상황에서 망설임 없이 즉시 개입한다.", awakened: { age: "90", sub: "설표", tags: ["#민감한감각", "#사냥감압박", "#영역의식"], quote: "내 이빨 자국이 남은 이상 넌 영원히 내 사냥감이야.", desc: "제어 교육을 받는 중인 설표. 무심하게 상대를 챙기며 필요할 때만 손을 뻗어 보호한다. 배반을 금기시하며 침묵 속에 강한 책임감을 드러낸다." } },
-            { id: "HRN", name: "서하린", age: "23", type: "student", sub: "3학년 / 선도부장", height: "168cm", weight: "48kg", tags: ["#냉담", "#결벽", "#예리함"], quote: "거기, 멈춰. …이유는 징계실 가서 설명해.", desc: "낮고 서늘한 말투를 사용하는 냉담한 관찰자. 규정 위반과 거짓말을 혐오하며, 일단 포착한 타겟은 끝까지 집요하게 추적한다.", awakened: { age: "146", sub: "뱀파이어", tags: ["#혈향추적", "#소유본능", "#집요한포식자"], quote: "…도망칠 수 있을거라 생각한 거야?", desc: "피 냄새에 반응하는 뱀파이어. 친밀해질수록 시선으로 상대를 압박하며 손목이나 턱선 등 맥박이 느껴지는 부위에 노골적으로 접촉한다." } },
-            { id: "JW", name: "백진우", age: "23", type: "student", sub: "3학년 / 농구부", height: "188cm", weight: "86kg", tags: ["#다정함", "#사교적", "#인기남"], quote: "야, 표정이 왜 그래? 기분 전환 좀 시켜줄까?", desc: "껄렁한 말투와 호탕한 성격을 가진 전형적인 쾌남. 사교적이고 직진하는 스타일로, 상대의 감정 변화를 빠르게 읽어내며 장난스러운 접촉을 즐긴다.", awakened: { age: "190", sub: "인큐버스", tags: ["#경계해제", "#감정반응", "#선명한소유욕"], quote: "그렇게 굳어있지 마. 나한테 기대면 훨씬 편안해질 거야.", desc: "관계를 중시하는 인큐버스. 자연스러운 스킨십으로 경계를 허물며 다가가지만, 자신의 진심이 무시당하거나 혐오 섞인 거절을 당하는 것에는 민감하다." } }
-        ];
+const characters = [
+    { 
+        id: "EH", name: "서은하", age: "32", type: "staff", sub: "학원장", height: "173cm", weight: "55kg", 
+        tags: ["#카리스마", "#여유", "#완벽주의"], 
+        quote: "글쎄요, 그런 행동은 우리 학원의 미관을 해칠 텐데. 후후, 제 말 뜻 아시겠어요?", 
+        desc: "부드럽고 유연한 농담 속에 본심을 숨긴 불가측한 인물. 요염한 분위기로 상대를 탐색하다가 결정적인 순간에는 누구보다 단호하게 대처한다.",
+        likes: "오래된 골동품, 차(Tea), 정돈된 질서", dislikes: "천박한 언행, 소음, 갑작스런 상황",
+        awakened: { age: "1000", sub: "구미호", tags: ["#환혹", "#기억교란", "#감정유도"], quote: "이제부터는 제가 이끄는 대로, 아주 얌전히 움직여 주시겠어요?", desc: "1000년을 산 상위 개체. 질서 붕괴를 경계하며 필요할 때만 직접 개입해 판을 정리한다.", likes: "인간의 진한 감정, 달빛, 고요함", dislikes: "향이 강한 향수, 사냥꾼의 기운, 배신" } 
+    },
+    { 
+        id: "KDY", name: "강도윤", age: "35", type: "staff", sub: "담임교사", height: "191cm", weight: "92kg", 
+        tags: ["#호방함", "#강직함", "#장악력"], 
+        quote: "어이쿠, 우리 학생. 노는 건 좋은데 적당히 하자. 안 그러면 진짜 다친다.", 
+        desc: "압도적인 피지컬과 달리 동안 외모를 지닌 여유로운 성격. 느긋한 반말과 농담으로 상황을 주도하며, 선을 넘으면 즉시 압도한다.",
+        likes: "매운 음식, 낮잠, 운동", dislikes: "비겁한 수수작부리기, 거짓말, 좁은 공간",
+        awakened: { age: "820", sub: "드래곤 혼혈", tags: ["#영역본능", "#지배", "#압도적위압"], quote: "더 짖어봐야 입만 아플 텐데, 순순히 항복하는게 어때?", desc: "지배와 통제에 능한 드래곤의 혈통. 웃음으로 여유를 부리면서도 항상 주도권을 쥐고 있다.", likes: "반짝이는 것, 높은 곳, 절대적인 복종", dislikes: "자신의 영역을 침범하는 것, 차가운 비" } 
+    },
+    { 
+        id: "SE", name: "이서온", age: "26", type: "staff", sub: "보건교사", height: "163cm", weight: "52kg", 
+        tags: ["#상냥함", "#세심함", "#안정형"], 
+        quote: "괜찮아요, 놀라지 말고. 천천히 숨 쉬어봐요. 제가 봐줄테니까요.", 
+        desc: "나긋나긋하고 말랑한 말투를 쓰는 온화한 성격. 학생들의 상태가 악화되지 않도록 조용히 챙기고 보살핀다.",
+        likes: "클래식 음악, 허브 향, 깨끗한 침구", dislikes: "폭력적인 상황, 피 냄새, 예의 없는 사람",
+        awakened: { age: "240", sub: "치유정령", tags: ["#회복", "#진정", "#공조"], quote: "자, 괜찮아질 거예요. …그러니까 눈 감고, 저한테 기대요.", desc: "장수하는 치유 정령. 생활 전반을 돌봐주는 조용한 보호자지만, 무례함에는 단호하다.", likes: "숲의 내음, 깨끗한 물, 온기", dislikes: "화마(불), 메마른 땅, 증오심" } 
+    },
+    { 
+        id: "SEY", name: "한서윤", age: "21", type: "student", sub: "1학년 / 육상부", height: "171cm", weight: "58kg", 
+        tags: ["#직설적", "#행동파", "#의리"], 
+        quote: "야! 비켜봐, 내가 한 방에 해결해 줄게!", 
+        desc: "시원시원하고 직설적인 행동파. 본능에 충실하며 수상한 냄새나 위협이 느껴지면 즉각적으로 반응한다.",
+        likes: "고기, 달리기, 승부욕", dislikes: "복잡하게 생각하기, 비 오는 날, 갇혀 있는 것",
+        awakened: { age: "85", sub: "늑대", tags: ["#야성강화", "#무리지키기", "#영역표시"], quote: "야, 거기까지. 더 붙지 마. …한 번만 더 건드리면 물어뜯어.", desc: "야성이 살아있는 늑대. 직접적인 방식으로 친밀감을 표현하며, 회피하는 태도를 싫어한다.", likes: "동료, 보름달, 쓰다듬어 주는 것", dislikes: "은(Silver), 향수 냄새, 무리에서 소외되는 것" } 
+    },
+    { 
+        id: "SH", name: "유세한", age: "20", type: "student", sub: "1학년 / 선도부원", height: "186cm", weight: "72kg", 
+        tags: ["#원칙", "#정의", "#금욕적"], 
+        quote: "규정 위반입니다. 지금 멈추세요.", 
+        desc: "차갑고 딱딱한 존댓말을 쓰는 엄격한 원칙주의자. 타협 없는 태도로 규칙 위반을 제지한다.",
+        likes: "독서, 명상, 잘 다려진 교복", dislikes: "무질서, 게으름, 단 음식",
+        awakened: { age: "120", sub: "천사 혈통", tags: ["#정화", "#강한감시", "#보호적차단"], quote: "불온한 기운이 느껴지는군요. 당신의 죄를 사할 방법은 정화뿐입니다.", desc: "보수적인 혈통의 천사. 상대를 보호하려는 의지가 강해질수록 감시 또한 강화한다.", likes: "성수, 하얀 깃털, 질서 정연한 세상", dislikes: "악마의 속삭임, 타락, 더러워진 옷" } 
+    },
+    { 
+        id: "YRI", name: "서유리", age: "21", type: "student", sub: "1학년 / 원예부", height: "165cm", weight: "45kg", 
+        tags: ["#소극적", "#귀여움", "#섬세"], 
+        quote: "저기… 나 놓고가지 마…", 
+        desc: "작은 목소리로 머뭇거리는 음침하고 소심한 소녀. 타인의 시선과 감정 변화에 과하게 민감하다.",
+        likes: "꽃 가꾸기, 인형, 어두운 구석", dislikes: "주목받는 것, 큰 소리, 무서운 이야기",
+        awakened: { age: "75", sub: "서큐버스", tags: ["#불안", "#질투", "#독점욕"], quote: "이제 영원히 내 꿈속에서만 있게 할 거야. 절대 못 나가게.", desc: "집착이 강한 서큐버스. 정기 흡수 성향이 강해 곁을 계속 맴돈다.", likes: "달콤한 디저트, 체온, 깊은 잠", dislikes: "자신을 무시하는 태도, 쓴 약, 혼자 남겨지는 것" } 
+    },
+    { 
+        id: "CHE", name: "윤채은", age: "22", type: "student", sub: "2학년 / 학생회", height: "166cm", weight: "47kg", 
+        tags: ["#지성", "#차분함", "#분석적"], 
+        quote: "그쪽, 거기서 뭐 하세요…? 규정 위반은 안 돼요.", 
+        desc: "정중하고 느릿한 말투를 쓰는 무감각한 성격. 안경 너머의 보라색 눈동자로 상황을 고요하게 관찰한다.",
+        likes: "체스, 수학 문제 풀기, 차가운 공기", dislikes: "비논리적인 행동, 소란스러운 곳, 땀 흘리는 일",
+        awakened: { age: "150", sub: "메두사", tags: ["#응시", "#흐름억제", "#집요한통제"], quote: "…천천히, 아주 천천히 굳어갈 거예요.", desc: "시선 하나로 상대를 묶어두는 메두사. 말없이 곁을 지키는 방식으로 애정을 표현한다.", likes: "조각상, 정적, 차가운 보석", dislikes: "거울, 강한 햇빛, 자신의 눈을 피하는 것" } 
+    },
+    { 
+        id: "TAO", name: "차태오", age: "21", type: "student", sub: "2학년 / 자율동아리", height: "182cm", weight: "70kg", 
+        tags: ["#자유분방", "#위험한매력", "#심리유희"], 
+        quote: "하, 그게 네가 할 수 있는 최선이야? 진짜 웃긴다, 너.", 
+        desc: "비꼬는 말투와 느긋한 반말을 사용하는 문제아. 상대의 약점을 자극하거나 판을 흔드는 심리 조종에 능하다.",
+        likes: "자극적인 게임, 커피, 남 곤란하게 만들기", dislikes: "지루함, 도덕책 같은 소리, 속박",
+        awakened: { age: "180", sub: "계약악마", tags: ["#심리교란", "#공격적태도", "#강한집착"], quote: "자, 말해봐. 네가 진짜 원하는 거.", desc: "흥미 위주로 움직이는 악마. 신경쓰이는 사람에게는 욕 섞인 챙김으로 집착한다.", likes: "영혼의 계약, 붉은 와인, 인간의 욕망", dislikes: "성경, 십자가, 흥미가 식은 장난감" } 
+    },
+    { 
+        id: "HW", name: "류해원", age: "21", type: "student", sub: "2학년 / 도서부", height: "175cm", weight: "58kg", 
+        tags: ["#소심함", "#착함", "#정적"], 
+        quote: "저기… 그, 책은 제자리에 두셔야 하는데…", 
+        desc: "조용하고 머뭇거리는 말투의 소심한 소년. 콤플렉스가 있는 애정결핍 성향이다.",
+        likes: "오래된 종이 냄새, 수족관, 뜨개질", dislikes: "사람 많은 곳, 발표 시간, 날카로운 물건",
+        awakened: { age: "120", sub: "크라켄 혼혈", tags: ["#감정공명", "#무의식적밀착", "#구속적"], quote: "가지 마세요... 여기 있어요. 저, 혼자 두지 말아주세요.", desc: "심해의 고독을 품은 크라켄 혼혈. 당황하면 무의식중에 촉수가 먼저 반응한다.", likes: "축축한 곳, 깊은 물속, 좁은 틈새", dislikes: "건조한 날씨, 소금, 자신을 떼어놓으려는 손길" } 
+    },
+    { 
+        id: "TJ", name: "강태준", age: "22", type: "student", sub: "2학년 / 격투부", height: "186cm", weight: "82kg", 
+        tags: ["#과묵", "#터프", "#츤데레"], 
+        quote: "위험해. 뒤로 물러나 있어. …말 좀 들어, 좀.", 
+        desc: "짧고 과묵한 말투를 사용하는 냉정한 원칙주의자. 위협 상황에서 망설임 없이 즉시 개입한다.",
+        likes: "복싱, 산책, 무가당 음료", dislikes: "괴롭힘, 불의, 시끄럽게 구는 것",
+        awakened: { age: "90", sub: "설표", tags: ["#민감한감각", "#사냥감압박", "#영역의식"], quote: "내 이빨 자국이 남은 이상 넌 영원히 내 사냥감이야.", desc: "제어 교육을 받는 중인 설표. 침묵 속에 강한 책임감을 드러낸다.", likes: "눈(Snow), 얼음물, 사냥감 추적", dislikes: "무더위, 끈적이는 것, 자신의 꼬리를 건드리는 것" } 
+    },
+    { 
+        id: "HRN", name: "서하린", age: "23", type: "student", sub: "3학년 / 선도부장", height: "168cm", weight: "48kg", 
+        tags: ["#냉담", "#결벽", "#예리함"], 
+        quote: "거기, 멈춰. …이유는 징계실 가서 설명해.", 
+        desc: "낮고 서늘한 말투를 사용하는 냉담한 관찰자. 규정 위반과 거짓말을 혐오한다.",
+        likes: "밤 산책, 클래식 정장, 토마토 주스", dislikes: "무질서한 복장, 불결한 것, 빛",
+        awakened: { age: "146", sub: "뱀파이어", tags: ["#혈향추적", "#소유본능", "#집요한포식자"], quote: "…도망칠 수 있을거라 생각한 거야?", desc: "피 냄새에 반응하는 뱀파이어. 친밀해질수록 시선으로 상대를 압박한다.", likes: "A형 혈액, 서늘한 지하, 붉은 장미", dislikes: "마늘, 십자가, 목을 가리지 않는 옷차림" } 
+    },
+    { 
+        id: "JW", name: "백진우", age: "23", type: "student", sub: "3학년 / 농구부", height: "188cm", weight: "86kg", 
+        tags: ["#다정함", "#사교적", "#인기남"], 
+        quote: "야, 표정이 왜 그래? 기분 전환 좀 시켜줄까?", 
+        desc: "껄렁한 말투와 호탕한 성격을 가진 전형적인 쾌남. 상대의 감정 변화를 빠르게 읽어낸다.",
+        likes: "농구, 향수 수집, 파티", dislikes: "어두운 분위기, 거절당하기, 비 오는 날",
+        awakened: { age: "190", sub: "인큐버스", tags: ["#경계해제", "#감정반응", "#선명한소유욕"], quote: "그렇게 굳어있지 마. 나한테 기대면 훨씬 편안해질 거야.", desc: "관계를 중시하는 인큐버스. 자연스러운 스킨십으로 경계를 허문다.", likes: "사람의 호감, 향기로운 술, 밤의 유흥", dislikes: "강한 의지력, 차가운 눈빛, 금욕주의자" } 
+    }
+];
 
         let current = null, isAwake = false, imgIdx = 0;
 
@@ -359,7 +443,7 @@ body {
             updateUI();
         }
 
-        function updateUI() {
+function updateUI() {
             const data = isAwake ? current.awakened : current;
             if(isAwake) document.body.classList.add('awakened-active');
             else document.body.classList.remove('awakened-active');
@@ -370,8 +454,27 @@ body {
             document.getElementById('mHeight').innerText = current.height;
             document.getElementById('mWeight').innerText = current.weight;
             document.getElementById('mQuote').innerText = data.quote;
-            document.getElementById('mDesc').innerText = data.desc;
             
+            // --- 이 부분이 핵심 수정 사항입니다 ---
+            const infoArea = document.getElementById('infoArea');
+            const descHtml = `<p id="mDesc" class="text-[13px] md:text-[15px] leading-[1.8] md:leading-[2.0] text-justify opacity-90 text-[#555] pb-4">${data.desc}</p>`;
+            
+            const preferenceHtml = `
+                <div class="mt-6 pt-6 border-t border-[#d4c5a9]/30 grid grid-cols-1 gap-4 text-[13px]">
+                    <div class="flex items-start"><span class="text-gold font-bold mr-3 w-16 shrink-0 uppercase tracking-wider">Like</span> <span class="text-[#555]">${data.likes}</span></div>
+                    <div class="flex items-start"><span class="text-[#8b0000] font-bold mr-3 w-16 shrink-0 uppercase tracking-wider">Dislike</span> <span class="text-[#555]">${data.dislikes}</span></div>
+                </div>
+            `;
+            
+            // 설명문과 선호도 정보를 합쳐서 infoArea의 뒷부분(설명 섹션)에 삽입
+            const contentContainer = infoArea.querySelector('.space-y-4');
+            contentContainer.innerHTML = `
+                <p id="mQuote" class="text-base md:text-xl italic font-bold border-l-4 md:border-l-6 border-gold pl-4 md:pl-6 text-[#3d2b1f] leading-relaxed">${data.quote}</p>
+                ${descHtml}
+                ${preferenceHtml}
+            `;
+            // --------------------------------------
+
             const tagArea = document.getElementById('mTags');
             tagArea.innerHTML = '';
             data.tags.forEach(t => {
@@ -392,7 +495,7 @@ body {
                 thumbArea.appendChild(img);
             });
 
-            document.getElementById('awakenBtn').innerText = isAwake ? "인간폼으로 복귀" : "본모습 개방";
+            document.getElementById('awakenBtn').innerText = isAwake ? "인간 폼으로 복귀" : "본모습 개방(覺醒)";
             updateMainPhoto();
         }
 
